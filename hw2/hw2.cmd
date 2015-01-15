@@ -7,10 +7,10 @@
  
 Universe   = vanilla
  
-Executable  = hw1.sh
+Executable  = hw2.sh
 Arguments   = ""
-Log         = hw1.log
-Output      = hw1.out
-Error       = hw1.err
+Log         = hw2.log
+Output      = hw2.out
+Error       = hw2.err
 Notification=Error
 Queue
