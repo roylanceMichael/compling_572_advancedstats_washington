@@ -4,6 +4,7 @@ import sys
 import re
 import math
 import getVectors
+import ig
 from decimal import Decimal
 
 
@@ -36,6 +37,15 @@ class S:
             for key in self.distr:
                 e += -(self.distr[key]/self.totalSize*math.log(self.distr[key]/self.totalSize, 2))
             return e
+
+        def informationGain(self):
+            selfEntropy = self.entropy()
+
+            runningTotal = 0
+
+            for splitSet in self.splitVectorsOnFeatures():
+                newIg = ig.IG(self, splitSet[0], splitSet[1])
+                print "ig for %s (%s/%s) is %s" % (splitSet[0].featureSplitOn, splitSet[0].totalSize, splitSet[1].totalSize, newIg.calculateInformationGain())
 
         def splitVectorsOnFeatures(self):
             # will be going through each feature, creating a new "s",

@@ -21,10 +21,13 @@ def main():
     newS = s.S()
     newS.addVectors(getV.vectors)
 
+    newS.informationGain()
+
     # let's calculate local probabilities
-    for vectorTuple in newS.splitVectorsOnFeatures():
-        print "feature split 1 %s %s with size %s" % (vectorTuple[0].featureSplitOn, vectorTuple[0].hasFeatureSplitOn, vectorTuple[0].totalSize)
-        print "feature split 2 %s %s with size %s" % (vectorTuple[1].featureSplitOn, vectorTuple[1].hasFeatureSplitOn, vectorTuple[1].totalSize)
+    # for vectorTuple in newS.splitVectorsOnFeatures():
+        # pass
+        # print "feature split 1 %s %s with size %s" % (vectorTuple[0].featureSplitOn, vectorTuple[0].hasFeatureSplitOn, vectorTuple[0].totalSize)
+        # print "feature split 2 %s %s with size %s" % (vectorTuple[1].featureSplitOn, vectorTuple[1].hasFeatureSplitOn, vectorTuple[1].totalSize)
 
 if __name__ == '__main__':
         main()
