@@ -16,6 +16,7 @@ class S:
             self.totalSize = 0
             self.featureSplitOn = ""
             self.hasFeatureSplitOn = False
+            self.highestIgInstance = None
 
         def addVectors(self, vectors):
             for vector in vectors:
@@ -41,11 +42,19 @@ class S:
         def informationGain(self):
             selfEntropy = self.entropy()
 
-            runningTotal = 0
+            highestInformationGain = 0
 
             for splitSet in self.splitVectorsOnFeatures():
+                # newIg is a whole class... sorry, that's a bad name
                 newIg = ig.IG(self, splitSet[0], splitSet[1])
+
                 print "ig for %s (%s/%s) is %s" % (splitSet[0].featureSplitOn, splitSet[0].totalSize, splitSet[1].totalSize, newIg.calculateInformationGain())
+
+                currentIg = newIg.calculateInformationGain()
+
+                if currentIg > highestInformationGain:
+                    highestInformationGain = currentIg
+                    self.highestIgInstance = newIg
 
         def splitVectorsOnFeatures(self):
             # will be going through each feature, creating a new "s",
