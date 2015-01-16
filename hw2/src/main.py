@@ -2,6 +2,7 @@ import sys
 import re
 import getVectors
 import dt
+import s
 
 
 def main():
@@ -12,12 +13,14 @@ def main():
     inputF = open(iFile)
     l = inputF.readline()
     while len(l.strip()) > 0:
-	getV.read_into_dicts(l)
+        getV.read_into_dicts(l)
         l = inputF.readline()
 
-    p = dtree.findClassDistribution(getV.vectors)
-    print dtree.entropy(p)
     inputF.close()
+
+    newS = s.S()
+    newS.addVectors(getV.vectors)
+    print newS.entropy()
 
 if __name__ == '__main__':
         main()

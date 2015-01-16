@@ -20,8 +20,5 @@ class GetVectors:
                 pair = i.split(':')
                 if len(pair) == 2:
                     vectDict[pair[0]] = pair[1]
-            
-            return self.vectors.append(vectDict)
 
-
-
+            self.vectors.append(vectDict)

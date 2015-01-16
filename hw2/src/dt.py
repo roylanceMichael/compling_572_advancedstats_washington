@@ -8,7 +8,7 @@ from decimal import Decimal
 
 
 class DT:
-#	def __init__(self):
+        #	def __init__(self):
 
         def findClassDistribution(self, vectors):
             # how many different class labels we have
@@ -33,6 +33,6 @@ class DT:
             return e
 
 
-#        def IG(self, line_of_input):
-            # calculate information gain
+#       def IG(self, line_of_input):
+           # calculate information gain
 
