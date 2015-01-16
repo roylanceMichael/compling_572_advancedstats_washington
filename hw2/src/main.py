@@ -23,6 +23,16 @@ def main():
 
     newS.informationGain()
 
+    if newS.highestIgInstance != None:
+        featureSplit = newS.highestIgInstance.splitWithFeature.featureSplitOn
+        featureWithTotal = newS.highestIgInstance.splitWithFeature.totalSize
+        featureWithoutTotal = newS.highestIgInstance.splitWithoutFeature.totalSize
+        informationGain = newS.highestIgInstance.calculateInformationGain()
+
+        print "feature %s (%s/%s) with %s was highest!" % (featureSplit, featureWithTotal, featureWithoutTotal, informationGain)
+    else:
+        print "for some odd reason, no highest feature was found"
+
     # let's calculate local probabilities
     # for vectorTuple in newS.splitVectorsOnFeatures():
         # pass
