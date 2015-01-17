@@ -9,28 +9,27 @@ from decimal import Decimal
 
 
 class S:
-        def __init__(self):
-            self.allFeatures = {}
-            self.vectors = []
+        def __init__(self, vectorRepo):
+            self.vectorRepo = vectorRepo
+            self.vectorIds = []
             self.distr = {} # 'talk.politics.guns' : 100
             self.totalSize = 0
             self.featureSplitOn = ""
             self.hasFeatureSplitOn = False
             self.highestIgInstance = None
 
-        def addVectors(self, vectors):
-            for vector in vectors:
-                self.vectors.append(vector)
+        def addVectors(self, vectorIds):
+            for vectorId in vectorIds:
+                self.vectorIds.append(vectorId)
 
-                if vector['className'] in self.distr:
-                    self.distr[vector['className']] += 1
+                className = self.vectorRepo.getClassName(vectorId)
+
+                if className in self.distr:
+                    self.distr[className] += 1
                 else:
-                    self.distr[vector['className']] = 1
+                    self.distr[className] = 1
 
-                for key in vector:
-                    self.allFeatures[key] = None
-
-            self.totalSize = len(vectors)
+            self.totalSize = len(vectorIds)
 
         def entropy(self):
             # calculate global entropy
@@ -48,35 +47,40 @@ class S:
                 # newIg is a whole class... sorry, that's a bad name
                 newIg = ig.IG(self, splitSet[0], splitSet[1])
 
-                print "ig for %s (%s/%s) is %s" % (splitSet[0].featureSplitOn, splitSet[0].totalSize, splitSet[1].totalSize, newIg.calculateInformationGain())
-
                 currentIg = newIg.calculateInformationGain()
 
                 if currentIg > highestInformationGain:
                     highestInformationGain = currentIg
                     self.highestIgInstance = newIg
 
+                    featureSplit = splitSet[0].featureSplitOn
+                    featureWithTotal = splitSet[0].totalSize
+                    featureWithoutTotal = splitSet[1].totalSize
+                    informationGain = highestInformationGain
+
+                    print "feature %s (%s/%s) with %s was highest!" % (featureSplit, featureWithTotal, featureWithoutTotal, informationGain)
+
         def splitVectorsOnFeatures(self):
             # will be going through each feature, creating a new "s",
             # and splitting the vectors on that feature
-            for feature in self.allFeatures:
+            for feature in self.vectorRepo.allFeatures:
                 vectorsWithFeature = []
                 vectorsWithoutFeature = []
 
-                for vector in self.vectors:
-                    if feature in vector:
-                        vectorsWithFeature.append(vector)
+                for vectorId in self.vectorIds:
+                    if feature in self.vectorRepo.getFeatures(vectorId):
+                        vectorsWithFeature.append(vectorId)
                     else:
-                        vectorsWithoutFeature.append(vector)
+                        vectorsWithoutFeature.append(vectorId)
 
 
-                sWithFeature = S()
+                sWithFeature = S(self.vectorRepo)
+                sWithoutFeature = S(self.vectorRepo)
+
                 sWithFeature.featureSplitOn = feature
                 sWithFeature.hasFeatureSplitOn = True
-                sWithoutFeature = S()
                 sWithoutFeature.featureSplitOn = feature
                 sWithoutFeature.hasFeatureSplitOn = False
-
                 sWithFeature.addVectors(vectorsWithFeature)
                 sWithoutFeature.addVectors(vectorsWithoutFeature)
 

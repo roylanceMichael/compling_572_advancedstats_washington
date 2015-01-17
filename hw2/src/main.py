@@ -18,7 +18,7 @@ def main():
 
     inputF.close()
 
-    newS = s.S()
+    newS = s.S(getV)
     newS.addVectors(getV.vectors)
 
     newS.informationGain()
