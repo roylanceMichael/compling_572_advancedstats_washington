@@ -18,6 +18,14 @@ class S:
             self.hasFeatureSplitOn = False
             self.highestIgInstance = None
 
+        def reportAdditionalFeatures(self):
+            returnStr = " %s " % (self.totalSize)
+
+            for className in self.distr:
+                returnStr = "%s %s %s " % (returnStr, className, self.distr[className] / self.totalSize)
+
+            return returnStr
+
         def reportSelf(self):
             if len(self.featureSplitOn) == 0:
                 return ""
@@ -33,10 +41,9 @@ class S:
             else:
                 return "&"
 
-
         def reportTree(self):
             if self.highestIgInstance == None:
-                yield self.reportSelf()
+                yield self.reportSelf() + self.reportAdditionalFeatures()
             else:
                 for childReport in self.highestIgInstance.splitWithFeature.reportTree():
                     yield self.reportSelf() + self.reportConcat() + childReport
