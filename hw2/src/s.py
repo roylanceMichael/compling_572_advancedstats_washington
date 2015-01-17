@@ -7,9 +7,9 @@ import getVectors
 import ig
 from decimal import Decimal
 
-
 class S:
-        def __init__(self, vectorRepo):
+        def __init__(self, vectorRepo, treeDepth):
+            self.treeDepth = treeDepth
             self.vectorRepo = vectorRepo
             self.vectorIds = []
             self.distr = {} # 'talk.politics.guns' : 100
@@ -17,6 +17,32 @@ class S:
             self.featureSplitOn = ""
             self.hasFeatureSplitOn = False
             self.highestIgInstance = None
+
+        def reportSelf(self):
+            if len(self.featureSplitOn) == 0:
+                return ""
+
+            if self.hasFeatureSplitOn:
+                return self.featureSplitOn
+            else:
+                return "!" + self.featureSplitOn
+
+        def reportConcat(self):
+            if self.highestIgInstance == None or len(self.featureSplitOn) == 0:
+                return ""
+            else:
+                return "&"
+
+
+        def reportTree(self):
+            if self.highestIgInstance == None:
+                yield self.reportSelf()
+            else:
+                for childReport in self.highestIgInstance.splitWithFeature.reportTree():
+                    yield self.reportSelf() + self.reportConcat() + childReport
+
+                for childReport in self.highestIgInstance.splitWithoutFeature.reportTree():
+                    yield self.reportSelf() + self.reportConcat() + childReport
 
         def addVectors(self, vectorIds):
             for vectorId in vectorIds:
@@ -41,7 +67,7 @@ class S:
         def informationGain(self):
             selfEntropy = self.entropy()
 
-            highestInformationGain = 0
+            highestInformationGain = self.vectorRepo.minimumInfoGain
 
             for splitSet in self.splitVectorsOnFeatures():
                 # newIg is a whole class... sorry, that's a bad name
@@ -60,7 +86,14 @@ class S:
 
                     print "feature %s (%s/%s) with %s was highest!" % (featureSplit, featureWithTotal, featureWithoutTotal, informationGain)
 
+            if self.highestIgInstance != None:
+                self.highestIgInstance.calculateInformationGainForChildren()
+
         def splitVectorsOnFeatures(self):
+            if self.treeDepth == self.vectorRepo.maxTreeDepth:
+                return
+                yield
+
             # will be going through each feature, creating a new "s",
             # and splitting the vectors on that feature
             for feature in self.vectorRepo.allFeatures:
@@ -74,8 +107,8 @@ class S:
                         vectorsWithoutFeature.append(vectorId)
 
 
-                sWithFeature = S(self.vectorRepo)
-                sWithoutFeature = S(self.vectorRepo)
+                sWithFeature = S(self.vectorRepo, self.treeDepth + 1)
+                sWithoutFeature = S(self.vectorRepo, self.treeDepth + 1)
 
                 sWithFeature.featureSplitOn = feature
                 sWithFeature.hasFeatureSplitOn = True

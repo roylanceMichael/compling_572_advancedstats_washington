@@ -22,3 +22,7 @@ class IG:
 		totalSize = self.parent.totalSize
 
 		return parentEntropy - (withFeatureSize / totalSize * withFeatureEntropy + withoutFeatureSize / totalSize * withoutFeatureEntropy)
+
+	def calculateInformationGainForChildren(self):
+		self.splitWithFeature.informationGain()
+		self.splitWithoutFeature.informationGain()

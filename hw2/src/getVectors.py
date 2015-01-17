@@ -4,7 +4,9 @@ import re
 import vectorInstance
 
 class GetVectors:
-    def __init__(self):
+    def __init__(self, maxTreeDepth, minimumInfoGain):
+        self.maxTreeDepth = maxTreeDepth
+        self.minimumInfoGain = minimumInfoGain
         self.currentId = 1
         self.allFeatures = {}
         self.vectors = {}   # a list of feature vectors represented as dictionaries
