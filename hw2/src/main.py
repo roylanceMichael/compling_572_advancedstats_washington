@@ -13,7 +13,9 @@ def main():
     maxDepth = int(sys.argv[3])
     minGain = float(sys.argv[4])
     modelFile = sys.argv[5]
-    sysOutput = sys.argv[6]
+    sysFile = sys.argv[6]
+
+    print "working with %s %s %s %s %s %s" % (trainFile, testFile, maxDepth, minGain, modelFile, sysFile)
 
     # acc file is implied, we'll use print
     # to communicate with that file
@@ -32,8 +34,14 @@ def main():
     rootS.addVectors(vectorRepo.vectors)
     rootS.informationGain()
 
-    # report to file now
+    # report model file
     reportFiles.reportModelFile(modelFile, rootS)
+
+    # report sys file
+    reportFiles.reportSysFile(sysFile, rootS, vectorRepo.getAllVectors())
+
+    # report confusion matrix
+    reportFiles.printConfusionMatrix(rootS, vectorRepo.getAllVectors(), "training")
 
 if __name__ == '__main__':
         main()

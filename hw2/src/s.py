@@ -17,6 +17,33 @@ class S:
             self.featureSplitOn = ""
             self.hasFeatureSplitOn = False
             self.highestIgInstance = None
+            self.highestClass = ""
+
+        def reportClassPrediction(self, vectorInstance):
+            if self.highestIgInstance == None:
+                return self.highestClass
+
+            nextFeature = self.highestIgInstance.splitWithFeature.featureSplitOn
+
+            if nextFeature in vectorInstance.features:
+                return self.highestIgInstance.splitWithFeature.reportClassPrediction(vectorInstance)
+
+            return self.highestIgInstance.splitWithoutFeature.reportClassPrediction(vectorInstance)
+
+        def reportClassificationResult(self, vectorInstance):
+            if self.highestIgInstance == None:
+                strBuilder = "array:%s " % (vectorInstance.id)
+                for key in self.distr:
+                    strBuilder = "%s %s %s " % (strBuilder, key, self.distr[key])
+
+                return strBuilder
+            else:
+                featureToCompare = self.highestIgInstance.splitWithFeature.featureSplitOn
+
+                if featureToCompare in vectorInstance.features:
+                    return self.highestIgInstance.splitWithFeature.reportClassificationResult(vectorInstance)
+                else:
+                    return self.highestIgInstance.splitWithoutFeature.reportClassificationResult(vectorInstance)
 
         def reportAdditionalFeatures(self):
             returnStr = " %s " % (self.totalSize)
@@ -93,6 +120,12 @@ class S:
 
             if self.highestIgInstance != None:
                 self.highestIgInstance.calculateInformationGainForChildren()
+            else:
+                highestDist = 0
+                for className in self.distr:
+                    if self.distr[className] > highestDist:
+                        highestDist = self.distr[className]
+                        self.highestClass = className
 
         def splitVectorsOnFeatures(self):
             if self.treeDepth == self.vectorRepo.maxTreeDepth:

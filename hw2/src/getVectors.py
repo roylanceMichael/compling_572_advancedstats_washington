@@ -15,6 +15,10 @@ class GetVectors:
         # binarize the input: non-zero values are substituted by 1
         return re.sub(r':[123456789]\d*', r':1', line)
 
+    def getAllVectors(self):
+        for vectorId in self.vectors:
+            yield self.vectors[vectorId]
+
     def getVector(self, vectorId):
         return self.vectors[vectorId]
 
