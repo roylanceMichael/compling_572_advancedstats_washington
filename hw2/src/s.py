@@ -91,8 +91,6 @@ class S:
                     featureWithoutTotal = splitSet[1].totalSize
                     informationGain = highestInformationGain
 
-                    print "feature %s (%s/%s) with %s was highest!" % (featureSplit, featureWithTotal, featureWithoutTotal, informationGain)
-
             if self.highestIgInstance != None:
                 self.highestIgInstance.calculateInformationGainForChildren()
 

@@ -1,8 +1,10 @@
-import sys
-import re
-import getVectors
-import dt
 import s
+import re
+import dt
+import sys
+import reportFiles
+import getVectors
+
 
 def main():
     # get from command parameters
@@ -25,12 +27,13 @@ def main():
             vectorRepo.read_into_dicts(l)
             l = inputF.readline()
 
+    # create the root item
     rootS = s.S(vectorRepo, 0)
     rootS.addVectors(vectorRepo.vectors)
     rootS.informationGain()
 
-    for tree in rootS.reportTree():
-        print tree
+    # report to file now
+    reportFiles.reportModelFile(modelFile, rootS)
 
 if __name__ == '__main__':
         main()
