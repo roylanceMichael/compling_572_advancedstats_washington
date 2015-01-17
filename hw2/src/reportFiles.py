@@ -14,18 +14,24 @@ def printConfusionMatrix(rootS, vectorInstances, dataType):
 
 	reportingDict = {}
 	correctTotal = 0
+	totalVectors = 0
 
 	for vectorInstance in vectorInstances:
 		expected = vectorInstance.className
 		actual = rootS.reportClassPrediction(vectorInstance)
+		totalVectors += 1
 
 		if expected == actual:
 			correctTotal += 1
 
 		if expected in reportingDict:
-			reportingDict[expected][actual] += 1
+			if actual in reportingDict[expected]:
+				reportingDict[expected][actual] += 1
+			else:
+				reportingDict[expected][actual] = 1
 		else:
 			reportingDict[expected] = { actual: 1 }
+
 	headerColumn = "\t"
 	for expectedKey in reportingDict:
 		headerColumn = headerColumn + "\t" + expectedKey
@@ -34,9 +40,10 @@ def printConfusionMatrix(rootS, vectorInstances, dataType):
 
 	confusionMatrix = ""
 	for expectedKey in reportingDict:
-		confusionMatrix = confusionMatrix + "\t" + expectedKey + "\t"
+		confusionMatrix = confusionMatrix + expectedKey + "\t"
 		for actualKey in reportingDict[expectedKey]:
-			print reportingDict[expectedKey][actualKey] + "\t"
-		print "\n"
+			confusionMatrix = confusionMatrix + str(reportingDict[expectedKey][actualKey]) + "\t"
+		confusionMatrix = confusionMatrix + "\n"
 
-	print "%s accuracy =%s\n" % (dataType, correctTotal / len(vectorInstances))
+	print confusionMatrix
+	print "%s accuracy =%s\n" % (dataType, float(correctTotal) / totalVectors)
