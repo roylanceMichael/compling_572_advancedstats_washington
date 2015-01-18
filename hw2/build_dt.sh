@@ -1,5 +1,5 @@
 #!/bin/bash
-# Mike Roylance (roylance@uw.edu) & Olga Whelon (olgaw@uw.edu)
+# Mike Roylance (roylance@uw.edu) & Olga Whelan (olgaw@uw.edu)
 
 trainFile=$1
 testFile=$2
