@@ -31,4 +31,4 @@ if [ -z "$7"]; then
 	accFile="examples/acc_default"
 fi
 
-python src/main.py $trainFile $testFile $maxDepth $minGain $modelFile $sysOutput
+python src/main.py $trainFile $testFile $maxDepth $minGain $modelFile $sysOutput > $accFile
