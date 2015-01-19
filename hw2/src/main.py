@@ -19,29 +19,45 @@ def main():
 
     # acc file is implied, we'll use print
     # to communicate with that file
-    vectorRepo = getVectors.GetVectors(3, 0.01)
+    trainVectorRepo = getVectors.GetVectors(3, 0.01)
+    testVectorRepo = getVectors.GetVectors(3, 0.01)
+
     dtree = dt.DT()
 
     # read in the training file into our repository
     with open(trainFile) as inputF:
         l = inputF.readline()
         while len(l.strip()) > 0:
-            vectorRepo.read_into_dicts(l)
+            trainVectorRepo.read_into_dicts(l)
+            l = inputF.readline()
+
+    # read in the test file into our repository
+    with open(testFile) as inputF:
+        l = inputF.readline()
+        while len(l.strip()) > 0:
+            testVectorRepo.read_into_dicts(l)
             l = inputF.readline()
 
     # create the root item
-    rootS = s.S(vectorRepo, 0)
-    rootS.addVectors(vectorRepo.vectors)
+    rootS = s.S(trainVectorRepo, 0)
+    rootS.addVectors(trainVectorRepo.vectors)
     rootS.informationGain()
 
     # report model file
     reportFiles.reportModelFile(modelFile, rootS)
 
+    def allVectors():
+        for vector in trainVectorRepo.getAllVectors():
+            yield vector
+        for vector in testVectorRepo.getAllVectors():
+            yield vector
+
     # report sys file
-    reportFiles.reportSysFile(sysFile, rootS, vectorRepo.getAllVectors())
+    reportFiles.reportSysFile(sysFile, rootS, allVectors())
 
     # report confusion matrix
-    reportFiles.printConfusionMatrix(rootS, vectorRepo.getAllVectors(), "training")
+    reportFiles.printConfusionMatrix(rootS, trainVectorRepo.getAllVectors(), "training")
+    reportFiles.printConfusionMatrix(rootS, testVectorRepo.getAllVectors(), "testing")
 
 if __name__ == '__main__':
         main()
