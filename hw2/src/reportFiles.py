@@ -6,13 +6,18 @@ def reportModelFile(modelFile, rootS):
 def reportSysFile(sysFile, rootS, vectorInstances):
 	with open(sysFile, "w") as outputF:
 		for vectorInstance in vectorInstances:
-			outputF.write(rootS.reportClassificationResult(vectorInstance))
+			outputF.write(rootS.reportClassificationResult(vectorInstance) + "\n")
 
-def printConfusionMatrix(rootS, vectorInstances, dataType):
+def printConfusionMatrix(rootS, vectorInstances, dataType, vectorRepo):
 	print "Confusion matrix for the %s data:\n" % (dataType)
 	print "row is the truth, column is the system output\n"
 
 	reportingDict = {}
+	for className in vectorRepo.allClassNames:
+		reportingDict[className] = {}
+		for otherClassName in vectorRepo.allClassNames:
+			reportingDict[className][otherClassName] = 0
+
 	correctTotal = 0
 	totalVectors = 0
 

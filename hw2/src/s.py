@@ -99,9 +99,7 @@ class S:
             return e
 
         def informationGain(self):
-            selfEntropy = self.entropy()
-
-            highestInformationGain = self.vectorRepo.minimumInfoGain
+            highestInformationGain = 0
 
             for splitSet in self.splitVectorsOnFeatures():
                 # newIg is a whole class... sorry, that's a bad name
@@ -109,7 +107,8 @@ class S:
 
                 currentIg = newIg.calculateInformationGain()
 
-                if currentIg > highestInformationGain:
+                if (currentIg > highestInformationGain and
+                    currentIg > self.vectorRepo.minimumInfoGain):
                     highestInformationGain = currentIg
                     self.highestIgInstance = newIg
 

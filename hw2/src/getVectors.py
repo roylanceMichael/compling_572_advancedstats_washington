@@ -8,6 +8,7 @@ class GetVectors:
         self.maxTreeDepth = maxTreeDepth
         self.minimumInfoGain = minimumInfoGain
         self.currentId = 1
+        self.allClassNames = {}
         self.allFeatures = {}
         self.vectors = {}   # a list of feature vectors represented as dictionaries
 
@@ -31,6 +32,7 @@ class GetVectors:
     def read_into_dicts(self, line_of_input):
         # turn each feature vector into a dictionary
         ilist = re.split('\s+', self.binarize(line_of_input).strip())
+        self.allClassNames[ilist[0]] = None
         vectDict = {}
         for i in ilist[0:]:
             pair = i.split(':')

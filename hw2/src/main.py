@@ -56,8 +56,8 @@ def main():
     reportFiles.reportSysFile(sysFile, rootS, allVectors())
 
     # report confusion matrix
-    reportFiles.printConfusionMatrix(rootS, trainVectorRepo.getAllVectors(), "training")
-    reportFiles.printConfusionMatrix(rootS, testVectorRepo.getAllVectors(), "testing")
+    reportFiles.printConfusionMatrix(rootS, trainVectorRepo.getAllVectors(), "training", trainVectorRepo)
+    reportFiles.printConfusionMatrix(rootS, testVectorRepo.getAllVectors(), "testing", testVectorRepo)
 
 if __name__ == '__main__':
         main()
