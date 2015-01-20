@@ -1,6 +1,5 @@
 import s
 import re
-import dt
 import sys
 import reportFiles
 import getVectors
@@ -21,8 +20,6 @@ def main():
     # to communicate with that file
     trainVectorRepo = getVectors.GetVectors(3, 0.01)
     testVectorRepo = getVectors.GetVectors(3, 0.01)
-
-    dtree = dt.DT()
 
     # read in the training file into our repository
     with open(trainFile) as inputF:
