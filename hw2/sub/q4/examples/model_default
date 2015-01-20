@@ -1,0 +1,8 @@
+israel&matzadah&tyranny 2  talk.politics.guns 0.5  talk.politics.misc 0.5 
+israel&matzadah&!tyranny 1  talk.politics.guns 1.0 
+israel&!matzadah&jack 16  talk.politics.misc 0.375  talk.politics.mideast 0.625 
+israel&!matzadah&!jack 331  talk.politics.guns 0.00604229607251  talk.politics.misc 0.036253776435  talk.politics.mideast 0.957703927492 
+!israel&turkish&arromdee 15  talk.politics.misc 0.4  talk.politics.mideast 0.6 
+!israel&turkish&!arromdee 174  talk.politics.misc 0.0114942528736  talk.politics.mideast 0.988505747126 
+!israel&!turkish&gun 346  talk.politics.guns 0.846820809249  talk.politics.misc 0.14450867052  talk.politics.mideast 0.00867052023121 
+!israel&!turkish&!gun 1815  talk.politics.guns 0.332231404959  talk.politics.misc 0.453443526171  talk.politics.mideast 0.214325068871 
