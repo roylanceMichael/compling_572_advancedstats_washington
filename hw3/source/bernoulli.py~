@@ -1,0 +1,76 @@
+from __future__ import division
+import os
+import sys
+import re
+import math
+import getVectors
+from decimal import Decimal
+
+class Bernoulli:
+        def __init__(self, vectors, classPriorD, condProbD):
+            self.vectors = vectors
+            self.classPriorD = classPriorD
+            self.condProbD = condProbD
+
+#            self.treeDepth = treeDepth
+#            self.vectorRepo = vectorRepo
+#            self.vectorIds = []
+#            self.distr = {} # 'talk.politics.guns' : 100
+#            self.totalSize = 0
+#            self.featureSplitOn = ""
+#            self.hasFeatureSplitOn = False
+#            self.highestIgInstance = None
+#            self.highestClass = ""
+
+#        def reportClassPrediction(self, vectorInstance):
+#            if self.highestIgInstance == None:
+#                return self.highestClass
+
+#            nextFeature = self.highestIgInstance.splitWithFeature.featureSplitOn
+
+#            if nextFeature in vectorInstance.features:
+#                return self.highestIgInstance.splitWithFeature.reportClassPrediction(vectorInstance)
+
+#            return self.highestIgInstance.splitWithoutFeature.reportClassPrediction(vectorInstance)
+
+#        def reportClassificationResult(self, vectorInstance):
+#            if self.highestIgInstance == None:
+#                strBuilder = "array:%s " % (vectorInstance.id)
+#                for key in self.distr:
+#                    strBuilder = "%s %s %s " % (strBuilder, key, self.distr[key])
+
+#                return strBuilder
+#            else:
+#                featureToCompare = self.highestIgInstance.splitWithFeature.featureSplitOn
+
+#                if featureToCompare in vectorInstance.features:
+#                    return self.highestIgInstance.splitWithFeature.reportClassificationResult(vectorInstance)
+#                else:
+#                    return self.highestIgInstance.splitWithoutFeature.reportClassificationResult(vectorInstance)
+
+#        def reportAdditionalFeatures(self):
+#            returnStr = " %s " % (self.totalSize)
+
+#            for className in self.distr:
+#                returnStr = "%s %s %s " % (returnStr, className, self.distr[className] / self.totalSize)
+
+#            return returnStr
+
+#        def reportSelf(self):
+#            if len(self.featureSplitOn) == 0:
+#                return ""
+
+#            if self.hasFeatureSplitOn:
+#                return self.featureSplitOn
+#            else:
+#                return "!" + self.featureSplitOn
+
+#        def reportConcat(self):
+#            if self.highestIgInstance == None or len(self.featureSplitOn) == 0:
+#                return ""
+#            else:
+#                return "&"
+
+    def bernoulliNB(self, vectors):
+        vectors = 
+        

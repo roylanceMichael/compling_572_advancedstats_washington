@@ -1,0 +1,58 @@
+import re
+
+
+class GetVectors:
+    def __init__(self):
+        self.featDict = {}   # {className1: {f1:#, f2:#, f3:#,..}, className2 : {}} - count of features for each class
+        self.vectors = {}   # {className1: [{v1}, {v2}, {v3}], className2: []} - a list of feature vectors represented as dictionaries
+        self.allFeatures = {}   # {f1: None, f2: None, } - all the features in the documents = V
+
+
+    def binarize(self, line):
+        # binarize the input: non-zero values are substituted by 1
+        return re.sub(r':[123456789]\d*', r':1', line)
+
+
+    def read_into_dicts(self, line_of_input):
+        # fill two dictionaries
+        ilist = re.split('\s+', self.binarize(line_of_input).strip())
+
+        className = ilist[0]
+        vectDict = {}
+
+        for i in ilist[0:]:
+            # get features
+            pair = i.split(':')
+            if len(pair) == 2:
+                vectDict[pair[0]] = pair[1]
+
+                # fill self.allFeatures
+                if pair[0] in self.allFeatures:
+                    pass
+                else:
+                    self.allFeatures[pair[0]] = None
+                
+                # fill self.featDict
+                if className in self.featDict:
+                    if pair[0] in self.featDict[className]:
+                        self.featDict[className][pair[0]] += 1
+                    else:
+                        self.featDict[className][pair[0]] = 1
+                else:
+                    self.featDict[className] = {pair[0] : 1}
+
+        # fill self.vectors
+        if className in self.vectors:
+            self.vectors[className].append(vectDict)
+        else:
+            self.vectors[className] = [vectDict]
+
+
+    def addMissingTerms(self):
+        for key in self.allFeatures:
+            for className in self.featDict:
+                if key in self.featDict[className]:        
+                    pass
+                else:
+                    self.featDict[className][key] = 0
+                
