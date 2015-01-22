@@ -3,8 +3,8 @@ import re
 
 class GetVectors:
     def __init__(self):
-        self.featDict = {}   # {className1: {f1:#, f2:#, f3:#,..}, className2 : {}} - count of features for each class
-        self.vectors = {}   # {className1: [{v1}, {v2}, {v3}], className2: []} - a list of feature vectors represented as dictionaries
+        self.featDict = {}   # {className1: {f1:#, f2:#, f3:#,..}, className2 : {}} - how many times different features are found in each class
+        self.vectors = {}   # {className1: [{f1:1}, {f2:1}, {f3:1}], className2: []} - a list of feature vectors represented as dictionaries
         self.allFeatures = {}   # {f1: None, f2: None, } - all the features in the documents = V
 
 
@@ -14,23 +14,20 @@ class GetVectors:
 
 
     def read_into_dicts(self, line_of_input):
-        # fill two dictionaries
+        # fill three dictionaries
         ilist = re.split('\s+', self.binarize(line_of_input).strip())
 
         className = ilist[0]
         vectDict = {}
 
-        for i in ilist[0:]:
+        for i in ilist[1:]:
             # get features
             pair = i.split(':')
             if len(pair) == 2:
                 vectDict[pair[0]] = pair[1]
 
                 # fill self.allFeatures
-                if pair[0] in self.allFeatures:
-                    pass
-                else:
-                    self.allFeatures[pair[0]] = None
+                self.allFeatures[pair[0]] = None
                 
                 # fill self.featDict
                 if className in self.featDict:
@@ -56,3 +53,12 @@ class GetVectors:
                 else:
                     self.featDict[className][key] = 0
                 
+
+    def getWords(self, line):
+        ilist = re.split('\s+', line.strip())
+
+        words = [ilist[0]]
+        for i in ilist[1:]:
+            pair = i.split(':')
+            words.append(pair[0])
+        return words

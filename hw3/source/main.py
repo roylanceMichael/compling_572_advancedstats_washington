@@ -15,8 +15,8 @@ def main():
 #    modelFile = sys.argv[5]
 #    sysFile = sys.argv[6]
 
+    print "preparing the classifier..."
     vect = getVectors.GetVectors()
-
     # read in the training file
     with open(trainFile) as inputF:
         lines = 0
@@ -27,19 +27,25 @@ def main():
             if len(l) != 0: 
                 lines += 1
     
-#    print vect.allFeatures
     vect.addMissingTerms()
-#    print vect.featDict
     # for now hardcoding classPriorD and condProbD
     bernNB = bernoulli.Bernoulli(vect.vectors, vect.featDict, 1, 1, lines)
     bernNB.bernoulliNB()
 
-#    for className in bernNB.classes:
-#        print bernNB.classes[className].probs
+    print "classifying test file..."
+    train = getVectors.GetVectors()
+    # read in the training file for classification
+    with open(trainFile) as inputF:
+        l = inputF.readline()
+        i = 0
+        while len(l.strip()) > 0:
+            w = train.getWords(l)
+            bernNB.reportClassificationResult(i, w)
+            l = inputF.readline()
+            i += 1
 
 
-
-    # read in the test file into our repository
+    # read in the test file for classification
 #    with open(testFile) as inputF:
 #        l = inputF.readline()
 #        while len(l.strip()) > 0:
@@ -49,11 +55,7 @@ def main():
     # report model file
     reportFiles.reportModelFile(modelFile, bernNB.classes)
 
-#    def allVectors():
-#        for vector in trainVectorRepo.getAllVectors():
-#            yield vector
-#        for vector in testVectorRepo.getAllVectors():
-#            yield vector
+
 
     # report sys file
 #    reportFiles.reportSysFile(sysFile, rootS, allVectors())

@@ -1,18 +1,19 @@
 from __future__ import division
 from decimal import Decimal
 import math
+import operator
 import getVectors
 import classInstance
 
 
 class Bernoulli:
     def __init__(self, vectors, featDict, classPriorD, condProbD, lines):
-            self.vectors = vectors
-            self.featDict = featDict
-            self.classPriorD = classPriorD
-            self.condProbD = condProbD
-            self.lines = lines
-            self.classes = {}
+        self.vectors = vectors
+        self.featDict = featDict
+        self.classPriorD = classPriorD
+        self.condProbD = condProbD
+        self.lines = lines
+        self.classes = {}
             
 
     def bernoulliNB(self):
@@ -22,12 +23,39 @@ class Bernoulli:
             probs = {}
             for feat in self.featDict[key]:
                 condProb = (self.featDict[key][feat] + self.condProbD) / (2 + len(self.vectors[key]))
-#                print key + "\t" + feat + "\t" + str(condProb) + "\n"
                 logCondProb = math.log10(condProb)
                 probs[feat] = [condProb, logCondProb]
 
             cI = classInstance.ClassInstance(key, prior, logprior, probs)
             self.classes[key] = cI
+
+
+    def classify(self, wordlist):
+        # working with self.classes where all the training probabilities are stored
+        instanceName = wordlist[0]
+        classification = {}
+        
+        for className in self.classes:
+            pclass = self.classes[className].logprior
+            for word in wordlist[1:]:
+                if word in self.classes[className].probs:
+                    pclass = pclass * self.classes[className].probs[word][1]
+                else:
+                    pclass = pclass * math.log10(1-self.classes[className].probs[word][0])
+            classification[className] = pclass
+
+        return instanceName, classification
+                    
+            
+    def reportClassificationResult(self, i, w):
+        # for sys file
+        c = self.classify(w)
+        name = c[0]
+        clf = c[1]
+        string = ""
+        for w in sorted(clf, key=clf.get, reverse=True):
+            string += str(w) + " " +  str(clf[w]) + " "
+        print "array:"+ str(i) + "\t" + name + "\t" + string
 
 
 
