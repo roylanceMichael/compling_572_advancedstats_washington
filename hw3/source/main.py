@@ -1,11 +1,14 @@
 import sys
 import getVectors
 import bernoulli
+import classInstance
+import reportFiles
 
 
 def main():
     # get from command parameters
     trainFile = sys.argv[1]
+    modelFile = sys.argv[2]
 #    testFile = sys.argv[2]
 #    classPriorD = int(sys.argv[3])
 #    condProbD = float(sys.argv[4])
@@ -26,10 +29,13 @@ def main():
     
 #    print vect.allFeatures
     vect.addMissingTerms()
-    print vect.featDict
+#    print vect.featDict
     # for now hardcoding classPriorD and condProbD
     bernNB = bernoulli.Bernoulli(vect.vectors, vect.featDict, 1, 1, lines)
     bernNB.bernoulliNB()
+
+#    for className in bernNB.classes:
+#        print bernNB.classes[className].probs
 
 
 
@@ -41,7 +47,7 @@ def main():
 #            l = inputF.readline()
 
     # report model file
-#    reportFiles.reportModelFile(modelFile, rootS)
+    reportFiles.reportModelFile(modelFile, bernNB.classes)
 
 #    def allVectors():
 #        for vector in trainVectorRepo.getAllVectors():

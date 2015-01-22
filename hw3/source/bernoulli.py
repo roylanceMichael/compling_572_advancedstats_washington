@@ -2,6 +2,7 @@ from __future__ import division
 from decimal import Decimal
 import math
 import getVectors
+import classInstance
 
 
 class Bernoulli:
@@ -11,15 +12,22 @@ class Bernoulli:
             self.classPriorD = classPriorD
             self.condProbD = condProbD
             self.lines = lines
-
+            self.classes = {}
+            
 
     def bernoulliNB(self):
         for key in self.vectors:
             prior = (len(self.vectors[key]) + self.classPriorD) /(len(self.vectors) + self.lines)
-
+            logprior = math.log10(prior)
+            probs = {}
             for feat in self.featDict[key]:
                 condProb = (self.featDict[key][feat] + self.condProbD) / (2 + len(self.vectors[key]))
 #                print key + "\t" + feat + "\t" + str(condProb) + "\n"
+                logCondProb = math.log10(condProb)
+                probs[feat] = [condProb, logCondProb]
+
+            cI = classInstance.ClassInstance(key, prior, logprior, probs)
+            self.classes[key] = cI
 
 
 

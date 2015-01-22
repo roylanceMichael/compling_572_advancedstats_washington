@@ -1,26 +1,27 @@
 from __future__ import division
-import os
-import sys
-import re
+from decimal import Decimal
 import math
 import getVectors
-from decimal import Decimal
+
 
 class Bernoulli:
-        def __init__(self, vectors, classPriorD, condProbD):
+    def __init__(self, vectors, featDict, classPriorD, condProbD, lines):
             self.vectors = vectors
+            self.featDict = featDict
             self.classPriorD = classPriorD
             self.condProbD = condProbD
+            self.lines = lines
 
-#            self.treeDepth = treeDepth
-#            self.vectorRepo = vectorRepo
-#            self.vectorIds = []
-#            self.distr = {} # 'talk.politics.guns' : 100
-#            self.totalSize = 0
-#            self.featureSplitOn = ""
-#            self.hasFeatureSplitOn = False
-#            self.highestIgInstance = None
-#            self.highestClass = ""
+
+    def bernoulliNB(self):
+        for key in self.vectors:
+            prior = (len(self.vectors[key]) + self.classPriorD) /(len(self.vectors) + self.lines)
+
+            for feat in self.featDict[key]:
+                condProb = (self.featDict[key][feat] + self.condProbD) / (2 + len(self.vectors[key]))
+#                print key + "\t" + feat + "\t" + str(condProb) + "\n"
+
+
 
 #        def reportClassPrediction(self, vectorInstance):
 #            if self.highestIgInstance == None:
@@ -71,6 +72,5 @@ class Bernoulli:
 #            else:
 #                return "&"
 
-    def bernoulliNB(self, vectors):
-        vectors = 
+
         
