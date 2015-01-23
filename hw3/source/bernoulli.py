@@ -36,13 +36,14 @@ class Bernoulli:
         classification = {}
         
         for className in self.classes:
-            pclass = self.classes[className].logprior
+            # pclass = self.classes[className].logprior
+            totalLog = 0
             for word in wordlist[1:]:
                 if word in self.classes[className].probs:
-                    pclass = pclass * self.classes[className].probs[word][1]
+                    totalLog = totalLog + self.classes[className].probs[word][1]
                 else:
-                    pclass = pclass * math.log10(1-self.classes[className].probs[word][0])
-            classification[className] = pclass
+                    totalLog = totalLog + math.log10(1-self.classes[className].probs[word][0])
+            classification[className] = totalLog
 
         return instanceName, classification
                     
@@ -53,6 +54,17 @@ class Bernoulli:
         name = c[0]
         clf = c[1]
         string = ""
+
+        # normalize to 1
+        #highest = -999999
+        #for w in clf:
+        #    if clf[w] > highest:
+        #        highest = clf[w]
+
+        #newDict = {}
+        #for w in clf:
+        #    newDict[w] = float(highest) / clf[w]
+
         for w in sorted(clf, key=clf.get, reverse=True):
             string += str(w) + " " +  str(clf[w]) + " "
         print "array:"+ str(i) + "\t" + name + "\t" + string

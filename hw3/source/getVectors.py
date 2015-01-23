@@ -52,7 +52,7 @@ class GetVectors:
                     pass
                 else:
                     self.featDict[className][key] = 0
-                
+                    
 
     def getWords(self, line):
         ilist = re.split('\s+', line.strip())
