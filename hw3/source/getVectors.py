@@ -4,12 +4,8 @@ import re
 class GetVectors:
     def __init__(self):
         self.featDict = {}   # {className1: {f1:#, f2:#, f3:#,..}, className2 : {}} - how many times different features are found in each class
-        self.vectors = {}   # {className1: [{f1:1}, {f2:1}, {f3:1}], className2: []} - a list of feature vectors represented as dictionaries
+        self.vectors = {}   # {className1: {f1: None, f2: None..} a dictionary of feature vectors represented as dictionaries
         self.allFeatures = {}   # {f1: None, f2: None, } - all the features in the documents = V
-
-        self.classProbability = {}
-
-        self.cachedTotalWords = 0
 
     def binarize(self, line):
         # binarize the input: non-zero values are substituted by 1
@@ -39,24 +35,22 @@ class GetVectors:
 
         className = ilist[0]
 
-        if className in self.classProbability:
-            self.classProbability[className] += 1
-        else:
-            self.classProbability[className] = 1
-
-        vectDict = {}
-
         for i in ilist[1:]:
             # get features
             pair = i.split(':')
             if len(pair) == 2:
-                vectDict[pair[0]] = pair[1]
+
+                # fill self.vectors
+                if className in self.vectors:
+                    self.vectors[className][pair[0]] = None
+                else:
+                    self.vectors[className] = { pair[0]: None }
 
                 # fill self.allFeatures
                 if pair[0] in self.allFeatures:
-                    self.allFeatures[pair[0]] += 1
+                    self.allFeatures[pair[0]] = None
                 else:
-                    self.allFeatures[pair[0]] = 1
+                    self.allFeatures[pair[0]] = None
                 
                 # fill self.featDict
                 if className in self.featDict:
@@ -65,14 +59,7 @@ class GetVectors:
                     else:
                         self.featDict[className][pair[0]] = 1
                 else:
-                    self.featDict[className] = {pair[0] : 1}
-
-        # fill self.vectors
-        if className in self.vectors:
-            self.vectors[className].append(vectDict)
-        else:
-            self.vectors[className] = [vectDict]
-
+                    self.featDict[className] = { pair[0] : 1}
 
     def addMissingTerms(self):
         for key in self.allFeatures:

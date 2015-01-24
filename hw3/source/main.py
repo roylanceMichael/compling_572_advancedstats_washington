@@ -24,7 +24,7 @@ def main():
     
     vect.addMissingTerms()
     # for now hardcoding classPriorD and condProbD
-    bernNB = bernoulli.Bernoulli(vect.vectors, vect.featDict, 1, 1, lines, vect)
+    bernNB = bernoulli.Bernoulli(vect, 0.0001, 0.0001, lines)
     bernNB.bernoulliNB()
 
     print "classifying test file..."

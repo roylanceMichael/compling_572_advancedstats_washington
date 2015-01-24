@@ -7,9 +7,9 @@ import classInstance
 
 
 class Bernoulli:
-    def __init__(self, vectors, featDict, classPriorD, condProbD, lines, repo):
-        self.vectors = vectors
-        self.featDict = featDict
+    def __init__(self, repo, classPriorD, condProbD, lines):
+        self.vectors = repo.vectors
+        self.featDict = repo.featDict
         self.classPriorD = classPriorD
         self.condProbD = condProbD
         self.lines = lines
@@ -24,7 +24,7 @@ class Bernoulli:
             probs = {}
 
             for feat in self.featDict[key]:
-                condProb = (self.featDict[key][feat] + self.condProbD) / (2 + len(self.vectors[key]))
+                condProb = (self.featDict[key][feat] + self.condProbD) / (len(self.vectors) + len(self.vectors[key]))
                 logCondProb = math.log10(condProb)
                 probs[feat] = [condProb, logCondProb]
 
@@ -36,26 +36,31 @@ class Bernoulli:
         # working with self.classes where all the training probabilities are stored
         instanceName = wordlist[0]
         classification = {}
+
+        currentWordList = {}
+        for word in wordlist[1:]:
+            currentWordList[word] = None
         
         for className in self.classes:
-            wordGivenClassProb = 0
-            
+            wordGivenClassProb = self.classes[className].logprior
+
             # this is p(xj|ci)
-            for word in wordlist[1:]:
-                if word in self.classes[className].probs:
-                    wordGivenClassProb += self.classes[className].probs[word][1]
-                else:
+            for word in currentWordList:
+                wordGivenClassProb += self.classes[className].probs[word][1]
+
+            for word in self.repo.vectors[className]:
+                if word not in currentWordList:
                     wordGivenClassProb += math.log10(1-self.classes[className].probs[word][0])
                 
             classification[className] = wordGivenClassProb
 
         # update probability for classification
-        totalAmount = 0
-        for className in classification:
-            totalAmount += classification[className]
+        # totalAmount = 0
+        # for className in classification:
+        #     totalAmount += classification[className]
 
-        for className in classification:
-            classification[className] = float(classification[className]) / totalAmount
+        # for className in classification:
+        #     classification[className] = float(classification[className]) / totalAmount
 
         return instanceName, classification
                     
