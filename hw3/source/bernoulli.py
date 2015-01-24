@@ -15,13 +15,17 @@ class Bernoulli:
         self.repo = repo
             
     def bernoulliNB(self):
+        print self.lines
         for key in self.featDict:
-            prior = (len(self.featDict[key]) + self.classPriorD) / (len(self.featDict) + self.lines)
+            prior =  self.repo.getClassProbability(key) 
             logprior = math.log10(prior)
             probs = {}
 
+            print "p(%s)=%s" % (key, prior)
+
             for feat in self.featDict[key]:
-                condProb = (self.featDict[key][feat] + self.condProbD) / (len(self.featDict) + len(self.featDict[key]))
+                condProb = (self.featDict[key][feat] + self.condProbD) / float(len(self.featDict) + self.repo.getClassCount(key))
+                print "p(%s|%s)=%s (%s + %s/%s + %s)" % (feat, key, condProb, self.featDict[key][feat], self.condProbD, len(self.featDict), self.repo.getClassCount(key))
                 logCondProb = math.log10(condProb)
                 probs[feat] = [condProb, logCondProb]
 

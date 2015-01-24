@@ -3,8 +3,11 @@ import re
 
 class GetVectors:
     def __init__(self):
+        self.classProbability = {}
         self.featDict = {}   # {className1: {f1:#, f2:#, f3:#,..}, className2 : {}} - how many times different features are found in each class
         self.allFeatures = {}   # {f1: None, f2: None, } - all the features in the documents = V
+        self.cachedTotalWords = 0
+        self.cachedTotalInstances = 0
 
     def binarize(self, line):
         # binarize the input: non-zero values are substituted by 1
@@ -21,17 +24,25 @@ class GetVectors:
         return float(self.allFeatures[feature]) / self.cachedTotalWords
 
     def getClassProbability(self, className):
-        totalInstances = 0
-        for key in self.classProbability:
-            totalInstances += self.classProbability[key]
+        if self.cachedTotalInstances == 0:
+            for key in self.classProbability:
+                self.cachedTotalInstances += self.classProbability[key]
 
-        return float(self.classProbability[className]) / totalInstances
+        return float(self.classProbability[className]) / self.cachedTotalInstances
+
+    def getClassCount(self, className):
+        return self.classProbability[className]
 
     def read_into_dicts(self, line_of_input):
         # fill three dictionaries
         ilist = re.split('\s+', self.binarize(line_of_input).strip())
 
         className = ilist[0]
+
+        if className in self.classProbability:
+            self.classProbability[className] += 1
+        else:
+            self.classProbability[className] = 1
 
         for i in ilist[1:]:
             # get features
@@ -56,9 +67,7 @@ class GetVectors:
     def addMissingTerms(self):
         for key in self.allFeatures:
             for className in self.featDict:
-                if key in self.featDict[className]:        
-                    pass
-                else:
+                if key not in self.featDict[className]:        
                     self.featDict[className][key] = 0
 
     def getWords(self, line):

@@ -1,19 +1,19 @@
 %%%%% prior prob P(c) %%%%%
-c	1.4	0.146128035678
-notC	1.4	0.146128035678
+c	0.75	-0.124938736608
+notC	0.25	-0.602059991328
 %%%%% conditional prob P(f|c) %%%%%
 %%%%% conditional prob P(f|c) c=talk.politics.guns %%%%%
 %%%%% conditional prob P(f|c) c=c %%%%%
-beijing	c	0.25	-0.602059991328
-chinese	c	0.5	-0.301029995664
-japan	c	0.125	-0.903089986992
-macao	c	0.25	-0.602059991328
-shanghai	c	0.25	-0.602059991328
-tokyo	c	0.125	-0.903089986992
+beijing	c	0.4	-0.397940008672
+chinese	c	0.8	-0.0969100130081
+japan	c	0.2	-0.698970004336
+macao	c	0.4	-0.397940008672
+shanghai	c	0.4	-0.397940008672
+tokyo	c	0.2	-0.698970004336
 %%%%% conditional prob P(f|c) c=notC %%%%%
-beijing	notC	0.125	-0.903089986992
-chinese	notC	0.25	-0.602059991328
-japan	notC	0.25	-0.602059991328
-macao	notC	0.125	-0.903089986992
-shanghai	notC	0.125	-0.903089986992
-tokyo	notC	0.25	-0.602059991328
+beijing	notC	0.333333333333	-0.47712125472
+chinese	notC	0.666666666667	-0.176091259056
+japan	notC	0.666666666667	-0.176091259056
+macao	notC	0.333333333333	-0.47712125472
+shanghai	notC	0.333333333333	-0.47712125472
+tokyo	notC	0.666666666667	-0.176091259056

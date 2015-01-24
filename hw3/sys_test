@@ -1,6 +1,35 @@
 preparing the classifier...
+c
+beijing-1
+chinese-3
+tokyo-0
+shanghai-1
+japan-0
+macao-1
+notC
+beijing-0
+chinese-1
+tokyo-1
+shanghai-0
+japan-1
+macao-0
+4
+p(c)=0.75
+p(beijing|c)=0.4 (1 + 1/2 + 3)
+p(chinese|c)=0.8 (3 + 1/2 + 3)
+p(tokyo|c)=0.2 (0 + 1/2 + 3)
+p(shanghai|c)=0.4 (1 + 1/2 + 3)
+p(japan|c)=0.2 (0 + 1/2 + 3)
+p(macao|c)=0.4 (1 + 1/2 + 3)
+p(notC)=0.25
+p(beijing|notC)=0.333333333333 (0 + 1/2 + 1)
+p(chinese|notC)=0.666666666667 (1 + 1/2 + 1)
+p(tokyo|notC)=0.666666666667 (1 + 1/2 + 1)
+p(shanghai|notC)=0.333333333333 (0 + 1/2 + 1)
+p(japan|notC)=0.666666666667 (1 + 1/2 + 1)
+p(macao|notC)=0.333333333333 (0 + 1/2 + 1)
 classifying test file...
-array:0	c	c 0.0753662109375 notC 0.0188415527344 
-array:1	c	c 0.0753662109375 notC 0.0188415527344 
-array:2	c	c 0.0753662109375 notC 0.0188415527344 
-array:3	notC	notC 0.0146545410156 c 0.0046142578125 
+array:0	c	c 0.055296 notC 0.00274348422497 
+array:1	c	c 0.055296 notC 0.00274348422497 
+array:2	c	c 0.055296 notC 0.00274348422497 
+array:3	notC	notC 0.0219478737997 c 0.005184 

@@ -14,7 +14,7 @@ def main():
     vect = getVectors.GetVectors()
     # read in the training file
     with open(trainFile) as inputF:
-        lines = 0
+        lines = 1
         l = inputF.readline()
         while len(l.strip()) > 0:
             vect.read_into_dicts(l)
@@ -23,7 +23,12 @@ def main():
                 lines += 1
     
     vect.addMissingTerms()
-    
+
+    for key in vect.featDict:
+        print key
+        for subKey in vect.featDict[key]:
+            print "%s-%s" % (subKey, vect.featDict[key][subKey])
+
     # for now hardcoding classPriorD and condProbD
     bernNB = bernoulli.Bernoulli(vect, 1, 1, lines)
     bernNB.bernoulliNB()
