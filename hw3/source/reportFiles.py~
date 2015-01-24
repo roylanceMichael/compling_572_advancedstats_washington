@@ -1,5 +1,0 @@
-def reportModelFile(modelFile, classes):
-	with open(modelFile, "w") as outputF:
-		outputF.write("%%%%% prior prob P(c) %%%%%" + "\n")
-                for className in classes:
-                    outputF.write(classes[className].className + "\t" + classes[className].prior + "\t" + classes[className].logprior + "\n")

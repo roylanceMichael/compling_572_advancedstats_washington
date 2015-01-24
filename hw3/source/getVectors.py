@@ -4,13 +4,11 @@ import re
 class GetVectors:
     def __init__(self):
         self.featDict = {}   # {className1: {f1:#, f2:#, f3:#,..}, className2 : {}} - how many times different features are found in each class
-        self.vectors = {}   # {className1: {f1: None, f2: None..} a dictionary of feature vectors represented as dictionaries
         self.allFeatures = {}   # {f1: None, f2: None, } - all the features in the documents = V
 
     def binarize(self, line):
         # binarize the input: non-zero values are substituted by 1
         return re.sub(r':[123456789]\d*', r':1', line)
-
 
     def getFeatureProbability(self, feature): 
         if feature not in self.allFeatures or self.allFeatures[feature] == 0:
@@ -40,12 +38,6 @@ class GetVectors:
             pair = i.split(':')
             if len(pair) == 2:
 
-                # fill self.vectors
-                if className in self.vectors:
-                    self.vectors[className][pair[0]] = None
-                else:
-                    self.vectors[className] = { pair[0]: None }
-
                 # fill self.allFeatures
                 if pair[0] in self.allFeatures:
                     self.allFeatures[pair[0]] = None
@@ -68,7 +60,6 @@ class GetVectors:
                     pass
                 else:
                     self.featDict[className][key] = 0
-
 
     def getWords(self, line):
         ilist = re.split('\s+', line.strip())

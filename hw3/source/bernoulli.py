@@ -5,32 +5,28 @@ import operator
 import getVectors
 import classInstance
 
-
 class Bernoulli:
     def __init__(self, repo, classPriorD, condProbD, lines):
-        self.vectors = repo.vectors
+        self.classes = {}
         self.featDict = repo.featDict
         self.classPriorD = classPriorD
         self.condProbD = condProbD
         self.lines = lines
-        self.classes = {}
         self.repo = repo
             
-
     def bernoulliNB(self):
-        for key in self.vectors:
-            prior = (len(self.vectors[key]) + self.classPriorD) / (len(self.vectors) + self.lines)
+        for key in self.featDict:
+            prior = (len(self.featDict[key]) + self.classPriorD) / (len(self.featDict) + self.lines)
             logprior = math.log10(prior)
             probs = {}
 
             for feat in self.featDict[key]:
-                condProb = (self.featDict[key][feat] + self.condProbD) / (len(self.vectors) + len(self.vectors[key]))
+                condProb = (self.featDict[key][feat] + self.condProbD) / (len(self.featDict) + len(self.featDict[key]))
                 logCondProb = math.log10(condProb)
                 probs[feat] = [condProb, logCondProb]
 
             cI = classInstance.ClassInstance(key, prior, logprior, probs)
             self.classes[key] = cI
-
 
     def classify(self, wordlist):
         # working with self.classes where all the training probabilities are stored
@@ -48,11 +44,11 @@ class Bernoulli:
             for word in currentWordList:
                 wordGivenClassProb += self.classes[className].probs[word][1]
 
-            for word in self.repo.vectors[className]:
+            for word in self.repo.featDict[className]:
                 if word not in currentWordList:
                     wordGivenClassProb += math.log10(1-self.classes[className].probs[word][0])
                 
-            classification[className] = wordGivenClassProb
+            classification[className] = math.pow(10, wordGivenClassProb)
 
         # update probability for classification
         # totalAmount = 0
