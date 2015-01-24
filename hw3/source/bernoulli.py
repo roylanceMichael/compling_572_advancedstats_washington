@@ -38,34 +38,24 @@ class Bernoulli:
         classification = {}
         
         for className in self.classes:
-            # this is p(ci)
-            classProbability = self.repo.getClassProbability(className)
-            
             wordGivenClassProb = 0
-            wordProb = 0
-
+            
             # this is p(xj|ci)
             for word in wordlist[1:]:
-                # this is p(xj)
-                wordProb = math.log10(self.repo.getFeatureProbability(word))
-
                 if word in self.classes[className].probs:
                     wordGivenClassProb += self.classes[className].probs[word][1]
                 else:
                     wordGivenClassProb += math.log10(1-self.classes[className].probs[word][0])
                 
-
-            classification[className] = totalLog
-
-
+            classification[className] = wordGivenClassProb
 
         # update probability for classification
-        # totalAmount = 0
-        # for className in classification:
-            # totalAmount += classification[className]
+        totalAmount = 0
+        for className in classification:
+            totalAmount += classification[className]
 
-        # for className in classification:
-            # classification[className] = float(classification[className]) / totalAmount
+        for className in classification:
+            classification[className] = float(classification[className]) / totalAmount
 
         return instanceName, classification
                     
