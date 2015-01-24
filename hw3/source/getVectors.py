@@ -7,17 +7,43 @@ class GetVectors:
         self.vectors = {}   # {className1: [{f1:1}, {f2:1}, {f3:1}], className2: []} - a list of feature vectors represented as dictionaries
         self.allFeatures = {}   # {f1: None, f2: None, } - all the features in the documents = V
 
+        self.classProbability = {}
+
+        self.cachedTotalWords = 0
 
     def binarize(self, line):
         # binarize the input: non-zero values are substituted by 1
         return re.sub(r':[123456789]\d*', r':1', line)
 
 
+    def getFeatureProbability(self, feature): 
+        if feature not in self.allFeatures or self.allFeatures[feature] == 0:
+            return 0
+
+        if self.cachedTotalWords == 0:
+            for key in self.allFeatures:
+                self.cachedTotalWords += self.allFeatures[key]
+
+        return float(self.allFeatures[feature]) / self.cachedTotalWords
+
+    def getClassProbability(self, className):
+        totalInstances = 0
+        for key in self.classProbability:
+            totalInstances += self.classProbability[key]
+
+        return float(self.classProbability[className]) / totalInstances
+
     def read_into_dicts(self, line_of_input):
         # fill three dictionaries
         ilist = re.split('\s+', self.binarize(line_of_input).strip())
 
         className = ilist[0]
+
+        if className in self.classProbability:
+            self.classProbability[className] += 1
+        else:
+            self.classProbability[className] = 1
+
         vectDict = {}
 
         for i in ilist[1:]:
@@ -27,7 +53,10 @@ class GetVectors:
                 vectDict[pair[0]] = pair[1]
 
                 # fill self.allFeatures
-                self.allFeatures[pair[0]] = None
+                if pair[0] in self.allFeatures:
+                    self.allFeatures[pair[0]] += 1
+                else:
+                    self.allFeatures[pair[0]] = 1
                 
                 # fill self.featDict
                 if className in self.featDict:
@@ -52,7 +81,7 @@ class GetVectors:
                     pass
                 else:
                     self.featDict[className][key] = 0
-                    
+
 
     def getWords(self, line):
         ilist = re.split('\s+', line.strip())

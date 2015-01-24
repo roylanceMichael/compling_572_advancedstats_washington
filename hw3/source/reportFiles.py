@@ -7,19 +7,7 @@ def reportModelFile(modelFile, classes):
 
         outputF.write("%%%%% conditional prob P(f|c) %%%%%" + "\n" + "%%%%% conditional prob P(f|c) c=talk.politics.guns %%%%%" + "\n")
         
-        for feat in sorted(classes['talk.politics.guns'].probs):
-            outputF.write(str(feat) + "\t" + "talk.politics.guns" + "\t" + str(classes['talk.politics.guns'].probs[feat][0]) + "\t" + str(classes['talk.politics.guns'].probs[feat][1]) + "\n")
-
-        outputF.write("%%%%% conditional prob P(f|c) c=talk.politics.mideast %%%%%" + "\n")
-        
-        for feat in sorted(classes['talk.politics.mideast'].probs):
-            outputF.write(str(feat) + "\t" + "talk.politics.mideast" + "\t" + str(classes['talk.politics.mideast'].probs[feat][0]) + "\t" + str(classes['talk.politics.mideast'].probs[feat][1]) + "\n")
-
-        outputF.write("%%%%% conditional prob P(f|c) c=talk.politics.misc %%%%%" + "\n")
-        
-        for feat in sorted(classes['talk.politics.misc'].probs):
-            outputF.write(str(feat) + "\t" + "talk.politics.misc" + "\t" + str(classes['talk.politics.misc'].probs[feat][0]) + "\t" + str(classes['talk.politics.misc'].probs[feat][1]) + "\n")
-
-
-#def reportSysFile(sysFile, i, instanceName, classification):
-
+        for className in classes:
+            outputF.write("%%%%% conditional prob P(f|c) c=" + className + " %%%%%" + "\n")
+            for feat in sorted(classes[className].probs):
+                outputF.write(str(feat) + "\t" + className + "\t" + str(classes[className].probs[feat][0]) + "\t" + str(classes[className].probs[feat][1]) + "\n")
