@@ -8,7 +8,8 @@ import reportFiles
 def main():
     # get from command parameters
     trainFile = sys.argv[1]
-    modelFile = sys.argv[2]
+    testFile = sys.argv[2]
+    modelFile = sys.argv[3]
 
     print "preparing the classifier..."
     vect = getVectors.GetVectors()
@@ -24,11 +25,6 @@ def main():
     
     vect.addMissingTerms()
 
-    for key in vect.featDict:
-        print key
-        for subKey in vect.featDict[key]:
-            print "%s-%s" % (subKey, vect.featDict[key][subKey])
-
     # for now hardcoding classPriorD and condProbD
     bernNB = bernoulli.Bernoulli(vect, 1, 1, lines)
     bernNB.bernoulliNB()
@@ -36,7 +32,7 @@ def main():
     print "classifying test file..."
     train = getVectors.GetVectors()
     # read in the training file for classification
-    with open(trainFile) as inputF:
+    with open(testFile) as inputF:
         l = inputF.readline()
         i = 0
         while len(l.strip()) > 0:
