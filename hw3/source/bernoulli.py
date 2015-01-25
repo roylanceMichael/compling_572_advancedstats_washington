@@ -51,17 +51,18 @@ class Bernoulli:
             classification[className] = math.pow(10, wordGivenClassProb)
 
         return instanceName, classification
-                    
-            
-    def reportClassificationResult(self, i, w):
-        # for sys file
-        c = self.classify(w)
-        name = c[0]
-        clf = c[1]
-        string = ""
 
-        for w in sorted(clf, key=clf.get, reverse=True):
-            string += str(w) + " " +  str(clf[w]) + " "
+    def getClassificationResultForConfusionMatrix(self, wordList):
+        (expected, clf) = self.classify(wordList)
+        return (expected, sorted(clf, key=clf.get, reverse=True)[0])
+                           
+    def reportClassificationResultForSysFile(self, idx, wordList):
+        # for sys file
+        (name, clf) = self.classify(wordList)
+        stringBuilder = ""
+
+        for className in sorted(clf, key=clf.get, reverse=True):
+            stringBuilder += str(className) + " " +  str(clf[className]) + " "
         
-        return "array:"+ str(i) + "\t" + name + "\t" + string
+        return "array:"+ str(idx) + "\t" + name + "\t" + stringBuilder
         

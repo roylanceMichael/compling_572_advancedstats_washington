@@ -10,10 +10,10 @@ sysOutput=$6
 accFile=$7
 
 if [ -z "$1" ]; then
-	trainFile="examples/sub.train.vectors.txt"
+	trainFile="examples/train.vectors.txt"
 fi
 if [ -z "$2"]; then
-	testFile="examples/sub.test.vectors.txt"
+	testFile="examples/test.vectors.txt"
 fi
 if [ -z "$3"]; then
 	classPriorDelta=0

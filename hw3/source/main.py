@@ -38,5 +38,8 @@ def main():
     # report model file
     reportFiles.reportModelFile(modelFile, bernNB.classes)
 
+    # print confusion matrix
+    reportFiles.printConfusionMatrix(bernNB, trainFile, testFile, vect)
+
 if __name__ == '__main__':
         main()
