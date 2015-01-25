@@ -16,7 +16,7 @@ if [ -z "$2"]; then
 	testFile="examples/test.vectors.txt"
 fi
 if [ -z "$3"]; then
-	classPriorDelta=0
+	classPriorDelta=1
 fi
 if [ -z "$4"]; then
 	condProbDelta=1

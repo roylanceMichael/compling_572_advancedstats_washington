@@ -42,7 +42,8 @@ class Bernoulli:
 
             # this is p(xj|ci)
             for word in currentWordList:
-                wordGivenClassProb += self.classes[className].probs[word][1]
+                if word in self.classes[className].probs:
+                    wordGivenClassProb += self.classes[className].probs[word][1]
 
             for word in self.repo.featDict[className]:
                 if word not in currentWordList:
