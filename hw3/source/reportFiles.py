@@ -1,3 +1,16 @@
+def reportSysFile(sysOutput, bernNB, vect, testFile):
+    # read in the training file for classification
+    with open(testFile) as inputF:
+        with open(sysOutput, "w") as outputF:
+            l = inputF.readline()
+            i = 0
+            while len(l.strip()) > 0:
+                w = vect.getWords(l)
+                outputF.write(bernNB.reportClassificationResult(i, w) + "\n")
+                l = inputF.readline()
+
+                i += 1
+
 def reportModelFile(modelFile, classes):
     with open(modelFile, "w") as outputF:
         outputF.write("%%%%% prior prob P(c) %%%%%" + "\n")

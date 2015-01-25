@@ -50,10 +50,7 @@ class GetVectors:
             if len(pair) == 2:
 
                 # fill self.allFeatures
-                if pair[0] in self.allFeatures:
-                    self.allFeatures[pair[0]] = None
-                else:
-                    self.allFeatures[pair[0]] = None
+                self.allFeatures[pair[0]] = None
                 
                 # fill self.featDict
                 if className in self.featDict:

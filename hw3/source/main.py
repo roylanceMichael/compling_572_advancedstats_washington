@@ -9,7 +9,11 @@ def main():
     # get from command parameters
     trainFile = sys.argv[1]
     testFile = sys.argv[2]
-    modelFile = sys.argv[3]
+    classPriorDelta = float(sys.argv[3])
+    condProbDelta = float(sys.argv[4])
+
+    modelFile = sys.argv[5]
+    sysOutput = sys.argv[6]
 
     print "preparing the classifier..."
     vect = getVectors.GetVectors()
@@ -26,20 +30,11 @@ def main():
     vect.addMissingTerms()
 
     # for now hardcoding classPriorD and condProbD
-    bernNB = bernoulli.Bernoulli(vect, 1, 1, lines)
+    bernNB = bernoulli.Bernoulli(vect, classPriorDelta, condProbDelta, lines)
     bernNB.bernoulliNB()
 
-    print "classifying test file..."
-    train = getVectors.GetVectors()
-    # read in the training file for classification
-    with open(testFile) as inputF:
-        l = inputF.readline()
-        i = 0
-        while len(l.strip()) > 0:
-            w = train.getWords(l)
-            bernNB.reportClassificationResult(i, w)
-            l = inputF.readline()
-            i += 1
+    # report sys file
+    reportFiles.reportSysFile(sysOutput, bernNB, vect, testFile)
 
     # report model file
     reportFiles.reportModelFile(modelFile, bernNB.classes)

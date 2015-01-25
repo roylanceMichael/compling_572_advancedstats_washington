@@ -62,5 +62,6 @@ class Bernoulli:
 
         for w in sorted(clf, key=clf.get, reverse=True):
             string += str(w) + " " +  str(clf[w]) + " "
-        print "array:"+ str(i) + "\t" + name + "\t" + string
+        
+        return "array:"+ str(i) + "\t" + name + "\t" + string
         
