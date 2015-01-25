@@ -1,0 +1,29 @@
+from __future__ import division
+from decimal import Decimal
+import math
+import operator
+import getVectors
+
+class Multinomial:
+    def __init__(self, repo, classPriorD, condProbD, lines):
+#        self.classes = {}
+        self.featDict = repo.featDict
+        self.classPriorD = classPriorD
+        self.condProbD = condProbD
+        self.lines = lines
+        self.repo = repo
+
+
+    def multinomialNB(self):
+        for key in self.featDict:
+            prior =  self.repo.getClassProbability(key, self.classPriorD) 
+            logprior = math.log10(prior)
+#            probs = {}
+
+ #           for feat in self.featDict[key]:
+#                condProb = (self.featDict[key][feat] + self.condProbD) / float(len(self.featDict) + self.repo.getClassCount(key))
+#                logCondProb = math.log10(condProb)
+#                probs[feat] = [condProb, logCondProb]
+
+#            cI = classInstance.ClassInstance(key, prior, logprior, probs)
+#            self.classes[key] = cI
