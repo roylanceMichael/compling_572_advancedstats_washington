@@ -1,15 +1,30 @@
-def reportSysFile(sysOutput, bernNB, vect, testFile):
-    # read in the training file for classification
-    with open(testFile) as inputF:
-        with open(sysOutput, "w") as outputF:
-            l = inputF.readline()
-            i = 0
-            while len(l.strip()) > 0:
-                w = vect.getWords(l)
-                outputF.write(bernNB.reportClassificationResult(i, w) + "\n")
-                l = inputF.readline()
+import re
 
-                i += 1
+def getWords(line):
+    ilist = re.split('\s+', line.strip())
+
+    words = [ilist[0]]
+    for i in ilist[1:]:
+        pair = i.split(':')
+        words.append(pair[0])
+    return words
+
+def reportSysFileInternal(reportType, fileToRead, outputF, model):
+	outputF.write("%%%%% " + reportType + " data:\n")
+	with open(fileToRead) as inputF:
+		l = inputF.readline()
+		i = 0
+		while len(l.strip()) > 0:
+			w = getWords(l)
+			outputF.write(model.reportClassificationResult(i, w) + "\n")
+			l = inputF.readline()
+			i += 1
+
+def reportSysFile(sysOutput, model, trainFile, testFile):
+    # read in the training file for classification
+	with open(sysOutput, "w") as outputF:
+		reportSysFileInternal("training", trainFile, outputF, model)
+		reportSysFileInternal("test", testFile, outputF, model)
 
 def reportModelFile(modelFile, classes):
     with open(modelFile, "w") as outputF:
@@ -17,7 +32,7 @@ def reportModelFile(modelFile, classes):
         
         for className in classes:
             outputF.write(str(classes[className].className) + "\t" + str(classes[className].prior) + "\t" + str(classes[className].logprior) + "\n")
-            
+
         for className in classes:
             outputF.write("%%%%% conditional prob P(f|c) c=" + className + " %%%%%" + "\n")
             for feat in sorted(classes[className].probs):

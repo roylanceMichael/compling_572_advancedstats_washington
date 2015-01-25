@@ -1,1 +1,7 @@
+%%%%% training data:
+array:0	c	c 0.055296 notC 0.00274348422497 
+array:1	c	c 0.055296 notC 0.00274348422497 
+array:2	c	c 0.055296 notC 0.00274348422497 
+array:3	notC	notC 0.0219478737997 c 0.005184 
+%%%%% testing data:
 array:0	notC	notC 0.0219478737997 c 0.005184 

@@ -70,12 +70,3 @@ class GetVectors:
             for className in self.featDict:
                 if key not in self.featDict[className]:        
                     self.featDict[className][key] = 0
-
-    def getWords(self, line):
-        ilist = re.split('\s+', line.strip())
-
-        words = [ilist[0]]
-        for i in ilist[1:]:
-            pair = i.split(':')
-            words.append(pair[0])
-        return words

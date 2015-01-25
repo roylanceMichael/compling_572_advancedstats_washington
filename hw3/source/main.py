@@ -33,7 +33,7 @@ def main():
     bernNB.bernoulliNB()
 
     # report sys file
-    reportFiles.reportSysFile(sysOutput, bernNB, vect, testFile)
+    reportFiles.reportSysFile(sysOutput, bernNB, trainFile, testFile)
 
     # report model file
     reportFiles.reportModelFile(modelFile, bernNB.classes)
