@@ -16,7 +16,7 @@ class Bernoulli:
             
     def bernoulliNB(self):
         for key in self.featDict:
-            prior =  self.repo.getClassProbability(key) 
+            prior =  self.repo.getClassProbability(key, self.classPriorD) 
             logprior = math.log10(prior)
             probs = {}
 

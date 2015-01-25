@@ -23,12 +23,16 @@ class GetVectors:
 
         return float(self.allFeatures[feature]) / self.cachedTotalWords
 
-    def getClassProbability(self, className):
+    def getClassProbability(self, className, classPriorD):
         if self.cachedTotalInstances == 0:
             for key in self.classProbability:
                 self.cachedTotalInstances += self.classProbability[key]
 
-        return float(self.classProbability[className]) / self.cachedTotalInstances
+        classPriorDenominatorSmoothing = 0
+        if (classPriorD > 0):
+            classPriorDenominatorSmoothing = len(self.classProbability)
+
+        return float(self.classProbability[className] + classPriorD) / (classPriorDenominatorSmoothing + self.cachedTotalInstances)
 
     def getClassCount(self, className):
         return self.classProbability[className]
@@ -51,7 +55,7 @@ class GetVectors:
 
                 # fill self.allFeatures
                 self.allFeatures[pair[0]] = None
-                
+
                 # fill self.featDict
                 if className in self.featDict:
                     if pair[0] in self.featDict[className]:
