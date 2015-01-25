@@ -1,8 +1,6 @@
 %%%%% prior prob P(c) %%%%%
 c	0.75	-0.124938736608
 notC	0.25	-0.602059991328
-%%%%% conditional prob P(f|c) %%%%%
-%%%%% conditional prob P(f|c) c=talk.politics.guns %%%%%
 %%%%% conditional prob P(f|c) c=c %%%%%
 beijing	c	0.4	-0.397940008672
 chinese	c	0.8	-0.0969100130081

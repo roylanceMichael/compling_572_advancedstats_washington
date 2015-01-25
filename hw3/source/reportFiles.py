@@ -17,9 +17,7 @@ def reportModelFile(modelFile, classes):
         
         for className in classes:
             outputF.write(str(classes[className].className) + "\t" + str(classes[className].prior) + "\t" + str(classes[className].logprior) + "\n")
-
-        outputF.write("%%%%% conditional prob P(f|c) %%%%%" + "\n" + "%%%%% conditional prob P(f|c) c=talk.politics.guns %%%%%" + "\n")
-        
+            
         for className in classes:
             outputF.write("%%%%% conditional prob P(f|c) c=" + className + " %%%%%" + "\n")
             for feat in sorted(classes[className].probs):

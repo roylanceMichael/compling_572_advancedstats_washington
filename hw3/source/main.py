@@ -15,7 +15,6 @@ def main():
     modelFile = sys.argv[5]
     sysOutput = sys.argv[6]
 
-    print "preparing the classifier..."
     vect = getVectors.GetVectors()
     # read in the training file
     with open(trainFile) as inputF:
