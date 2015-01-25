@@ -12,22 +12,22 @@ accFile=$7
 if [ -z "$1" ]; then
 	trainFile="examples/train.vectors.txt"
 fi
-if [ -z "$2"]; then
+if [ -z "$2" ]; then
 	testFile="examples/test.vectors.txt"
 fi
-if [ -z "$3"]; then
+if [ -z "$3" ]; then
 	classPriorDelta=1
 fi
-if [ -z "$4"]; then
+if [ -z "$4" ]; then
 	condProbDelta=1
 fi
-if [ -z "$5"]; then
+if [ -z "$5" ]; then
 	modelFile="examples/model_default"
 fi
-if [ -z "$6"]; then
+if [ -z "$6" ]; then
 	sysOutput="examples/sys_default"
 fi
-if [ -z "$7"]; then
+if [ -z "$7" ]; then
 	accFile="examples/acc_default"
 fi
 
