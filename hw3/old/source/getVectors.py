@@ -5,15 +5,8 @@ class GetVectors:
         self.classProbability = {}
         self.featDict = {}   # {className1: {f1:#, f2:#, f3:#,..}, className2 : {}} - how many times different features are found in each class
         self.allFeatures = {}   # {f1: None, f2: None, } - all the features in the documents = V
-#        self.cachedTotalWords = 0
         self.sizeClass = {}   # {className1: size, className2: size, ...}
         self.cachedTotalInstances = 0
-
-
-#    def binarize(self, line):
-#        # binarize the input: non-zero values are substituted by 1
-#        return re.sub(r':[123456789]\d*', r':1', line)
-
 
     def getClassProbability(self, className, classPriorD):
         if self.cachedTotalInstances == 0:
@@ -29,7 +22,6 @@ class GetVectors:
 
     def read_into_dicts(self, line_of_input):
         # fill three dictionaries
-#        ilist = re.split('\s+', self.binarize(line_of_input).strip())
         ilist = re.split('\s+', line_of_input.strip())
 
         className = ilist[0]

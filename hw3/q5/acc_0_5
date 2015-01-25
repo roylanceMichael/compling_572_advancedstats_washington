@@ -1,0 +1,22 @@
+Confusion matrix for the training data:
+
+row is the truth, column is the system output
+
+		talk.politics.guns	talk.politics.misc	talk.politics.mideast
+talk.politics.guns	899	0	1	
+talk.politics.misc	773	120	7	
+talk.politics.mideast	762	13	125	
+
+training accuracy =0.423703703704
+
+Confusion matrix for the test data:
+
+row is the truth, column is the system output
+
+		talk.politics.guns	talk.politics.misc	talk.politics.mideast
+talk.politics.guns	99	1	0	
+talk.politics.misc	92	8	0	
+talk.politics.mideast	92	0	8	
+
+test accuracy =0.383333333333
+

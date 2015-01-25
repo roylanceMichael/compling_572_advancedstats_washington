@@ -4,7 +4,7 @@ import math
 import operator
 import classInstance
 
-class Bernoulli:
+class Multinomial:
     def __init__(self, repo, classPriorD, condProbD, lines):
         self.classes = {}
         self.featDict = repo.featDict
@@ -12,20 +12,24 @@ class Bernoulli:
         self.condProbD = condProbD
         self.lines = lines
         self.repo = repo
-            
-    def bernoulliNB(self):
+        self.lenAllFeat = len(self.repo.allFeatures)
+
+    def multinomialNB(self):
         for key in self.featDict:
             prior =  self.repo.getClassProbability(key, self.classPriorD) 
             logprior = math.log10(prior)
+            condProb_ooc = (self.condProbD) / float(self.repo.sizeClass[key] + self.lenAllFeat)
+            logCondProb_ooc = math.log10(condProb_ooc)
             probs = {}
 
             for feat in self.featDict[key]:
-                condProb = (self.featDict[key][feat] + self.condProbD) / float(len(self.featDict) + self.repo.getClassCount(key))
+                condProb = (self.featDict[key][feat] + self.condProbD) / float(self.repo.sizeClass[key] + self.lenAllFeat)
                 logCondProb = math.log10(condProb)
                 probs[feat] = [condProb, logCondProb]
 
-            cI = classInstance.ClassInstance(key, prior, logprior, None, None, probs)
+            cI = classInstance.ClassInstance(key, prior, logprior, condProb_ooc, logCondProb_ooc, probs)
             self.classes[key] = cI
+
 
     def classify(self, wordlist):
         # working with self.classes where all the training probabilities are stored
@@ -34,20 +38,18 @@ class Bernoulli:
 
         currentWordList = {}
         for word in wordlist[1:]:
-            currentWordList[word.value] = None
+            currentWordList[word] = None
         
         for className in self.classes:
-            wordGivenClassProb = self.classes[className].logprior
+            wordGivenClassProb = self.classes[className].logprior   #
 
-            # this is p(xj|ci)
+            # this is p(c|doc)
             for word in currentWordList:
-                if word in self.classes[className].probs:
-                    wordGivenClassProb += self.classes[className].probs[word][1]
+                if word.value in self.classes[className].probs:
+                    wordGivenClassProb += self.classes[className].probs[word.value][1] * word.count   #
+                else:
+                    wordGivenClassProb += self.classes[className].logCondProb_ooc * word.count   #
 
-            for word in self.repo.featDict[className]:
-                if word not in currentWordList:
-                    wordGivenClassProb += math.log10(1-self.classes[className].probs[word][0])
-                
             classification[className] = math.pow(10, wordGivenClassProb)
 
         return instanceName, classification
@@ -66,3 +68,4 @@ class Bernoulli:
         
         return "array:"+ str(idx) + "\t" + name + "\t" + stringBuilder
         
+

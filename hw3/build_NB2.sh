@@ -8,6 +8,7 @@ condProbDelta=$4
 modelFile=$5
 sysOutput=$6
 accFile=$7
+binarize=$8
 
 if [ -z "$1" ]; then
 	trainFile="examples/sub.train.vectors.txt"
@@ -30,5 +31,8 @@ fi
 if [ -z "$7" ]; then
 	accFile="examples/acc_default"
 fi
+if [ -z "$8" ]; then
+	binarize=1
+fi
 
-python source/q2_main.py $trainFile $testFile $classPriorDelta $condProbDelta $modelFile $sysOutput > $accFile
+python source/q4_main.py $trainFile $testFile $classPriorDelta $condProbDelta $modelFile $sysOutput $binarize > $accFile

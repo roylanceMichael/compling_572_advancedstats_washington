@@ -1,12 +1,13 @@
 import re
+import word
 
 def getWords(line):
     ilist = re.split('\s+', line.strip())
 
-    words = [ilist[0]]
+    words = [word.Word(ilist[0], 0, "class")]
     for i in ilist[1:]:
         pair = i.split(':')
-        words.append(pair[0])
+        words.append(word.Word(pair[0], int(pair[1]), "word"))
     return words
 
 # todo: refactor to read files exactly once
