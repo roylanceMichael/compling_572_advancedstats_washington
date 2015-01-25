@@ -62,7 +62,7 @@ def printConfusionMatrixInternal(bernoulliNB, wordLists, dataType, vectorRepo):
 
 	print headerColumn
 
-	confusionMatrix = "\t"
+	confusionMatrix = ""
 	for expectedKey in reportingDict:
 		confusionMatrix = confusionMatrix + expectedKey + "\t"
 		for actualKey in reportingDict[expectedKey]:

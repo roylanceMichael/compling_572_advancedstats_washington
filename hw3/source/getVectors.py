@@ -1,6 +1,5 @@
 import re
 
-
 class GetVectors:
     def __init__(self):
         self.classProbability = {}
