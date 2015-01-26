@@ -18,12 +18,13 @@ class Multinomial:
         for key in self.featDict:
             prior =  self.repo.getClassProbability(key, self.classPriorD) 
             logprior = math.log10(prior)
-            condProb_ooc = (self.condProbD) / float(self.repo.sizeClass[key] + self.lenAllFeat)
+            commonDenominator = float(self.repo.sizeClass[key] + self.lenAllFeat)
+            condProb_ooc = (self.condProbD) / commonDenominator
             logCondProb_ooc = math.log10(condProb_ooc)
             probs = {}
 
             for feat in self.featDict[key]:
-                condProb = (self.featDict[key][feat] + self.condProbD) / float(self.repo.sizeClass[key] + self.lenAllFeat)
+                condProb = (self.featDict[key][feat] + self.condProbD) / commonDenominator
                 logCondProb = math.log10(condProb)
                 probs[feat] = [condProb, logCondProb]
 
@@ -46,11 +47,11 @@ class Multinomial:
             # this is p(c|doc)
             for word in currentWordList:
                 if word.value in self.classes[className].probs:
-                    wordGivenClassProb += self.classes[className].probs[word.value][1] * word.count   #
+                    wordGivenClassProb += self.classes[className].probs[word.value][1] * word.count #
                 else:
                     wordGivenClassProb += self.classes[className].logCondProb_ooc * word.count   #
 
-            classification[className] = math.pow(10, wordGivenClassProb)
+            classification[className] = wordGivenClassProb
 
         return instanceName, classification
 

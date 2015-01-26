@@ -23,16 +23,16 @@ if [ -z "$4" ]; then
 	condProbDelta=1
 fi
 if [ -z "$5" ]; then
-	modelFile="examples/model_default"
+	modelFile="model_default"
 fi
 if [ -z "$6" ]; then
-	sysOutput="examples/sys_default"
+	sysOutput="sys_default"
 fi
 if [ -z "$7" ]; then
-	accFile="examples/acc_default"
+	accFile="acc_default"
 fi
 if [ -z "$8" ]; then
-	binarize=1
+	binarize=0
 fi
 
 python source/q4_main.py $trainFile $testFile $classPriorDelta $condProbDelta $modelFile $sysOutput $binarize > $accFile

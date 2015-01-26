@@ -1,3 +1,5 @@
+out of class prob for c is 0.0833333333333
+out of class prob for notC is 0.111111111111
 Confusion matrix for the training data:
 
 row is the truth, column is the system output

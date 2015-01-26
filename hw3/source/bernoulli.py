@@ -47,8 +47,10 @@ class Bernoulli:
             for word in self.repo.featDict[className]:
                 if word not in currentWordList:
                     wordGivenClassProb += math.log10(1-self.classes[className].probs[word][0])
-                
-            classification[className] = math.pow(10, wordGivenClassProb)
+            
+            # math.pow(10, wordGivenClassProb)
+
+            classification[className] = wordGivenClassProb
 
         return instanceName, classification
 
