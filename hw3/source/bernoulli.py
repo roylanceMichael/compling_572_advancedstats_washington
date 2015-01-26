@@ -19,8 +19,10 @@ class Bernoulli:
             logprior = math.log10(prior)
             probs = {}
 
+            commonDenominator = float(len(self.featDict) + self.repo.getClassCount(key))
+
             for feat in self.featDict[key]:
-                condProb = (self.featDict[key][feat] + self.condProbD) / float(len(self.featDict) + self.repo.getClassCount(key))
+                condProb = (self.featDict[key][feat] + self.condProbD) / commonDenominator
                 logCondProb = math.log10(condProb)
                 probs[feat] = [condProb, logCondProb]
 
