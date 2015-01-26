@@ -2756,7 +2756,7 @@ array:52	talk.politics.guns	talk.politics.guns -308.662611706 talk.politics.misc
 array:53	talk.politics.guns	talk.politics.guns -308.662611706 talk.politics.misc -313.832727202 talk.politics.mideast -321.75354436 
 array:54	talk.politics.guns	talk.politics.guns -202.80724822 talk.politics.misc -203.818837027 talk.politics.mideast -208.205626011 
 array:55	talk.politics.guns	talk.politics.guns -308.662611706 talk.politics.misc -313.832727202 talk.politics.mideast -321.75354436 
-array:56	talk.politics.guns	talk.politics.guns -1869.35643395 talk.politics.misc -1924.28485917 talk.politics.mideast -1978.77352563 
+array:56	talk.politics.guns	talk.politics.guns -1869.35643395 talk.politics.misc -1924.28485917 talk.politics.mideast -1978.77352562 
 array:57	talk.politics.guns	talk.politics.guns -2478.73791167 talk.politics.misc -2545.15430262 talk.politics.mideast -2604.62788622 
 array:58	talk.politics.guns	talk.politics.guns -570.553323296 talk.politics.misc -573.698478364 talk.politics.mideast -600.940204488 
 array:59	talk.politics.guns	talk.politics.guns -284.947333311 talk.politics.misc -290.780035595 talk.politics.mideast -296.630551125 
@@ -2927,7 +2927,7 @@ array:223	talk.politics.misc	talk.politics.mideast -1172.19716264 talk.politics.
 array:224	talk.politics.misc	talk.politics.misc -830.196202613 talk.politics.guns -852.656075714 talk.politics.mideast -855.361492244 
 array:225	talk.politics.misc	talk.politics.misc -1205.5549246 talk.politics.guns -1214.52392974 talk.politics.mideast -1220.56296783 
 array:226	talk.politics.misc	talk.politics.misc -327.469967684 talk.politics.guns -331.375235158 talk.politics.mideast -343.778470392 
-array:227	talk.politics.misc	talk.politics.misc -406.208490644 talk.politics.guns -408.872440599 talk.politics.mideast -442.256871595 
+array:227	talk.politics.misc	talk.politics.misc -406.208490644 talk.politics.guns -408.872440599 talk.politics.mideast -442.256871594 
 array:228	talk.politics.misc	talk.politics.guns -501.638862465 talk.politics.misc -507.617919152 talk.politics.mideast -516.222723449 
 array:229	talk.politics.misc	talk.politics.misc -733.513404513 talk.politics.guns -738.862091633 talk.politics.mideast -751.176099827 
 array:230	talk.politics.misc	talk.politics.misc -242.773917547 talk.politics.guns -246.982503687 talk.politics.mideast -252.672227045 
