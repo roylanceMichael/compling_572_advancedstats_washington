@@ -24,7 +24,6 @@ class Bernoulli:
             commonDenominator = float(len(self.featDict) + self.repo.getClassCount(key))
 
             for feat in self.featDict[key]:
-                print "building feat: " + feat
                 condProb = (self.featDict[key][feat] + self.condProbD) / commonDenominator
                 logCondProb = math.log10(condProb)
                 probs[feat] = [condProb, logCondProb]

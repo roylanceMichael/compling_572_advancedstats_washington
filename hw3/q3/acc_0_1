@@ -98455,4 +98455,107 @@ building feat: locatd
 building feat: bowyer
 building feat: miniskirts
 building feat: murderer
-building feat: mu
+building feat: murderes
+building feat: handedly
+building feat: slut
+building feat: leased
+building feat: murdered
+building feat: guffaws
+building feat: slum
+building feat: msstate
+building feat: slug
+building feat: throne
+building feat: cliffs
+building feat: stereotypically
+building feat: getting
+building feat: spilled
+building feat: dependence
+building feat: shipping
+building feat: surge
+building feat: dependency
+building feat: fudd
+building feat: fatally
+building feat: warrants
+building feat: anachronism
+building feat: karbasi
+building feat: ukap
+building feat: brush
+building feat: registration
+building feat: dispossessed
+building feat: brilliantly
+building feat: uncontrollably
+building feat: stucture
+building feat: aarp
+building feat: ensured
+building feat: appointing
+building feat: funds
+building feat: contradictory
+building feat: nassau
+building feat: jaffa
+building feat: jaffe
+building feat: lvs
+building feat: instructive
+building feat: macedonians
+building feat: rilkn
+building feat: windfall
+building feat: lvf
+building feat: lvc
+building feat: lvl
+building feat: broadly
+building feat: libelli
+building feat: mcgeachie
+building feat: herberger
+building feat: reforendum
+building feat: meaningless
+building feat: veishea
+building feat: firey
+building feat: bombarding
+building feat: goodness
+building feat: booz
+building feat: uhuo
+building feat: karabakh
+building feat: roark
+building feat: boot
+building feat: cave
+building feat: sics
+building feat: illinois
+building feat: hutter
+building feat: book
+building feat: sysrians
+building feat: sich
+building feat: branch
+building feat: booo
+building feat: yeomanry
+building feat: withstood
+building feat: junk
+building feat: ideological
+building feat: june
+building feat: contends
+building feat: interventionists
+building feat: gan
+building feat: rotting
+building feat: snif
+building feat: expands
+how long did this take?
+Confusion matrix for the training data:
+
+row is the truth, column is the system output
+
+		talk.politics.guns	talk.politics.misc	talk.politics.mideast
+talk.politics.guns	891	9	0	
+talk.politics.misc	55	820	25	
+talk.politics.mideast	55	43	802	
+
+training accuracy =0.930740740741
+
+Confusion matrix for the test data:
+
+row is the truth, column is the system output
+
+		talk.politics.guns	talk.politics.misc	talk.politics.mideast
+talk.politics.guns	98	2	0	
+talk.politics.misc	20	76	4	
+talk.politics.mideast	7	3	90	
+
+test accuracy =0.88
+
