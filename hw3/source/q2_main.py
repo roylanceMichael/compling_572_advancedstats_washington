@@ -43,7 +43,6 @@ def main():
     bernNB = bernoulli.Bernoulli(vect, classPriorDelta, condProbDelta, lines)
     bernNB.bernoulliNB()
 
-    print "how long did this take?"
     # report sys file
     reportFiles.reportSysFile(sysOutput, bernNB, vect)
 
