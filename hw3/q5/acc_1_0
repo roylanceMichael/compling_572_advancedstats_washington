@@ -4,19 +4,19 @@ row is the truth, column is the system output
 
 		talk.politics.guns	talk.politics.misc	talk.politics.mideast
 talk.politics.guns	888	11	1	
-talk.politics.misc	68	798	34	
-talk.politics.mideast	9	32	859	
+talk.politics.misc	46	821	33	
+talk.politics.mideast	8	28	864	
 
-training accuracy =0.942592592593
+training accuracy =0.952962962963
 
 Confusion matrix for the test data:
 
 row is the truth, column is the system output
 
 		talk.politics.guns	talk.politics.misc	talk.politics.mideast
-talk.politics.guns	96	4	0	
-talk.politics.misc	21	75	4	
-talk.politics.mideast	2	4	94	
+talk.politics.guns	95	5	0	
+talk.politics.misc	19	77	4	
+talk.politics.mideast	1	2	97	
 
-test accuracy =0.883333333333
+test accuracy =0.896666666667
 

@@ -69,9 +69,14 @@ class Multinomial:
 
         self.classificationCache[key] = (name, sortedClassification[0])
 
+        # converting and normalizing
+        maxkey = max(clf.iteritems(), key=operator.itemgetter(1))[0]
+        denom = pow(Decimal(10), Decimal(clf[maxkey]))   # normalize by this
+
         for className in sortedClassification:
-            stringBuilder += str(className) + " " +  str(clf[className]) + " "
+            conv = pow(Decimal(10), Decimal(clf[className]))
+            norm = Decimal(conv)/Decimal(denom)
+            stringBuilder += str(className) + " " + str(norm) + " "
         
-        return "array:"+ str(idx) + "\t" + name + "\t" + stringBuilder
-        
+        return "array:"+ str(idx) + "\t" + name + "\t" + stringBuilder  
 
