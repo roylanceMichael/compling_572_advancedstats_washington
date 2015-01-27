@@ -14,6 +14,8 @@ class Multinomial:
         self.repo = repo
         self.lenAllFeat = len(self.repo.allFeatures)
 
+        self.classificationCache = {}
+
     def multinomialNB(self):
         for key in self.featDict:
             prior =  self.repo.getClassProbability(key, self.classPriorD) 
@@ -55,16 +57,19 @@ class Multinomial:
 
         return instanceName, classification
 
-    def getClassificationResultForConfusionMatrix(self, wordList):
-        (expected, clf) = self.classify(wordList)
-        return (expected, sorted(clf, key=clf.get, reverse=True)[0])
+    def getClassificationResultForConfusionMatrix(self, key):
+        return self.classificationCache[key]
                            
-    def reportClassificationResultForSysFile(self, idx, wordList):
+    def reportClassificationResultForSysFile(self, key, idx, wordList):
         # for sys file
         (name, clf) = self.classify(wordList)
         stringBuilder = ""
 
-        for className in sorted(clf, key=clf.get, reverse=True):
+        sortedClassification = sorted(clf, key=clf.get, reverse=True)
+
+        self.classificationCache[key] = (name, sortedClassification[0])
+
+        for className in sortedClassification:
             stringBuilder += str(className) + " " +  str(clf[className]) + " "
         
         return "array:"+ str(idx) + "\t" + name + "\t" + stringBuilder

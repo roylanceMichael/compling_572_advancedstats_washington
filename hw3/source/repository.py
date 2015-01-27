@@ -1,4 +1,5 @@
 import re
+import word
 
 class Repository:
     def __init__(self):
@@ -8,6 +9,19 @@ class Repository:
         self.sizeClass = {}   # {className1: size, className2: size, ...}
         self.cachedTotalInstances = 0
         self.cachedTotalWords = 0
+        self.trainVectors = []
+        self.testVectors = []
+
+    def buildWords(self, ilist, vectorType):
+        words = [word.Word(ilist[0], 0, "class")]
+        for i in ilist[1:]:
+            pair = i.split(':')
+            words.append(word.Word(pair[0], int(pair[1]), "word"))
+        
+        if vectorType == "train":
+            self.trainVectors.append(words)
+        else:
+            self.testVectors.append(words)
 
     def binarize(self, line):
         # binarize the input: non-zero values are substituted by 1
@@ -37,12 +51,13 @@ class Repository:
     def getClassCount(self, className):
         return self.classProbability[className]
 
-    def readIntoDictsBinarized(self, line_of_input):
+    def readIntoDictsBinarized(self, line_of_input, vectorType):
         # fill three dictionaries
         ilist = re.split('\s+', self.binarize(line_of_input).strip())
 
-        className = ilist[0]
+        self.buildWords(ilist, vectorType)
 
+        className = ilist[0]
         if className in self.classProbability:
             self.classProbability[className] += 1
         else:
@@ -71,9 +86,11 @@ class Repository:
             for feat in self.featDict[className]:
                 self.sizeClass[className] += self.featDict[className][feat]
 
-    def readIntoDictsNormal(self, line_of_input):
+    def readIntoDictsNormal(self, line_of_input, vectorType):
         # fill three dictionaries
         ilist = re.split('\s+', line_of_input.strip())
+
+        self.buildWords(ilist, vectorType)
 
         className = ilist[0]
 

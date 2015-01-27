@@ -1,15 +1,6 @@
 import re
 import word
 
-def getWords(line):
-    ilist = re.split('\s+', line.strip())
-
-    words = [word.Word(ilist[0], 0, "class")]
-    for i in ilist[1:]:
-        pair = i.split(':')
-        words.append(word.Word(pair[0], int(pair[1]), "word"))
-    return words
-
 # todo: refactor to read files exactly once
 def getWordListsFromFile(fileName):
 	with open(fileName) as inputF:
@@ -18,16 +9,12 @@ def getWordListsFromFile(fileName):
 			yield getWords(line)
 			line = inputF.readline()
 
-def reportSysFileInternal(reportType, fileToRead, outputF, model):
+def reportSysFileInternal(reportType, words, outputF, model):
 	outputF.write("%%%%% " + reportType + " data:\n")
-	with open(fileToRead) as inputF:
-		l = inputF.readline()
-		i = 0
-		while len(l.strip()) > 0:
-			w = getWords(l)
-			outputF.write(model.reportClassificationResultForSysFile(i, w) + "\n")
-			l = inputF.readline()
-			i += 1
+	i = 0
+	for w in words:
+		outputF.write(model.reportClassificationResultForSysFile(str(i) + reportType, i, w) + "\n")
+		i += 1
 
 def printConfusionMatrixInternal(bernoulliNB, wordLists, dataType, vectorRepo):
 	print "Confusion matrix for the %s data:\n" % (dataType)
@@ -42,8 +29,10 @@ def printConfusionMatrixInternal(bernoulliNB, wordLists, dataType, vectorRepo):
 	correctTotal = 0
 	totalVectors = 0
 
+	currentIdx = 0
 	for wordList in wordLists:
-		(expected, actual) = bernoulliNB.getClassificationResultForConfusionMatrix(wordList)
+		(expected, actual) = bernoulliNB.getClassificationResultForConfusionMatrix(str(currentIdx) + dataType)
+		currentIdx += 1
 		totalVectors += 1
 
 		if expected == actual:
@@ -73,15 +62,15 @@ def printConfusionMatrixInternal(bernoulliNB, wordLists, dataType, vectorRepo):
 	print confusionMatrix
 	print "%s accuracy =%s\n" % (dataType, float(correctTotal) / totalVectors)
 
-def printConfusionMatrix(bernoulliNB, trainFile, testFile, vectorRepo):
-	printConfusionMatrixInternal(bernoulliNB, getWordListsFromFile(trainFile), "training", vectorRepo)
-	printConfusionMatrixInternal(bernoulliNB, getWordListsFromFile(testFile), "test", vectorRepo)
+def printConfusionMatrix(bernoulliNB, vectorRepo):
+	printConfusionMatrixInternal(bernoulliNB, vectorRepo.trainVectors, "training", vectorRepo)
+	printConfusionMatrixInternal(bernoulliNB, vectorRepo.testVectors, "test", vectorRepo)
 
-def reportSysFile(sysOutput, model, trainFile, testFile):
+def reportSysFile(sysOutput, model, vectorRepo):
     # read in the training file for classification
 	with open(sysOutput, "w") as outputF:
-		reportSysFileInternal("training", trainFile, outputF, model)
-		reportSysFileInternal("test", testFile, outputF, model)
+		reportSysFileInternal("training", vectorRepo.trainVectors, outputF, model)
+		reportSysFileInternal("test", vectorRepo.testVectors, outputF, model)
 
 def reportModelFile(modelFile, classes):
     with open(modelFile, "w") as outputF:
