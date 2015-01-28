@@ -35,4 +35,4 @@ if [ -z "$8" ]; then
 	binarize=0
 fi
 
-python source/q4_main.py $trainFile $testFile $classPriorDelta $condProbDelta $modelFile $sysOutput $binarize > $accFile
+python2.7 source/q4_main.py $trainFile $testFile $classPriorDelta $condProbDelta $modelFile $sysOutput $binarize > $accFile

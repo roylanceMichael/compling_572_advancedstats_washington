@@ -31,4 +31,4 @@ if [ -z "$7" ]; then
 	accFile="acc_default"
 fi
  
-python source/q2_main.py $trainFile $testFile $classPriorDelta $condProbDelta $modelFile $sysOutput > $accFile
+python2.7 source/q2_main.py $trainFile $testFile $classPriorDelta $condProbDelta $modelFile $sysOutput > $accFile
