@@ -8,8 +8,8 @@ def main():
     # get from command parameters
     trainFile = sys.argv[1]
     testFile = sys.argv[2]
-#    kval = float(sys.argv[3])
-#    similarity_func = float(sys.argv[4])
+    kval = float(sys.argv[3])
+    similarity_func = float(sys.argv[4])
 #    sysOutput = sys.argv[5]
 
     tr = train.Train()
@@ -20,14 +20,12 @@ def main():
             tr.read_into_dicts(l)
             l = inputF.readline()
 
-#    for key in tr.vectors:
-#        print key, tr.vectors[key].className
-
     # read in the test file and classify
     with open(testFile) as inputF:
         l = inputF.readline()
         while len(l.strip()) > 0:
-#            knn.KNN(l, tr)
+            k = knn.KNN(kval, similarity_func, l, tr)
+            k.knn()
             l = inputF.readline()    
 
     # report sys file
