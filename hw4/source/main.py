@@ -21,12 +21,24 @@ def main():
             l = inputF.readline()
 
     # read in the test file and classify
+    clusterResults = []
+    correctNumber = 0
+    totalNumber = 0
     with open(testFile) as inputF:
         l = inputF.readline()
         while len(l.strip()) > 0:
             k = knn.KNN(kval, similarity_func, l, tr)
-            k.knn()
+            actualClassName = k.classify()
+            print actualClassName
+            print k.expectedClassName
+            totalNumber += 1
+            if actualClassName == k.expectedClassName:
+                correctNumber += 1
+
             l = inputF.readline()    
+
+    print "results: "
+    print float(correctNumber) / totalNumber
 
     # report sys file
 #    reportFiles.reportSysFile(sysOutput, bernNB, trainFile, testFile)

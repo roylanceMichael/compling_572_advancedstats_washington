@@ -17,8 +17,13 @@ class Train:
             # get features
             pair = i.split(':')
             if len(pair) == 2:
-                vectDict[pair[0]] = pair[1]
+                vectDict[pair[0]] = float(pair[1])
 
         vi = vectorInstance.VectorInstance(self.currentId, ilist[0], vectDict)
         self.vectors[self.currentId] = vi
         self.currentId = self.currentId + 1
+
+    def getClassNameFromId(self, vectId):
+        if vectId in self.vectors:
+            return self.vectors[vectId].className
+        return None
