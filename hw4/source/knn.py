@@ -1,5 +1,6 @@
 import math
 import re
+import operator
 
 
 class KNN:
@@ -75,19 +76,23 @@ class KNN:
         # print self.doc
         for current_id in self.tr.vectors:
             d = self.getDistance(self.tr.vectors[current_id].features)
-            # print self.tr.vectors[Id].id, d
+
             if len(kneighbours) < self.kval:
-            # add to k-neighbours dict
                 kneighbours[current_id] = d
-                # print kneighbours
             else:
-                # choose k smallest ones
-                maxk = min(kneighbours, key=kneighbours.get)
-                if d < kneighbours[maxk]:
-                    del kneighbours[maxk]
+                highestRowId = -1
+                highestRowDistance = 0
+
+                for rowId in kneighbours:
+                    if kneighbours[rowId] > highestRowDistance:
+                        highestRowId = rowId
+                        highestRowDistance = kneighbours[rowId] 
+
+                if d < highestRowDistance and highestRowId > 0:
+                    del kneighbours[highestRowId]
                     kneighbours[current_id] = d
-                    # print kneighbours
-        # print "final: ", kneighbours
+
+
         return kneighbours
                     
                 
