@@ -82,7 +82,7 @@ class KNN:
                 # print kneighbours
             else:
                 # choose k smallest ones
-                maxk = max(kneighbours, key=kneighbours.get)
+                maxk = min(kneighbours, key=kneighbours.get)
                 if d < kneighbours[maxk]:
                     del kneighbours[maxk]
                     kneighbours[current_id] = d
