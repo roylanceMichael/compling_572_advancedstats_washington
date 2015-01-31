@@ -10,7 +10,6 @@ class KNN:
         self.doc = l
         self.tr = tr
         self.testVectDict = {}
-        self.allFeatures = {}
         self.expectedClassName = None
 
         self.prepInput()
@@ -24,7 +23,6 @@ class KNN:
             pair = i.split(':')
             if len(pair) == 2:
                 self.testVectDict[pair[0]] = float(pair[1])
-                self.allFeatures[pair[0]] = None
 
     def getDistance(self, trainInstance):
         # choose Euclidean or Cosine
@@ -35,10 +33,11 @@ class KNN:
 
     def distanceEuclidean(self, trainInstance):
         addSum = 0
-        for feature in self.allFeatures:
-            if feature in self.testVectDict and feature in trainInstance:
+
+        for feature in trainInstance:
+            if feature in self.testVectDict:
                 addSum += math.pow((trainInstance[feature] - self.testVectDict[feature]), 2)
-            elif feature in trainInstance:
+            else:
                 addSum += math.pow(trainInstance[feature], 2)
         return math.sqrt(addSum)
 
@@ -48,18 +47,25 @@ class KNN:
         resultsFromKnn = self.knn()
 
         allClasses = {}
+        highestClass = None
+        highestCount = 0
         for result in resultsFromKnn:
             className = self.tr.getClassNameFromId(result)
 
             if className in allClasses:
                 allClasses[className] += 1
+
+                if allClasses[className] > highestCount:
+                    highestCount = allClasses[className]
+                    highestClass = className
             else:
                 allClasses[className] = 1 
 
-        for result in allClasses:
-            print "%s -> %s " % (result, allClasses[result])
-
-        return max(allClasses, key=allClasses.get)
+                if allClasses[className] > highestCount:
+                    highestCount = allClasses[className]
+                    highestClass = className
+                    
+        return highestClass
 
     def knn(self):
         kneighbours = {}   # here we store ids and distances of labelled instances

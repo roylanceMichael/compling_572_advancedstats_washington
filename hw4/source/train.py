@@ -6,6 +6,7 @@ class Train:
     def __init__(self):
         self.vectors = {}   # {className1: [{f1:1}, {f2:1}, {f3:1}], className2: []} - a list of feature vectors represented as dictionaries
         self.currentId = 1
+        self.allTrainFeatures = {}
 
 
     def read_into_dicts(self, line_of_input):
@@ -18,6 +19,7 @@ class Train:
             pair = i.split(':')
             if len(pair) == 2:
                 vectDict[pair[0]] = float(pair[1])
+                self.allTrainFeatures[pair[0]] = None
 
         vi = vectorInstance.VectorInstance(self.currentId, ilist[0], vectDict)
         self.vectors[self.currentId] = vi
