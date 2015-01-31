@@ -13,6 +13,7 @@ class KNN:
         self.allFeatures = {}
         self.expectedClassName = None
 
+        self.prepInput()
 
     def prepInput(self):
         # prepare the test string for distance calculation
@@ -25,7 +26,6 @@ class KNN:
                 self.testVectDict[pair[0]] = float(pair[1])
                 self.allFeatures[pair[0]] = None
 
-
     def getDistance(self, trainInstance):
         # choose Euclidean or Cosine
         if self.similarity_func == 1:
@@ -33,17 +33,8 @@ class KNN:
         elif self.similarity_func == 2:
             return self.distanceCosine(trainInstance)
 
-
-    def getAllFeatures(self, trainInstance):
-        # collect all features in test and train instance
-        for feature in trainInstance:
-            if feature not in self.allFeatures:
-                self.allFeatures[feature] = None
-
-
     def distanceEuclidean(self, trainInstance):
         addSum = 0
-        self.getAllFeatures(trainInstance)   # check all features
         for feature in self.allFeatures:
             if feature in self.testVectDict and feature in trainInstance:
                 addSum += math.pow((trainInstance[feature] - self.testVectDict[feature]), 2)
@@ -71,27 +62,25 @@ class KNN:
         return max(allClasses, key=allClasses.get)
 
     def knn(self):
-        self.prepInput()
         kneighbours = {}   # here we store ids and distances of labelled instances
-        # print self.doc
+
         for current_id in self.tr.vectors:
             d = self.getDistance(self.tr.vectors[current_id].features)
 
             if len(kneighbours) < self.kval:
                 kneighbours[current_id] = d
             else:
-                highestRowId = -1
+                # are we lower than the highest row distance?
+                highestRowId = 0
                 highestRowDistance = 0
-
                 for rowId in kneighbours:
                     if kneighbours[rowId] > highestRowDistance:
+                        highestRowDistance = kneighbours[rowId]
                         highestRowId = rowId
-                        highestRowDistance = kneighbours[rowId] 
 
-                if d < highestRowDistance and highestRowId > 0:
+                if d < highestRowDistance:
                     del kneighbours[highestRowId]
                     kneighbours[current_id] = d
-
 
         return kneighbours
                     

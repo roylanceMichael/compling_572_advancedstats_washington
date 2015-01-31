@@ -10,7 +10,7 @@ if [ -z "$1" ]; then
 	trainFile="examples/train.vectors.txt"
 fi
 if [ -z "$2" ]; then
-	testFile="examples/sub.test.vectors.txt"
+	testFile="examples/test.vectors.txt"
 fi
 if [ -z "$3" ]; then
 	kval=5

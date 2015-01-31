@@ -29,12 +29,12 @@ def main():
         while len(l.strip()) > 0:
             k = knn.KNN(kval, similarity_func, l, tr)
             actualClassName = k.classify()
-            print actualClassName
-            print k.expectedClassName
+
             totalNumber += 1
             if actualClassName == k.expectedClassName:
                 correctNumber += 1
 
+            print "actual: %s, expected: %s - current score: %s" % (actualClassName, k.expectedClassName, float(correctNumber) / totalNumber)
             l = inputF.readline()    
 
     print "results: "
