@@ -11,6 +11,7 @@ class KNN:
         self.tr = tr
         self.testVectDict = {}
         self.expectedClassName = None
+        self.actualClassName = None
 
         self.prepInput()
 
@@ -46,12 +47,41 @@ class KNN:
 
         return math.sqrt(addSum)
 
-#    def distanceCosine(self):
 
+    def distanceCosine(self, trainInstance):
+        # x1 * x2 / x1^2 + x2^2
+        numeratorSum = 0
+        denominatorTrainSum = 0
+        denominatorTestSum = 0
+
+        for feature in trainInstance:
+            if feature in self.testVectDict:
+                numeratorSum += trainInstance[feature] * self.testVectDict[feature]
+                denominatorTrainSum += math.pow(trainInstance[feature], 2)
+                denominatorTestSum += math.pow(self.testVectDict[feature], 2) 
+            elif feature in trainInstance:
+                denominatorTrainSum += math.pow(trainInstance[feature], 2)
+
+        for feature in self.testVectDict:
+            if feature not in trainInstance and feature in self.tr.allTrainFeatures:
+                denominatorTestSum += math.pow(self.testVectDict[feature], 2) 
+
+        cosineDist = float(numeratorSum) / (math.sqrt(denominatorTrainSum) * math.sqrt(denominatorTestSum))
+        return 1 - cosineDist
+
+    # note: call reportSysRecord first
     def classify(self):
+        if self.expectedClassName == None:
+            raise Exception("Call reportSysRecord first!")
+        return (self.expectedClassName, self.actualClassName)
+
+    def reportSysRecord(self, idx):
         resultsFromKnn = self.knn()
 
         allClasses = {}
+        for className in self.tr.classNames:
+            allClasses[className] = 0
+
         highestClass = None
         highestCount = 0
         for result in resultsFromKnn:
@@ -70,7 +100,20 @@ class KNN:
                     highestCount = allClasses[className]
                     highestClass = className
 
-        return highestClass
+        sortedResults = sorted(allClasses, key=allClasses.get, reverse=True)
+
+        self.actualClassName = sortedResults[0]
+
+        denom = 0
+        for className in allClasses:
+            denom += allClasses[self.actualClassName]
+
+        stringBuilder = ""
+        for className in sortedResults:
+            norm = float(allClasses[className])/denom
+            stringBuilder += str(className) + " " + str(norm) + " "
+        
+        return "array:"+ str(idx) + "\t" + self.actualClassName + "\t" + stringBuilder 
 
     def knn(self):
         kneighbours = {}   # here we store ids and distances of labelled instances

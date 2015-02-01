@@ -1,8 +1,6 @@
 import sys
 import train
 import knn
-#import reportFiles
-
 
 def main():
     # get from command parameters
@@ -10,7 +8,7 @@ def main():
     testFile = sys.argv[2]
     kval = float(sys.argv[3])
     similarity_func = float(sys.argv[4])
-#    sysOutput = sys.argv[5]
+    sysOutput = sys.argv[5]
 
     tr = train.Train()
     # read in the training file
@@ -20,31 +18,65 @@ def main():
             tr.read_into_dicts(l)
             l = inputF.readline()
 
+    reportingDict = {}
+    for className in tr.classNames:
+        reportingDict[className] = {}
+        for otherClassName in tr.classNames:
+            reportingDict[className][otherClassName] = 0
+
     # read in the test file and classify
     clusterResults = []
-    correctNumber = 0
-    totalNumber = 0
-    with open(testFile) as inputF:
-        l = inputF.readline()
-        while len(l.strip()) > 0:
-            k = knn.KNN(kval, similarity_func, l, tr)
-            actualClassName = k.classify()
 
-            totalNumber += 1
-            if actualClassName == k.expectedClassName:
-                correctNumber += 1
+    correctTotal = 0
+    totalVectors = 0
+    currentIdx = 0
 
-            print "actual: %s, expected: %s - current score: %s" % (actualClassName, k.expectedClassName, float(correctNumber) / totalNumber)
-            l = inputF.readline()    
+    with open(sysOutput, "w") as outputF:
+        with open(testFile) as inputF:
+            l = inputF.readline()
+            while len(l.strip()) > 0:
+                k = knn.KNN(kval, similarity_func, l, tr)
 
-    print "results: "
-    print float(correctNumber) / totalNumber
+                # write to sys output
+                outputF.write(k.reportSysRecord(currentIdx) + "\n")
 
-    # report sys file
-#    reportFiles.reportSysFile(sysOutput, bernNB, trainFile, testFile)
+                # get expected and actual
+                (expected, actual) = k.classify()
 
-    # print confusion matrix
-#    reportFiles.printConfusionMatrix(bernNB, trainFile, testFile, vect)
+                currentIdx += 1
+                totalVectors += 1
+
+                if expected == actual:
+                    correctTotal += 1
+
+                if expected in reportingDict:
+                    if actual in reportingDict[expected]:
+                        reportingDict[expected][actual] += 1
+                    else:
+                        reportingDict[expected][actual] = 1
+                else:
+                    reportingDict[expected] = { actual: 1 }
+
+                l = inputF.readline()   
+
+    print "Confusion matrix for the test data:\n"
+    print "row is the truth, column is the system output\n"
+
+    headerColumn = "\t"
+    for expectedKey in reportingDict:
+        headerColumn = headerColumn + "\t" + expectedKey
+
+    print headerColumn
+
+    confusionMatrix = ""
+    for expectedKey in reportingDict:
+        confusionMatrix = confusionMatrix + expectedKey + "\t"
+        for actualKey in reportingDict[expectedKey]:
+            confusionMatrix = confusionMatrix + str(reportingDict[expectedKey][actualKey]) + "\t"
+        confusionMatrix = confusionMatrix + "\n"
+
+    print confusionMatrix
+    print "test accuracy =%s\n" % (float(correctTotal) / totalVectors) 
 
 if __name__ == '__main__':
         main()
