@@ -13,7 +13,7 @@ if [ -z "$2" ]; then
 	testFile="examples/test.vectors.txt"
 fi
 if [ -z "$3" ]; then
-	kval=5
+	kval=1
 fi
 if [ -z "$4" ]; then
 	similarity_func=1

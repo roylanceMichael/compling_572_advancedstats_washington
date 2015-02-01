@@ -37,8 +37,13 @@ class KNN:
         for feature in trainInstance:
             if feature in self.testVectDict:
                 addSum += math.pow((trainInstance[feature] - self.testVectDict[feature]), 2)
-            else:
+            elif feature in trainInstance:
                 addSum += math.pow(trainInstance[feature], 2)
+
+        for feature in self.testVectDict:
+            if feature not in trainInstance and feature in self.tr.allTrainFeatures:
+                addSum += math.pow(self.testVectDict[feature], 2)
+
         return math.sqrt(addSum)
 
 #    def distanceCosine(self):
@@ -64,7 +69,7 @@ class KNN:
                 if allClasses[className] > highestCount:
                     highestCount = allClasses[className]
                     highestClass = className
-                    
+
         return highestClass
 
     def knn(self):
