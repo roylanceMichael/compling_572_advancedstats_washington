@@ -47,7 +47,6 @@ class KNN:
 
         return math.sqrt(addSum)
 
-
     def distanceCosine(self, trainInstance):
         # x1 * x2 / x1^2 + x2^2
         numeratorSum = 0
