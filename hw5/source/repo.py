@@ -4,10 +4,10 @@ import math
 
 class Repo:
     def __init__(self):
-        self.featureVector = {} # { featureName: count }
+        self.featureVector = {} # { featureName: count } - over all the classes
         self.classVector = {}   # {className1: {{f1:1}, {f2:1}, {f3:1}}, className2: {}} - a dictionary of feature vectors represented as dictionaries
-        self.classTotal = {}   # {className1: #feat-s, className2: #feat-s, ...}
-        self.classExpected = {}
+        self.docsInClass = {}
+        self.featExpected = {}   # {featureName: {className1 : [float, float], className2 : [], } featureName: {}} - calculate Expected value
         self.chi2 = {}
         self.total = 0
         self.df = 0
@@ -21,8 +21,10 @@ class Repo:
         if className not in self.classVector:
             self.classVector[className] = {}
 
-        if className not in self.classTotal:
-            self.classTotal[className] = 0
+        if className not in self.docsInClass:
+            self.docsInClass[className] = 1
+        else:
+            self.docsInClass[className] += 1
 
         for i in ilist[1:]:
             # get features
@@ -39,38 +41,39 @@ class Repo:
                 else:
                     self.classVector[className][pair[0]] = 1
 
-                self.classTotal[className] += 1
-
 
     def getTotal(self):   
-        for key in self.classTotal:
-            self.total += self.classTotal[key]
+        for key in self.docsInClass:
+            self.total += self.docsInClass[key]
 
 
     def getClassExpected(self):
         self.getTotal()
-        for key in self.classTotal:
-            for feat in self.featureVector:
-                self.classExpected[key] = self.classTotal[key] * self.featureVector[feat] / self.total
+
+        for feat in self.featureVector:
+            # {feature : {class : [expected_out_of_class, expected_in_class]} }
+            self.featExpected[feat] = {}
+            for className in self.classVector:
+                 self.featExpected[feat][className] = [0, 0]
+                 # f not in c
+                 self.featExpected[feat][className][0] += (self.total - self.featureVector[feat]) * self.docsInClass[className] / self.total
+                 # f in c
+                 self.featExpected[feat][className][1] += self.featureVector[feat] * self.docsInClass[className] / self.total
 
 
     def chiSq(self):
-    # chiSq for every feature
+    # chiSq for every feature - fill chi2
         for feat in self.featureVector:
             chi = 0
-            
-            for className in self.classExpected:
+            for className in self.featExpected[feat]:
                 if feat not in self.classVector[className]:
                     self.classVector[className][feat] = 0
-                chi += math.pow((self.classVector[className][feat] - self.classExpected[className]), 2) / self.classExpected[className]
+                # f not in c
+                chi += math.pow(((self.docsInClass[className] - self.classVector[className][feat]) - self.featExpected[feat][className][0]), 2) / self.featExpected[feat][className][0]
+                # f in c
+                chi += math.pow((self.classVector[className][feat] - self.featExpected[feat][className][1]), 2) / self.featExpected[feat][className][1]
 
             self.chi2[feat] = chi
-
-#    def chiSq(self):
-# calculates one number for the whole table               
-#        for feat in self.featureVector:
-#            for className in self.classExpected:
-#                self.chi2 += math.pow((self.classVector[className][feat] - self.classExpected[className]), 2) / self.classExpected[className]
 
 
     def DF(self):

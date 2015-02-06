@@ -11,7 +11,7 @@ def main():
 		newRepo.read_into_dicts(line)
 	newRepo.getClassExpected()
 	newRepo.chiSq()
-
+	
 	for key in sorted(newRepo.chi2, key=newRepo.chi2.get, reverse=True):
 		print key, '\t', newRepo.chi2[key], '\t', newRepo.featureVector[key]
 
