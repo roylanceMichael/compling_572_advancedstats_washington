@@ -110,14 +110,14 @@ class KNN:
                 kneighbours[current_id] = d
             else:
                 # are we lower than the highest row distance?
-                highestRowId = 0
-                highestRowDistance = 0
+                highestRowId = -1
+                highestRowDistance = -1
                 for rowId in kneighbours:
                     if kneighbours[rowId] > highestRowDistance:
                         highestRowDistance = kneighbours[rowId]
                         highestRowId = rowId
 
-                if d < highestRowDistance:
+                if d < highestRowDistance and highestRowId > -1:
                     del kneighbours[highestRowId]
                     kneighbours[current_id] = d
 

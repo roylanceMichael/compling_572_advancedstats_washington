@@ -16,7 +16,7 @@ if [ -z "$2" ]; then
 	testFile="examples/test.vectors.txt"
 fi
 if [ -z "$3" ]; then
-	kval=5
+	kval=1
 fi
 if [ -z "$4" ]; then
 	similarity_func=2
@@ -25,10 +25,10 @@ if [ -z "$5" ]; then
 	kept_feat_list="kept_feat_list"
 fi 
 if [ -z "$6" ]; then
-	sysOutput=sys_default
+	sysOutput="sys_default"
 fi
 if [ -z "$7" ]; then
-	accOutput=acc_default
+	accOutput="acc_default"
 fi
 
 python2.7 source/main_q3.py $trainFile $testFile $kval $similarity_func $kept_feat_list $sysOutput > $accOutput

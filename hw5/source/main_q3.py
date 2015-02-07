@@ -68,9 +68,6 @@ def main():
 
                 l = inputF.readline()   
 
-    print "Confusion matrix for the test data:\n"
-    print "row is the truth, column is the system output\n"
-
     headerColumn = "\t"
     for expectedKey in reportingDict:
         headerColumn = headerColumn + "\t" + expectedKey
@@ -83,6 +80,11 @@ def main():
         for actualKey in reportingDict[expectedKey]:
             confusionMatrix = confusionMatrix + str(reportingDict[expectedKey][actualKey]) + "\t"
         confusionMatrix = confusionMatrix + "\n"
+
+    print "Number of related features: %s" % (len(tr.allTrainFeatures))
+    print "Test Accuracy: %s" % (float(correctTotal) / totalVectors) 
+    print "Confusion matrix for the test data:\n"
+    print "row is the truth, column is the system output\n"
 
     print confusionMatrix
     print "test accuracy =%s\n" % (float(correctTotal) / totalVectors) 
