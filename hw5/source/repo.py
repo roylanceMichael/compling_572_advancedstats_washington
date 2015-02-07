@@ -46,7 +46,6 @@ class Repo:
         for key in self.docsInClass:
             self.total += self.docsInClass[key]
 
-
     def getClassExpected(self):
         self.getTotal()
 

@@ -23,7 +23,7 @@ class KNN:
         for i in ilist[1:]:
             # get features
             pair = i.split(':')
-            if len(pair) == 2:
+            if len(pair) == 2 and pair[0] in self.tr.keptFeatures:
                 self.testVectDict[pair[0]] = float(pair[1])
 
     def getDistance(self, trainInstance):
@@ -32,21 +32,6 @@ class KNN:
             return self.distanceEuclidean(trainInstance)
         elif self.similarity_func == 2:
             return self.distanceCosine(trainInstance)
-
-    def distanceEuclidean(self, trainInstance):
-        addSum = 0
-
-        for feature in trainInstance:
-            if feature in self.testVectDict:
-                addSum += math.pow((trainInstance[feature] - self.testVectDict[feature]), 2)
-            elif feature in trainInstance:
-                addSum += math.pow(trainInstance[feature], 2)
-
-        for feature in self.testVectDict:
-            if feature not in trainInstance and feature in self.tr.allTrainFeatures:
-                addSum += math.pow(self.testVectDict[feature], 2)
-
-        return math.sqrt(addSum)
 
     def distanceCosine(self, trainInstance):
         # x1 * x2 / x1^2 + x2^2

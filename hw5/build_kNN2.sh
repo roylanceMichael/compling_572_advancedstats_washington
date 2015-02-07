@@ -22,7 +22,7 @@ if [ -z "$4" ]; then
 	similarity_func=2
 fi
 if [ -z "$5" ]; then
-	kept_feat_list=100
+	kept_feat_list="kept_feat_list"
 fi 
 if [ -z "$6" ]; then
 	sysOutput=sys_default

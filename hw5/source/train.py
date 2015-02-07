@@ -10,7 +10,6 @@ class Train:
         self.classNames = {}
         self.keptFeatures = {} 
 
-
     def getKeptFeatures(self, keptFeatureLine):
         ilist = re.split('\s+', keptFeatureLine.strip())
         self.keptFeatures[ilist[0]] = None
