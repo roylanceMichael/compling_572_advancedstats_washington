@@ -1,13 +1,13 @@
-		talk.politics.guns	talk.politics.misc	talk.politics.mideast
-Number of related features: 32532
-Test Accuracy: 0.72
+Number of related features: 2401
+Test Accuracy: 0.75
 Confusion matrix for the test data:
 
 row is the truth, column is the system output
 
-talk.politics.guns	73	21	6	
-talk.politics.misc	18	68	14	
-talk.politics.mideast	7	18	75	
+		talk.politics.guns	talk.politics.misc	talk.politics.mideast
+talk.politics.guns	68	20	12	
+talk.politics.misc	18	75	7	
+talk.politics.mideast	6	12	82	
 
-test accuracy =0.72
+test accuracy =0.75
 

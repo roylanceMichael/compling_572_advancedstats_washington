@@ -12,7 +12,6 @@ def main():
     sysOutput = sys.argv[6]
 
     tr = train.Train()
-
     # read the list of kept features:
     with open(kept_feat_list) as inF:
         keptF = inF.readline()
@@ -72,8 +71,6 @@ def main():
     for expectedKey in reportingDict:
         headerColumn = headerColumn + "\t" + expectedKey
 
-    print headerColumn
-
     confusionMatrix = ""
     for expectedKey in reportingDict:
         confusionMatrix = confusionMatrix + expectedKey + "\t"
@@ -85,7 +82,7 @@ def main():
     print "Test Accuracy: %s" % (float(correctTotal) / totalVectors) 
     print "Confusion matrix for the test data:\n"
     print "row is the truth, column is the system output\n"
-
+    print headerColumn
     print confusionMatrix
     print "test accuracy =%s\n" % (float(correctTotal) / totalVectors) 
 

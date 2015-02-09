@@ -15,8 +15,8 @@ cat examples/train2.vectors.txt | ./rank_feat_by_chi_square.sh > q5/feat_list
 
 # calculate the kept feature lists and then the kmeans
 executeScript "base" 0.0
-executeScript "001" 0.001
-executeScript "01" 0.01
-executeScript "025" 0.025
-executeScript "05" 0.05
-executeScript "1" 0.1
+executeScript "001" 13.816
+executeScript "01" 9.210
+executeScript "025" 7.378
+executeScript "05" 5.991
+executeScript "1" 4.605

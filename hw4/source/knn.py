@@ -65,6 +65,9 @@ class KNN:
             if feature not in trainInstance and feature in self.tr.allTrainFeatures:
                 denominatorTestSum += math.pow(self.testVectDict[feature], 2) 
 
+        if denominatorTrainSum == 0 or denominatorTestSum == 0:
+            return 1
+
         cosineDist = float(numeratorSum) / (math.sqrt(denominatorTrainSum) * math.sqrt(denominatorTestSum))
         return 1 - cosineDist
 
