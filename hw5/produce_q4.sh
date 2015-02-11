@@ -4,7 +4,7 @@
 executeScript () 
 {
 cat q4/feat_list | ./filter_feat_by_scores.sh ${2} > q4/${1}_kept_feat_list
-./build_kNN2.sh examples/train.vectors.txt examples/test.vectors.txt 1 2 q4/${1}_kept_feat_list q4/${1}_sys q4/${1}_acc
+./build_kNN2.sh examples/train.vectors.txt examples/test.vectors.txt 1 2 q4/${1}_kept_feat_list q4/${1}_sys > q4/${1}_acc
 }
 
 rm -rf q4
