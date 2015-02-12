@@ -32,7 +32,6 @@ class Decode:
                     power += self.features[className][f]
 
             condProb = math.exp(power)
-#            print condProb
             self.condProb[className] = condProb
                     
 
@@ -44,9 +43,6 @@ class Decode:
     def classCondProb(self):
         self.normaliZ()
         for className in self.condProb:
-#            print className
-#            print self.condProb[className]
- #           print self.Z
             self.P[className] = float(self.condProb[className] / self.Z)
 
 
@@ -55,4 +51,9 @@ class Decode:
         for className in self.P:
             stringBuilder += str(className) + " " + str(self.P[className]) + "\t "
         
-        return "array:"+ str(self.docID[0]) + "\t" + str(self.docID[1]) + "\t" + stringBuilder 
+        return "array:"+ str(self.docID[0]) + "\t" + str(self.docID[1]) + "\t" + stringBuilder
+
+
+    def reportAcc(self):
+        acc = [self.docID[1], max(self.P, key=self.P.get)]
+        return acc
