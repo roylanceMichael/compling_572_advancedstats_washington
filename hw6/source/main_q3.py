@@ -8,7 +8,7 @@ def main():
     outputFile = sys.argv[2]
 
     e = empiricalE.Empirical()
-    # read the model from file:
+    # read the training data from file:
     with open(trainingData) as inF:
         l = inF.readline()
         while len(l.strip()) > 0:

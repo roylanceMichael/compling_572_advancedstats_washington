@@ -36,7 +36,7 @@ def main():
     correctTotal = 0
     totalVectors = 0
 
-    # read in the training file
+    # read in the test file
     with open(sysOutput, "w+") as outputF:
         with open(testData) as inputF:
             l = inputF.readline()
