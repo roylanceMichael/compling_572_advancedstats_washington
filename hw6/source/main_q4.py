@@ -10,46 +10,55 @@ def main():
     trainingData = sys.argv[1]
     outputFile = sys.argv[2]
 
-    m = modelE.ModelE()
-    # read the training data from file:
-    with open(trainingData) as inF:
-        l = inF.readline()
-        while len(l.strip()) > 0:
-            m.read_into_dicts(l)
-            l = inF.readline()
-
-    totalF = len(m.allFeat)
-
     if len(sys.argv) == 3:
-        p = 1 / len(m.features)
+        modelExp = modelE.ModelE()
+        # read the training data from file:
+        totalF = 0
+        with open(trainingData) as inF:
+            l = inF.readline()
+            while len(l.strip()) > 0:
+                totalF += 1
+                modelExp.read_into_dicts(l)
+                l = inF.readline()
+
+        p = 1 / len(modelExp.classNames)
 
         with open(outputFile, "w+") as outputF:
-            outputF.write(m.outputModelE_(p, totalF))
+            outputF.write(modelExp.outputModelE_(p, totalF))
 
     if len(sys.argv) == 4:
         modelFile = sys.argv[3]
-        print "grabbed the model file!"
 
         m = model.Model()
         # read the model from file
-        with open(modelFile) as inF:
-            mF_ = inF.readline()
+        with open(modelFile) as inmF:
+            mF_ = inmF.readline()
             mF = mF_.strip()
             className = ""
             while len(mF) > 0:
                 if len(mF.split()) > 2:
 		    className = mF.split()[-1]
-		    mF_ = inF.readline()
+		    mF_ = inmF.readline()
 		    mF = mF_.strip()
                 m.read_into_dicts(mF, className)
-                mF_ = inF.readline()
+                mF_ = inmF.readline()
                 mF = mF_.strip()
 
-#        with open(outputFile, "w+") as outputF:
-#            outputF.write(m.outputModelE_model(p, totalF))
+        modelExp = modelE.ModelE()
+        totalF = 0
+        with open(trainingData) as inputF:
+            l = inputF.readline()
+            while len(l.strip()) > 0:
+                totalF += 1
+                modelExp.read_into_dicts(l)
+                d = decode.Decode(m)
+                d.read_into_dicts(l, totalF)
+                d.getCondProb()
+                d.classCondProb()
+                l = inputF.readline()
 
-### think about how to read the training file only once.
-### If decoding with model file - need to do that first
+        with open(outputFile, "w+") as outputF:
+            outputF.write(modelExp.outputModelE_model(d, totalF))
 
 
 if __name__ == '__main__':
