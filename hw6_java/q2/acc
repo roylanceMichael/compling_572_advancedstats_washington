@@ -1,0 +1,5 @@
+Accuracy: 192.0 / 300.0 : 0.64
+	talk.politics.misc	talk.politics.mideast	talk.politics.guns	
+talk.politics.misc	0	21	79
+talk.politics.mideast	0	95	5
+talk.politics.guns	0	3	97
