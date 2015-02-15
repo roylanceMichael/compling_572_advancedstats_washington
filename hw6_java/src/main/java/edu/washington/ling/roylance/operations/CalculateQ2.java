@@ -43,11 +43,14 @@ public class CalculateQ2 implements IBuilder<List<TestInstanceResult>> {
         
         this.testInstances
                 .forEach(testInstance -> {
-                    TestInstanceResult testInstanceResult = TestInstanceResult.factory();
+                    TestInstanceResult testInstanceResult = 
+                            TestInstanceResult.factory()
+                            .setExpected(testInstance.getClassification());
                     
                     HashMap<String, Double> classNumerators = new HashMap<>();
                     
-                    this.model.values()
+                    this.model
+                            .values()
                             .forEach(classInstance -> {
                                 classNumerators.put(
                                         classInstance.getClassName(),

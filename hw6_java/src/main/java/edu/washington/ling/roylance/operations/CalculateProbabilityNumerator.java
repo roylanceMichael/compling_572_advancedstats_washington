@@ -22,24 +22,29 @@ public class CalculateProbabilityNumerator implements IBuilder<Double> {
     
     @Override
     public Double build() {
+        double addDefaultAndXResult = 
+                this.addDefaultAndX();
+
         return Math.pow(
                 Math.E,
-                this.addDefaultAndX()
+                addDefaultAndXResult
         );
     }
     
     private double addDefaultAndX() {
-        return this.classInstance.getDefaultProbability()
+        double returnResult = this.classInstance.getDefaultProbability()
                 +
             this.vectorInstance
                     .getFeatures()
                     .stream()
                     .map(feature -> {
-                            if (this.classInstance.getFeatureClassInstances().containsKey(feature)) {
+                        if (this.classInstance.getFeatureClassInstances().containsKey(feature)) {
                                 return this.classInstance.getFeatureClassInstances().get(feature);
                             }
                             return 0.0;
                         })
                     .reduce(0.0, (a, b) -> a + b);
+        
+        return returnResult;
     }
 }

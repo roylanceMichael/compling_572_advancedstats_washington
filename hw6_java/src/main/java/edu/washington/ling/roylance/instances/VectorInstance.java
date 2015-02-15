@@ -14,6 +14,10 @@ import java.util.List;
  * Created by mroylance on 2/13/15.
  */
 public class VectorInstance {
+    private static final String FeatureDelimiter = ":";
+    
+    private static int idSequence = 0;
+    
     private int id;
     
     private String classification;
@@ -43,7 +47,8 @@ public class VectorInstance {
     }
     
     public VectorInstance addFeature(@NotNull String value) {
-        this.features.add(value);
+        String[] splitItems = value.split(FeatureDelimiter);
+        this.features.add(splitItems[0]);
         return this;
     }
     
@@ -53,14 +58,13 @@ public class VectorInstance {
         try {
             BufferedReader br = new BufferedReader(new FileReader(testFileName));
             try {
-                int id = 0;
                 String line;
                 while ((line = br.readLine()) != null) {
                     String[] splitLine = ObjectUtilities.splitByWhiteSpace(line.trim());
                     
                     if (splitLine.length > 1) {
                         VectorInstance newInstance = new VectorInstance()
-                                .setId(id)
+                                .setId(idSequence)
                                 .setClassification(splitLine[0]);
 
                         Arrays.stream(splitLine)
@@ -70,7 +74,7 @@ public class VectorInstance {
                         returnVectors.add(newInstance);
                     }
                     
-                    id++;
+                    idSequence++;
                 }
             }
             finally {

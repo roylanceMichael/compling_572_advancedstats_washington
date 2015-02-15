@@ -1,5 +1,6 @@
 package edu.washington.ling.roylance.instances;
 
+import edu.washington.ling.roylance.utilities.ObjectUtilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -12,6 +13,8 @@ public class TestInstanceResult {
     
     private int id;
     
+    private String expected;
+    
     private HashMap<String, Double> classResults;
     
     public TestInstanceResult() {
@@ -20,6 +23,23 @@ public class TestInstanceResult {
 
     public int getId() {
         return this.id;
+    }
+    
+    public String getExpected() {
+        return this.expected;
+    }
+    
+    public double getAccuracyResult() {
+        if (this.expected == null || this.getActual() == null) {
+            return 0.0;
+        }
+        
+        return this.expected.equals(this.getActual()) ? 1.0 : 0.0;
+    }
+    
+    public TestInstanceResult setExpected(@NotNull String value) {
+        this.expected = value;
+        return this;
     }
     
     public TestInstanceResult addClassResult(@NotNull String className, double probability) {
@@ -37,6 +57,20 @@ public class TestInstanceResult {
                 .forEach(key -> stringBuilder.append(key + " " + Double.toString(this.classResults.get(key)) + " "));
         
         return stringBuilder.toString();
+    }
+    
+    public String getActual() {
+        double maxDouble = 0.0;
+        String maxKey = ObjectUtilities.EmptyString;
+        
+        for (String key: this.classResults.keySet()) {
+            if (this.classResults.get(key) > maxDouble) {
+                maxDouble = this.classResults.get(key);
+                maxKey = key;
+            }
+        }
+        
+        return maxKey;
     }
 
     public static TestInstanceResult factory() {

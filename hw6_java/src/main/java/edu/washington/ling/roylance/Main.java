@@ -1,8 +1,11 @@
 package edu.washington.ling.roylance;
 
 import edu.washington.ling.roylance.instances.ClassInstance;
+import edu.washington.ling.roylance.instances.TestInstanceResult;
 import edu.washington.ling.roylance.instances.VectorInstance;
 import edu.washington.ling.roylance.operations.CalculateQ2;
+import edu.washington.ling.roylance.report.PrintQ2StdOut;
+import edu.washington.ling.roylance.report.PrintQ2SysFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,9 +27,16 @@ public class Main {
         List<VectorInstance> testInstances = VectorInstance.factory(testDataFile);
         HashMap<String, ClassInstance> model = ClassInstance.factory(modelFile);
         
-        new CalculateQ2(testInstances, model).build()
-                .forEach(testInstanceResult -> {
-                    System.out.println(testInstanceResult.toString());
-                });
+        List<TestInstanceResult> testResults =
+                new CalculateQ2(testInstances, model).build();
+        
+        // print the sys output file
+        new PrintQ2SysFile(
+                sysOutput,
+                testResults
+        ).build();
+        
+        new PrintQ2StdOut(testResults)
+                .build();
     }
 }
