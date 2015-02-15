@@ -23,4 +23,4 @@ fi
 
 mvn clean -q
 mvn compile -q
-mvn exec:java -Dexec.mainClass="edu.washington.ling.roylance.Main" -Dexec.args="${testData} ${modelFile} ${sysOutput}" -q > $accOutput
+mvn exec:java -Dexec.mainClass="edu.washington.ling.roylance.MainQ2" -Dexec.args="${testData} ${modelFile} ${sysOutput}" -q > $accOutput

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by mroylance on 2/13/15.
  */
-public class Main {
+public class MainQ2 {
     public static void main(String[] args) {
         if (args == null) {
             System.out.println("There must be 4 arguments!");
