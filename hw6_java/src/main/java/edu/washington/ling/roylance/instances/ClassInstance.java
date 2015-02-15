@@ -90,6 +90,8 @@ public class ClassInstance {
                         }
                     }
                 }
+                
+                returnHashMap.put(currentClassInstance.getClassName(), currentClassInstance);
             }
             finally {
                 if (br != null) {
