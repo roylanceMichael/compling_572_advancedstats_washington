@@ -63,7 +63,7 @@ public class ExpectationInstance {
                 .distinct()
                 .forEach(className -> allClasses.add(className));
         
-        int totalCountProbability = 1 / vectorInstances.size();
+        double totalCountProbability = 1.0 / vectorInstances.size();
         
         vectorInstances
                 .forEach(vectorInstance -> {

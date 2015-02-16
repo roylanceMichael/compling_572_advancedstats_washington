@@ -6,7 +6,6 @@ import edu.washington.ling.roylance.instances.VectorInstance;
 import edu.washington.ling.roylance.interfaces.IPofYGivenX;
 import edu.washington.ling.roylance.operations.ModelFileAbsentCalculation;
 import edu.washington.ling.roylance.operations.ModelFileCalculation;
-import edu.washington.ling.roylance.utilities.ObjectUtilities;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +34,8 @@ public class MainQ4 {
 
         ExpectationInstance
                 .modelFactory(trainingData, pofYGivenX)
+                .stream()
+                .sorted((a, b) -> a.getClassName().compareTo(b.getClassName()))
                 .forEach(expectation -> System.out.println(expectation.toString()));
     }
 }
