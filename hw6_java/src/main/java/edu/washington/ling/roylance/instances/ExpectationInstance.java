@@ -5,6 +5,7 @@ import edu.washington.ling.roylance.utilities.ObjectUtilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,8 +62,9 @@ public class ExpectationInstance {
                 .forEach(className -> {
                     modelExpectation.put(className, new HashMap<>());
                 });
-
-        double totalCountProbability = 1.0 / vectorInstances.size();
+        
+        double totalCount = vectorInstances.size();
+        double totalCountProbability = 1.0 / totalCount;
         
         vectorInstances
                 .forEach(vectorInstance -> {
@@ -104,14 +106,15 @@ public class ExpectationInstance {
                                 expectationInstance.className = className;
                                 expectationInstance.featureName = featureName;
                                 expectationInstance.expectation = modelExpectation.get(className).get(featureName);
-                                expectationInstance.featureCount = expectationInstance.expectation * 
-                                        featureCount.get(featureName);
+                                expectationInstance.featureCount = expectationInstance.expectation * totalCount;
                                 
                                 returnList.add(expectationInstance);
                             });
                 });
         
-        return returnList;
+
+
+        return sortExpectationInstances(returnList);
     }
 
     public static List<ExpectationInstance> empiricalFactory(
@@ -163,15 +166,27 @@ public class ExpectationInstance {
                             .forEach(subKey -> {
                                 ExpectationInstance newInstance =
                                         new ExpectationInstance();
-                                newInstance.featureCount = countDictionary.get(key).get(subKey);
                                 newInstance.className = key;
                                 newInstance.featureName = subKey;
                                 newInstance.expectation =  newInstance.featureCount / totalCount;
+                                newInstance.featureCount = countDictionary.get(key).get(subKey);
 
                                 returnList.add(newInstance);
                             });
                 });
 
-        return returnList;
+        return sortExpectationInstances(returnList);
+    }
+    
+    private static List<ExpectationInstance> sortExpectationInstances(List<ExpectationInstance> expectationInstances) {
+        Comparator<ExpectationInstance> byClassName = (a, b) ->
+                a.className.compareTo(b.className);
+
+        Comparator<ExpectationInstance> byFeatureName = (a, b) ->
+                a.featureName.compareTo(b.featureName);
+
+        expectationInstances.sort(byClassName.thenComparing(byFeatureName));
+        
+        return expectationInstances;
     }
 }

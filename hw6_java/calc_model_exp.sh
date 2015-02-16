@@ -1,4 +1,6 @@
 #!/bin/sh
+# setting java 8 version manually
+export JAVA_HOME=/opt/jdk8
 
 trainData=$1
 sysOutput=$2

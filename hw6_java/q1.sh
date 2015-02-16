@@ -1,4 +1,7 @@
 #!/bin/sh
+# setting java 8 version manually
+export JAVA_HOME=/opt/jdk8
+
 rm -rf q1
 mkdir q1
 mallet import-svmlight --input examples/train2.vectors.txt examples/test2.vectors.txt --output q1/train2.vectors q1/test2.vectors
