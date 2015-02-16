@@ -1,6 +1,6 @@
 package edu.washington.ling.roylance;
 
-import edu.washington.ling.roylance.instances.EmpiricalExpectationInstance;
+import edu.washington.ling.roylance.instances.ExpectationInstance;
 import edu.washington.ling.roylance.instances.VectorInstance;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 public class MainQ3 {
     public static void main(String[] args) {
         if (args == null) {
-            System.out.println("There must be 4 arguments!");
+            System.out.println("There must be 1 argument!");
             return;
         }
 
@@ -19,7 +19,7 @@ public class MainQ3 {
 
         List<VectorInstance> vectorInstances = VectorInstance.factory(trainingFile);
 
-        EmpiricalExpectationInstance.factory(vectorInstances)
+        ExpectationInstance.empiricalFactory(vectorInstances)
                 .forEach(instance -> System.out.println(instance.toString()));
     }
 }
