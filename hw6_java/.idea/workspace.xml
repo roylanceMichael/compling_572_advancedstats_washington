@@ -3,15 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="64bc9bc5-beec-4030-86aa-6f57d4f4a633" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/instances/ExpectationInstance.java" afterPath="$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/instances/ExpectationInstance.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/calc_emp_exp.sh" afterPath="$PROJECT_DIR$/calc_emp_exp.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/calc_model_exp.sh" afterPath="$PROJECT_DIR$/calc_model_exp.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/q3/emp_count" afterPath="$PROJECT_DIR$/q3/emp_count" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/maxent_classify.sh" afterPath="$PROJECT_DIR$/maxent_classify.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/q4/model_count2" afterPath="$PROJECT_DIR$/q4/model_count2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/q4/model_count" afterPath="$PROJECT_DIR$/q4/model_count" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/q1.sh" afterPath="$PROJECT_DIR$/q1.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/q4.sh" afterPath="$PROJECT_DIR$/q4.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="hw6_java.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,16 +29,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ExpectationInstance.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/instances/ExpectationInstance.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2034" max-vertical-offset="2745">
-              <caret line="153" column="34" selection-start-line="153" selection-start-column="34" selection-end-line="153" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="maxent_classify.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/maxent_classify.sh">
           <provider selected="true" editor-type-id="text-editor">
@@ -74,18 +55,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="793740">
-              <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="acc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/q2/acc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
-              <caret line="0" column="44" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="44" />
+            <state vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="793740">
+              <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -131,10 +102,30 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="q4.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainQ3.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/MainQ3.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
+              <caret line="13" column="56" selection-start-line="13" selection-start-column="56" selection-end-line="13" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExpectationInstance.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/instances/ExpectationInstance.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.75770926" vertical-offset="1824" max-vertical-offset="2745">
+              <caret line="171" column="79" selection-start-line="171" selection-start-column="79" selection-end-line="171" selection-end-column="79" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="q4.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/q4.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.066079296" vertical-offset="0" max-vertical-offset="681">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
               <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
@@ -177,7 +168,6 @@
         <option value="$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/interfaces/IPofYGivenX.java" />
         <option value="$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/operations/ModelFileAbsentCalculation.java" />
         <option value="$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/operations/ModelFileCalculation.java" />
-        <option value="$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/instances/ExpectationInstance.java" />
         <option value="$PROJECT_DIR$/q4/model_count" />
         <option value="$PROJECT_DIR$/q3/emp_count" />
         <option value="$PROJECT_DIR$/calc_model_exp.sh" />
@@ -185,6 +175,7 @@
         <option value="$PROJECT_DIR$/q1.sh" />
         <option value="$PROJECT_DIR$/q4.sh" />
         <option value="$PROJECT_DIR$/maxent_classify.sh" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/instances/ExpectationInstance.java" />
       </list>
     </option>
   </component>
@@ -199,7 +190,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="68" />
+    <option name="x" value="115" />
     <option name="y" value="23" />
     <option name="width" value="1600" />
     <option name="height" value="1027" />
@@ -271,6 +262,80 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="roylance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hw6_java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hw6_java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="roylance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="operations" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hw6_java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hw6_java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="roylance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="instances" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hw6_java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hw6_java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="q3" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -733,15 +798,15 @@
       <workItem from="1423980015632" duration="1418000" />
       <workItem from="1423983101032" duration="24000" />
       <workItem from="1423983154268" duration="654000" />
-      <workItem from="1424041437515" duration="13120000" />
+      <workItem from="1424041437515" duration="13471000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35873000" />
+    <option name="totallyTimeSpent" value="36224000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="68" y="23" width="1600" height="1027" extended-state="0" />
+    <frame x="115" y="23" width="1600" height="1027" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1001,14 +1066,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/MainQ3.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
-          <caret line="13" column="56" selection-start-line="13" selection-start-column="56" selection-end-line="13" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/q1/m1.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.6" vertical-offset="0" max-vertical-offset="1552950">
@@ -1054,10 +1111,10 @@
         <state vertical-scroll-proportion="0.4845815" vertical-offset="0" max-vertical-offset="681">
           <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
           <folding>
-            <element signature="e#1032#1033#0" expanded="true" />
-            <element signature="e#1081#1082#0" expanded="true" />
-            <element signature="e#1137#1138#0" expanded="true" />
-            <element signature="e#1175#1176#0" expanded="true" />
+            <element signature="e#1032#1033#0" expanded="false" />
+            <element signature="e#1081#1082#0" expanded="false" />
+            <element signature="e#1137#1138#0" expanded="false" />
+            <element signature="e#1175#1176#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1091,7 +1148,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
           <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1148,25 +1205,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/instances/ExpectationInstance.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2034" max-vertical-offset="2745">
-          <caret line="153" column="34" selection-start-line="153" selection-start-column="34" selection-end-line="153" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/q3/emp_count">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="582">
-          <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/q2/acc">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="681">
@@ -1207,10 +1245,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/q4.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/maxent_classify.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="681">
           <caret line="0" column="9" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/q3/emp_count">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.5" vertical-offset="0" max-vertical-offset="793740">
+          <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
           <folding />
         </state>
       </provider>
@@ -1223,10 +1280,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/q4.sh">
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/MainQ3.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.066079296" vertical-offset="0" max-vertical-offset="681">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
+          <caret line="13" column="56" selection-start-line="13" selection-start-column="56" selection-end-line="13" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/washington/ling/roylance/instances/ExpectationInstance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.75770926" vertical-offset="1824" max-vertical-offset="2745">
+          <caret line="171" column="79" selection-start-line="171" selection-start-column="79" selection-end-line="171" selection-end-column="79" />
           <folding />
         </state>
       </provider>

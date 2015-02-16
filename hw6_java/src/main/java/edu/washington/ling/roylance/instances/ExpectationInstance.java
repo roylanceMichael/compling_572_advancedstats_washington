@@ -168,8 +168,8 @@ public class ExpectationInstance {
                                         new ExpectationInstance();
                                 newInstance.className = key;
                                 newInstance.featureName = subKey;
-                                newInstance.expectation =  newInstance.featureCount / totalCount;
                                 newInstance.featureCount = countDictionary.get(key).get(subKey);
+                                newInstance.expectation =  newInstance.featureCount / totalCount;
 
                                 returnList.add(newInstance);
                             });
