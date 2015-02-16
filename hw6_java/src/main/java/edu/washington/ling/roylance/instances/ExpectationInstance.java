@@ -18,7 +18,7 @@ public class ExpectationInstance {
 
     private double expectation;
 
-    private int featureCount;
+    private double featureCount;
 
     public String getClassName() {
         return this.className;
@@ -32,7 +32,7 @@ public class ExpectationInstance {
         return this.expectation;
     }
 
-    public int getFeatureCount() {
+    public double getFeatureCount() {
         return this.featureCount;
     }
 
@@ -51,50 +51,65 @@ public class ExpectationInstance {
             @NotNull List<VectorInstance> vectorInstances,
             @NotNull IPofYGivenX pofYGivenX) {
         List<ExpectationInstance> returnList = new ArrayList<>();
-        
-        List<String> allClasses = new ArrayList<>();
-        
-        HashMap<String, Integer> featureCountDictionary
+
+        HashMap<String, Integer> featureCount = new HashMap<>();
+        HashMap<String, HashMap<String, Double>> modelExpectation
                 = new HashMap<>();
         
-        vectorInstances
-                .stream()
-                .map(vectorInstance -> vectorInstance.getClassification())
-                .distinct()
-                .forEach(className -> allClasses.add(className));
-        
+        pofYGivenX
+                .getClassNames()
+                .forEach(className -> {
+                    modelExpectation.put(className, new HashMap<>());
+                });
+
         double totalCountProbability = 1.0 / vectorInstances.size();
         
         vectorInstances
                 .forEach(vectorInstance -> {
                     vectorInstance
-                            .getFeatures()
-                            .forEach(feature -> {
-                                int currentCount = 
-                                        featureCountDictionary.containsKey(feature) ?
-                                        featureCountDictionary.get(feature) :
-                                        0;
+                        .getFeatures()
+                        .forEach(feature -> {
+                                    int existingCount = featureCount.containsKey(feature) ?
+                                            featureCount.get(feature) :
+                                            0;
+                                    
+                                    featureCount.put(feature, existingCount + 1);
+                                    
+                                    pofYGivenX
+                                            .getClassNames()
+                                            .forEach(className -> {
+                                        
+                                                double existingValue = modelExpectation.get(className)
+                                                        .containsKey(feature) ?
+                                                        modelExpectation.get(className).get(feature) :
+                                                        0.0;
+                                                
+                                                // we're caching, so this is effective
+                                                double newCalculation = pofYGivenX.calculate(className, vectorInstance);
+                                                
+                                                modelExpectation.get(className)
+                                                        .put(feature, existingValue + (newCalculation * totalCountProbability));
+                                    });
+                                }
+                        );
+        });
+
+        modelExpectation
+                .keySet()
+                .forEach(className -> {
+                    modelExpectation.get(className)
+                            .keySet()
+                            .forEach(featureName -> {
+                                ExpectationInstance expectationInstance = new ExpectationInstance();
+                                expectationInstance.className = className;
+                                expectationInstance.featureName = featureName;
+                                expectationInstance.expectation = modelExpectation.get(className).get(featureName);
+                                expectationInstance.featureCount = expectationInstance.expectation * 
+                                        featureCount.get(featureName);
                                 
-                                featureCountDictionary.put(feature, currentCount + 1);
+                                returnList.add(expectationInstance);
                             });
                 });
-        
-        allClasses
-                .forEach(className -> 
-                        featureCountDictionary
-                            .keySet()
-                            .forEach(feature -> {
-                                ExpectationInstance newInstance = new ExpectationInstance();
-                                newInstance.className = className;
-                                newInstance.featureName = feature;
-                                newInstance.expectation =
-                                        pofYGivenX.calculate(className, feature) *
-                                        totalCountProbability *
-                                        featureCountDictionary.get(feature);
-                                newInstance.featureCount = featureCountDictionary.get(feature);
-
-                                returnList.add(newInstance);
-                            }));
         
         return returnList;
     }
