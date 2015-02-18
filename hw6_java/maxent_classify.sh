@@ -2,9 +2,6 @@
 # setting java 8 version manually
 export JAVA_HOME=/opt/jdk8
 
-rm -rf q2
-mkdir q2
-
 testData=$1
 modelFile=$2
 sysOutput=$3
