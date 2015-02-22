@@ -1,6 +1,5 @@
 package edu.washington.ling.roylance.models;
 
-import edu.washington.ling.roylance.enums.FeatureNames;
 import edu.washington.ling.roylance.enums.TagNames;
 import edu.washington.ling.roylance.models.feature.PreviousTag;
 import edu.washington.ling.roylance.models.feature.PreviousTwoTags;
@@ -10,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -59,24 +59,8 @@ public class Sentence {
                         Sentence newSentence = new Sentence()
                                 .setLength(sentenceLength);
 
-                        String previousTag = TagNames.BeginningOfSentence;
-                        String previousTwoTags = TagNames.BeginningOfSentence;
-
                         while (traversedIndexes < sentenceLength) {
-                            Word currentWord = words.get(currentWordsIndex);
-
-                            currentWord.addFeatureItem(
-                                    PreviousTag.factory(previousTag)
-                            );
-
-                            currentWord.addFeatureItem(
-                                    PreviousTwoTags.factory(previousTwoTags)
-                            );
-
-                            previousTwoTags = currentWord.getGoldClass() + ObjectUtilities.PlusSign + previousTag;
-                            previousTag = currentWord.getGoldClass();
-
-                            newSentence.addWord(currentWord);
+                            newSentence.addWord(words.get(currentWordsIndex));
 
                             currentWordsIndex++;
                             traversedIndexes++;

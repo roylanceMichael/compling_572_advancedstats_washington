@@ -17,7 +17,7 @@ public class FeatureNames {
 
     public static final String PreviousTag = "prevT";
 
-    public static final String PreviousTwoTags = "prev2T";
+    public static final String PreviousTwoTags = "prevTwoTags";
 
     public static final String PreviousWord = "prevW";
 

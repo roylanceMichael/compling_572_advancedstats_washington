@@ -1,8 +1,10 @@
 package edu.washington.ling.roylance;
 
-import edu.washington.ling.roylance.models.ClassInstance;
+import edu.washington.ling.roylance.models.SentenceWord;
+import edu.washington.ling.roylance.models.Tag;
 import edu.washington.ling.roylance.models.Sentence;
 import edu.washington.ling.roylance.models.Word;
+import edu.washington.ling.roylance.operations.CalculateSentenceTree;
 import edu.washington.ling.roylance.utilities.ObjectUtilities;
 
 import java.util.HashMap;
@@ -26,34 +28,19 @@ public class Main {
         String topN = args[5];
         String topK = args[6];
 
-        HashMap<String, ClassInstance> model = ClassInstance.factory(modelFile);
+        HashMap<String, Tag> allTags = Tag.factory(modelFile);
         List<Word> words = Word.factory(testDataFile);
         List<Sentence> sentences = Sentence.factory(boundaryFile, words);
 
         sentences
                 .forEach(sentence -> {
-                    System.out.println("length: " + sentence.getLength());
-                    sentence
-                            .getWords()
-                            .stream()
-                            .sorted((a, b) -> ObjectUtilities.ascOrder(a.getId(), b.getId()))
-                            .forEach(word -> {
-                                StringBuilder workspace = new StringBuilder(
-                                        word.getId() +
-                                                " " +
-                                                word.getInstanceName() +
-                                                " " +
-                                                word.getGoldClass() +
-                                                " ");
+                    SentenceWord beginningOfSentence = new CalculateSentenceTree(
+                            Integer.parseInt(topN),
+                            sentence,
+                            allTags)
+                            .build();
 
-                                word
-                                        .getFeatures()
-                                        .forEach(feature -> {
-                                            workspace.append(feature + " ");
-                                        });
-
-                                System.out.println(workspace);
-                            });
+                    System.out.println(beginningOfSentence.toString());
                 });
     }
 }

@@ -1,13 +1,21 @@
 package edu.washington.ling.roylance.models;
 
+import com.google.common.base.Functions;
+import com.google.common.collect.Ordering;
 import edu.washington.ling.roylance.builders.FeatureFactory;
+import edu.washington.ling.roylance.enums.FeatureNames;
 import edu.washington.ling.roylance.models.feature.Feature;
+import edu.washington.ling.roylance.models.feature.PreviousTag;
+import edu.washington.ling.roylance.models.feature.PreviousTwoTags;
+import edu.washington.ling.roylance.operations.CalculateProbabilityDenominator;
+import edu.washington.ling.roylance.operations.CalculateProbabilityNumerator;
 import edu.washington.ling.roylance.utilities.ObjectUtilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Word {
     private int id;
@@ -16,12 +24,15 @@ public class Word {
 
     private String instanceName;
 
-    private String goldClass;
+    private String goldTag;
 
-    private Set<Feature> features;
+    private HashMap<String, Double> potentialTags;
+
+    private HashMap<String, Feature> instanceFeatures;
 
     public Word() {
-        this.features = new HashSet<>();
+        this.instanceFeatures = new HashMap<>();
+        this.potentialTags = new HashMap<>();
     }
 
     public int getId() {
@@ -32,12 +43,16 @@ public class Word {
         return this.instanceName;
     }
 
-    public String getGoldClass() {
-        return this.goldClass;
+    public String getGoldTag() {
+        return this.goldTag;
     }
 
-    public Set<Feature> getFeatures() {
-        return this.features;
+    public HashMap<String, Feature> getInstanceFeatures() {
+        return this.instanceFeatures;
+    }
+
+    public HashMap<String, Double> getPotentialTags() {
+        return this.potentialTags;
     }
 
     public Word setId(int value) {
@@ -50,8 +65,8 @@ public class Word {
         return this;
     }
 
-    public Word setGoldClass(String value) {
-        this.goldClass = value;
+    public Word setGoldTag(String value) {
+        this.goldTag = value;
         return this;
     }
 
@@ -71,8 +86,50 @@ public class Word {
                 .create(item)
                 .ifPresent(feature -> {
                     this.lastFeature = feature;
-                    this.features.add(this.lastFeature);
+                    this.instanceFeatures.put(this.lastFeature.getName(), this.lastFeature);
                 });
+
+        return this;
+    }
+
+    public Set<String> getTopTags(int topN) {
+        return this
+                .potentialTags
+                .keySet()
+                .stream()
+                .limit(topN)
+                .collect(Collectors.toCollection(HashSet::new));
+    }
+
+    public Word calculatePotentialTags(
+            @NotNull PreviousTwoTags prevTwoTags,
+            @NotNull PreviousTag prevTag,
+            @NotNull HashMap<String, Tag> allTags){
+
+        this.instanceFeatures.put(FeatureNames.PreviousTwoTags, prevTwoTags);
+        this.instanceFeatures.put(FeatureNames.PreviousTag, prevTag);
+
+        HashMap<String, Double> tagResults = new HashMap<>();
+
+        allTags
+                .keySet()
+                .forEach(tagKey ->
+                        tagResults.put(
+                            tagKey,
+                            new CalculateProbabilityNumerator(allTags.get(tagKey), this).build()
+                ));
+
+        double denominator = new CalculateProbabilityDenominator(tagResults.values()).build();
+
+        tagResults
+                .keySet()
+                .forEach(tagKey -> {
+
+                    this.potentialTags.put(tagKey, tagResults.get(tagKey) / denominator);
+                });
+
+        // sort right away
+        Ordering.natural().onResultOf(Functions.forMap(this.potentialTags));
 
         return this;
     }
@@ -93,7 +150,7 @@ public class Word {
                                 new Word()
                                 .setId(id)
                                 .setInstanceName(splitLine[0])
-                                .setGoldClass(splitLine[1]);
+                                .setGoldTag(splitLine[1]);
 
                         Arrays.stream(splitLine)
                                 .skip(2)

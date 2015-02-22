@@ -7,21 +7,21 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
 
-public class ClassInstance {
+public class Tag {
     private static final String DefaultName = "<default>";
 
-    private String className;
+    private String tagName;
 
     private double defaultProbability;
 
     private HashMap<String, Double> featureClassInstances;
 
-    public ClassInstance() {
+    public Tag() {
         this.featureClassInstances = new HashMap<>();
     }
 
-    public String getClassName() {
-        return this.className;
+    public String getTagName() {
+        return this.tagName;
     }
 
     public double getDefaultProbability() {
@@ -32,28 +32,28 @@ public class ClassInstance {
         return this.featureClassInstances;
     }
 
-    public ClassInstance setClassName(@NotNull String value) {
-        this.className = value;
+    public Tag setTagName(@NotNull String value) {
+        this.tagName = value;
         return this;
     }
 
-    public ClassInstance setDefaultProbability(double value) {
+    public Tag setDefaultProbability(double value) {
         this.defaultProbability = value;
         return this;
     }
 
-    public ClassInstance addFeatureClassInstance(@NotNull String feature, double count) {
+    public Tag addFeatureClassInstance(@NotNull String feature, double count) {
         this.featureClassInstances.put(feature, count);
         return this;
     }
 
-    public static HashMap<String, ClassInstance> factory(@NotNull String fileName) {
-        HashMap<String, ClassInstance> returnHashMap = new HashMap<>();
+    public static HashMap<String, Tag> factory(@NotNull String fileName) {
+        HashMap<String, Tag> returnHashMap = new HashMap<>();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             try {
-                ClassInstance currentClassInstance = null;
+                Tag currentTag = null;
 
                 String line;
                 while ((line = br.readLine()) != null) {
@@ -61,25 +61,25 @@ public class ClassInstance {
 
                     // this is where we'll get the class name
                     if (splitLine.length > 2) {
-                        if (currentClassInstance != null) {
-                            returnHashMap.put(currentClassInstance.getClassName(), currentClassInstance);
+                        if (currentTag != null) {
+                            returnHashMap.put(currentTag.getTagName(), currentTag);
                         }
 
-                        currentClassInstance = new ClassInstance()
-                                .setClassName(splitLine[splitLine.length - 1]);
+                        currentTag = new Tag()
+                                .setTagName(splitLine[splitLine.length - 1]);
                     }
                     else if (splitLine.length == 2) {
-                        if (currentClassInstance == null) {
+                        if (currentTag == null) {
                             continue;
                         }
 
                         if (DefaultName.equals(splitLine[0])) {
-                            currentClassInstance.setDefaultProbability(
+                            currentTag.setDefaultProbability(
                                     Double.parseDouble(splitLine[1])
                             );
                         }
                         else {
-                            currentClassInstance
+                            currentTag
                                     .addFeatureClassInstance(
                                             splitLine[0],
                                             Double.parseDouble(splitLine[1])
@@ -88,7 +88,7 @@ public class ClassInstance {
                     }
                 }
 
-                returnHashMap.put(currentClassInstance.getClassName(), currentClassInstance);
+                returnHashMap.put(currentTag.getTagName(), currentTag);
             }
             finally {
                 if (br != null) {
