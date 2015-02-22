@@ -1,20 +1,18 @@
 package edu.washington.ling.roylance.models;
 
+import edu.washington.ling.roylance.builders.FeatureFactory;
+import edu.washington.ling.roylance.models.feature.Feature;
 import edu.washington.ling.roylance.utilities.ObjectUtilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Word {
     private int id;
 
-    private Feature temporaryFeature;
+    private Feature lastFeature;
 
     private String instanceName;
 
@@ -57,16 +55,25 @@ public class Word {
         return this;
     }
 
-    public Word addFeatureItem(String item) {
-        if (this.temporaryFeature == null) {
-            this.temporaryFeature = Feature.factory(item);
+    public Word addFeatureItem(@NotNull String item) {
+        if (ObjectUtilities.isInteger(item)) {
+
+            if (this.lastFeature != null) {
+                this.lastFeature
+                        .setCount(Integer.parseInt(item));
+            }
+
             return this;
         }
 
-        this.features.add(this
-                .temporaryFeature
-                .setCount(Integer.parseInt(item)));
-        this.temporaryFeature = null;
+        FeatureFactory
+                .getInstance()
+                .create(item)
+                .ifPresent(feature -> {
+                    this.lastFeature = feature;
+                    this.features.add(this.lastFeature);
+                });
+
         return this;
     }
 

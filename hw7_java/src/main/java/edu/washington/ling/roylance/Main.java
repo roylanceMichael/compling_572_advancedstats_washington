@@ -49,7 +49,7 @@ public class Main {
                                 word
                                         .getFeatures()
                                         .forEach(feature -> {
-                                            workspace.append(feature.getName() + " " + feature.getValue() + " " + feature.getCount() + " ");
+                                            workspace.append(feature + " ");
                                         });
 
                                 System.out.println(workspace);

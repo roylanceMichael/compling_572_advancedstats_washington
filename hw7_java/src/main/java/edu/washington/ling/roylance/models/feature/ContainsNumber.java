@@ -1,0 +1,9 @@
+package edu.washington.ling.roylance.models.feature;
+
+import edu.washington.ling.roylance.enums.FeatureNames;
+
+public class ContainsNumber extends Feature {
+    public ContainsNumber() {
+        this.setName(FeatureNames.ContainsNumber);
+    }
+}
