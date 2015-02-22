@@ -7,22 +7,23 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Word {
     private int id;
 
-    private String temporaryFeature;
+    private Feature temporaryFeature;
 
     private String instanceName;
 
     private String goldClass;
 
-    private HashMap<String, String> features;
+    private Set<Feature> features;
 
     public Word() {
-        this.features = new HashMap<>();
+        this.features = new HashSet<>();
     }
 
     public int getId() {
@@ -37,7 +38,7 @@ public class Word {
         return this.goldClass;
     }
 
-    public HashMap<String, String> getFeatures() {
+    public Set<Feature> getFeatures() {
         return this.features;
     }
 
@@ -58,17 +59,14 @@ public class Word {
 
     public Word addFeatureItem(String item) {
         if (this.temporaryFeature == null) {
-            this.temporaryFeature = item;
+            this.temporaryFeature = Feature.factory(item);
             return this;
         }
 
-        this.addFeature(this.temporaryFeature, item);
+        this.features.add(this
+                .temporaryFeature
+                .setCount(Integer.parseInt(item)));
         this.temporaryFeature = null;
-        return this;
-    }
-
-    public Word addFeature(String key, String value) {
-        this.features.put(key, value);
         return this;
     }
 

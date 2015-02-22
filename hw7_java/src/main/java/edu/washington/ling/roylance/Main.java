@@ -48,9 +48,8 @@ public class Main {
 
                                 word
                                         .getFeatures()
-                                        .keySet()
-                                        .forEach(key -> {
-                                            workspace.append(key + " " + word.getFeatures().get(key) + " ");
+                                        .forEach(feature -> {
+                                            workspace.append(feature.getName() + " " + feature.getValue() + " " + feature.getCount() + " ");
                                         });
 
                                 System.out.println(workspace);
