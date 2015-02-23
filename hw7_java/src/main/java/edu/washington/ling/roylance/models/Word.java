@@ -124,8 +124,7 @@ public class Word {
         tagResults
                 .keySet()
                 .forEach(tagKey -> {
-
-                    this.potentialTags.put(tagKey, tagResults.get(tagKey) / denominator);
+                        this.potentialTags.put(tagKey, tagResults.get(tagKey) / denominator);
                 });
 
         // sort right away

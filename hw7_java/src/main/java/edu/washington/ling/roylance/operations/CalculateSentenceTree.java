@@ -42,6 +42,10 @@ public class CalculateSentenceTree implements IBuilder<SentenceWord> {
 
                     currentLevel
                             .forEach(wordOnLevel -> {
+                                System.out.println("----");
+                                System.out.println(wordOnLevel.getPreviousTwoTags());
+                                System.out.println(wordOnLevel.getPreviousTag());
+
                                 word
                                         .calculatePotentialTags(
                                                 wordOnLevel.getPreviousTwoTags(),
@@ -49,6 +53,8 @@ public class CalculateSentenceTree implements IBuilder<SentenceWord> {
                                                 allTags)
                                         .getTopTags(this.topN)
                                         .forEach(tag -> {
+                                            System.out.println(tag);
+
                                             SentenceWord newWord = new SentenceWord(
                                                     wordOnLevel,
                                                     word.getInstanceName(),

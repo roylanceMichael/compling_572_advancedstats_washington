@@ -39,8 +39,6 @@ public class Main {
                             sentence,
                             allTags)
                             .build();
-
-                    System.out.println(beginningOfSentence.toString());
                 });
     }
 }

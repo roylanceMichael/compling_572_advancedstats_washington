@@ -14,10 +14,10 @@ public class Tag {
 
     private double defaultProbability;
 
-    private HashMap<String, Double> featureClassInstances;
+    private HashMap<String, Double> features;
 
     public Tag() {
-        this.featureClassInstances = new HashMap<>();
+        this.features = new HashMap<>();
     }
 
     public String getTagName() {
@@ -28,8 +28,8 @@ public class Tag {
         return this.defaultProbability;
     }
 
-    public HashMap<String, Double> getFeatureClassInstances() {
-        return this.featureClassInstances;
+    public HashMap<String, Double> getFeatures() {
+        return this.features;
     }
 
     public Tag setTagName(@NotNull String value) {
@@ -42,8 +42,9 @@ public class Tag {
         return this;
     }
 
-    public Tag addFeatureClassInstance(@NotNull String feature, double count) {
-        this.featureClassInstances.put(feature, count);
+    public Tag addFeature(@NotNull String feature, double count) {
+        System.out.println(feature + " " + count);
+        this.features.put(feature, count);
         return this;
     }
 
@@ -80,7 +81,7 @@ public class Tag {
                         }
                         else {
                             currentTag
-                                    .addFeatureClassInstance(
+                                    .addFeature(
                                             splitLine[0],
                                             Double.parseDouble(splitLine[1])
                                     );

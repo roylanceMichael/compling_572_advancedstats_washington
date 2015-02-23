@@ -36,9 +36,11 @@ public class CalculateProbabilityNumerator implements IBuilder<Double> {
                         .keySet()
                         .stream()
                         .map(key -> {
-                            if (this.tag.getFeatureClassInstances().containsKey(key)) {
-                                return this.tag.getFeatureClassInstances().get(key);
+                            if (this.tag.getFeatures().containsKey(key)) {
+                                System.out.println("adding this key: " + key);
+                                return this.tag.getFeatures().get(key);
                             }
+                            System.out.println("not adding this key: " + key);
                             return 0.0;
                         })
                         .reduce(0.0, (a, b) -> a + b);
