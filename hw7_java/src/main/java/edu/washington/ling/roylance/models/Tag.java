@@ -43,7 +43,6 @@ public class Tag {
     }
 
     public Tag addFeature(@NotNull String feature, double count) {
-        System.out.println(feature + " " + count);
         this.features.put(feature, count);
         return this;
     }

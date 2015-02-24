@@ -26,13 +26,13 @@ public class Word {
 
     private String goldTag;
 
-    private HashMap<String, Double> potentialTags;
+    private List<TagResult> potentialTags;
 
     private HashMap<String, Feature> instanceFeatures;
 
     public Word() {
         this.instanceFeatures = new HashMap<>();
-        this.potentialTags = new HashMap<>();
+        this.potentialTags = new ArrayList<>();
     }
 
     public int getId() {
@@ -51,7 +51,7 @@ public class Word {
         return this.instanceFeatures;
     }
 
-    public HashMap<String, Double> getPotentialTags() {
+    public List<TagResult> getPotentialTags() {
         return this.potentialTags;
     }
 
@@ -95,9 +95,9 @@ public class Word {
     public Set<String> getTopTags(int topN) {
         return this
                 .potentialTags
-                .keySet()
                 .stream()
                 .limit(topN)
+                .map(item -> item.getTag())
                 .collect(Collectors.toCollection(HashSet::new));
     }
 
@@ -122,13 +122,15 @@ public class Word {
         double denominator = new CalculateProbabilityDenominator(tagResults.values()).build();
 
         tagResults
-                .keySet()
-                .forEach(tagKey -> {
-                        this.potentialTags.put(tagKey, tagResults.get(tagKey) / denominator);
-                });
-
-        // sort right away
-        Ordering.natural().onResultOf(Functions.forMap(this.potentialTags));
+                .entrySet()
+                .stream()
+                .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
+                .forEach(kvp ->
+                        this.potentialTags.add(
+                                new TagResult()
+                                .setTag(kvp.getKey())
+                                .setProbability(kvp.getValue() / denominator)
+                        ));
 
         return this;
     }

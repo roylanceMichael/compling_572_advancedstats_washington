@@ -21,6 +21,10 @@ public class Feature {
         return this.count;
     }
 
+    public String getRepresentation() {
+        return this.name + ObjectUtilities.EqualsSign + this.value;
+    }
+
     public Feature setValue(String value) {
         this.value = value;
         return this;
