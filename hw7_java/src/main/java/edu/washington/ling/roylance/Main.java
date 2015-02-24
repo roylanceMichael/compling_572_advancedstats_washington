@@ -40,7 +40,7 @@ public class Main {
                             allTags)
                             .build();
 
-                    System.out.println(beginningOfSentence);
+                    beginningOfSentence.printSelf();
                 });
     }
 }

@@ -109,6 +109,8 @@ public class Word {
         this.instanceFeatures.put(FeatureNames.PreviousTwoTags, prevTwoTags);
         this.instanceFeatures.put(FeatureNames.PreviousTag, prevTag);
 
+        this.potentialTags.clear();
+
         HashMap<String, Double> tagResults = new HashMap<>();
 
         allTags

@@ -118,9 +118,17 @@ public class SentenceWord {
                 .nextSentenceWords
                 .keySet()
                 .forEach(key -> {
-                    workspace.append(this.nextSentenceWords.get(key).toString());
+                    workspace.append("\n" + this.nextSentenceWords.get(key).toString());
                 });
 
         return workspace.toString();
+    }
+
+    public void printSelf() {
+        System.out.println(this.wordName + " " + this.tagName);
+
+        this.nextSentenceWords
+                .keySet()
+                .forEach(key -> this.nextSentenceWords.get(key).printSelf());
     }
 }
