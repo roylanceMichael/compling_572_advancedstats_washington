@@ -20,6 +20,8 @@ public class CalculateSentenceTree implements IBuilder<SentenceWord> {
 
     public CalculateSentenceTree(
             int topN,
+            int topK,
+            double beamSize,
             @NotNull Sentence sentence,
             @NotNull HashMap<String, Tag> allTags) {
         this.topN = topN;
@@ -30,31 +32,37 @@ public class CalculateSentenceTree implements IBuilder<SentenceWord> {
     @Override
     public SentenceWord build() {
         List<SentenceWord> currentLevel = new ArrayList<>();
-        SentenceWord previousWord = new SentenceWord();
+        SentenceWord beginningOfSentence = new SentenceWord();
 
-        currentLevel.add(previousWord);
+        currentLevel.add(beginningOfSentence);
 
         this
                 .sentence
                 .getWords()
+                .stream()
+                .sorted((a, b) -> Integer.compare(a.getId(), b.getId()))
                 .forEach(word -> {
                     List<SentenceWord> newLevel = new ArrayList<>();
 
                     currentLevel
-                            .forEach(wordOnLevel -> {
+                            .forEach(nextWord -> {
 
                                 word
                                         .calculatePotentialTags(
-                                                wordOnLevel.getPreviousTwoTags(),
-                                                wordOnLevel.getPreviousTag(),
+                                                nextWord.getPreviousTwoTags(),
+                                                nextWord.getPreviousTag(),
                                                 allTags)
                                         .getTopTags(this.topN)
                                         .forEach(tag -> {
+
                                             SentenceWord newWord = new SentenceWord(
-                                                    wordOnLevel,
+                                                    nextWord,
                                                     word.getInstanceName(),
-                                                    tag);
-                                            wordOnLevel.addNextSentenceWord(tag, newWord);
+                                                    tag.getTag(),
+                                                    word.getGoldTag(),
+                                                    tag.getProbability());
+
+                                            nextWord.addNextSentenceWord(tag.getTag(), newWord);
                                             newLevel.add(newWord);
                                         });
                             });
@@ -63,6 +71,6 @@ public class CalculateSentenceTree implements IBuilder<SentenceWord> {
                     currentLevel.addAll(newLevel);
                 });
 
-        return previousWord;
+        return beginningOfSentence;
     }
 }

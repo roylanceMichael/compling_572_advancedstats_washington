@@ -1,11 +1,10 @@
 package edu.washington.ling.roylance;
 
+import edu.washington.ling.roylance.models.Sentence;
 import edu.washington.ling.roylance.models.SentenceWord;
 import edu.washington.ling.roylance.models.Tag;
-import edu.washington.ling.roylance.models.Sentence;
 import edu.washington.ling.roylance.models.Word;
 import edu.washington.ling.roylance.operations.CalculateSentenceTree;
-import edu.washington.ling.roylance.utilities.ObjectUtilities;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,11 +35,13 @@ public class Main {
                 .forEach(sentence -> {
                     SentenceWord beginningOfSentence = new CalculateSentenceTree(
                             Integer.parseInt(topN),
+                            Integer.parseInt(topK),
+                            Double.parseDouble(beamSize),
                             sentence,
                             allTags)
                             .build();
 
-                    beginningOfSentence.printSelf();
+                    beginningOfSentence.printSelfForSysFile();
                 });
     }
 }

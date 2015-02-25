@@ -1,15 +1,11 @@
 package edu.washington.ling.roylance.models;
 
-import edu.washington.ling.roylance.enums.TagNames;
-import edu.washington.ling.roylance.models.feature.PreviousTag;
-import edu.washington.ling.roylance.models.feature.PreviousTwoTags;
 import edu.washington.ling.roylance.utilities.ObjectUtilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 

@@ -3,6 +3,7 @@ package edu.washington.ling.roylance.models;
 import edu.washington.ling.roylance.enums.TagNames;
 import edu.washington.ling.roylance.models.feature.PreviousTag;
 import edu.washington.ling.roylance.models.feature.PreviousTwoTags;
+import edu.washington.ling.roylance.utilities.ObjectUtilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -18,6 +19,8 @@ public class SentenceWord {
 
     private double probability;
 
+    private String goldTagName;
+
     private HashMap<String, SentenceWord> nextSentenceWords;
 
     public SentenceWord() {
@@ -26,37 +29,50 @@ public class SentenceWord {
         this.wordName = TagNames.BeginningOfSentence;
         this.tagName = TagNames.BeginningOfSentence;
         this.nextSentenceWords = new HashMap<>();
+        this.probability = 0.0;
     }
 
     public SentenceWord(
             @NotNull String wordName,
-            @NotNull String tagName) {
+            @NotNull String tagName,
+            @NotNull String goldTagName,
+            double probability) {
         this(new SentenceWord(),
                 new SentenceWord(),
                 wordName,
-                tagName);
+                tagName,
+                goldTagName,
+                probability);
     }
 
     public SentenceWord(
             @NotNull SentenceWord previousWord,
             @NotNull String wordName,
-            @NotNull String tagName) {
+            @NotNull String tagName,
+            @NotNull String goldTagName,
+            double probability) {
         this(new SentenceWord(),
                 previousWord,
                 wordName,
-                tagName);
+                tagName,
+                goldTagName,
+                probability);
     }
 
     public SentenceWord(
             @NotNull SentenceWord previousTwoWord,
             @NotNull SentenceWord previousWord,
             @NotNull String wordName,
-            @NotNull String tagName) {
+            @NotNull String tagName,
+            @NotNull String goldTagName,
+            double probability) {
         this.previousTwoWord = previousTwoWord;
         this.previousWord = previousWord;
         this.wordName = wordName;
         this.tagName = tagName;
         this.nextSentenceWords = new HashMap<>();
+        this.goldTagName = goldTagName;
+        this.probability = probability;
     }
 
     public SentenceWord getPreviousTwoWord() {
@@ -73,6 +89,14 @@ public class SentenceWord {
 
     public String getTagName() {
         return this.tagName;
+    }
+
+    public String getGoldTagName() {
+        return this.goldTagName;
+    }
+
+    public double getProbability() {
+        return this.probability;
     }
 
     public PreviousTwoTags getPreviousTwoTags() {
@@ -112,23 +136,35 @@ public class SentenceWord {
 
     @Override
     public String toString() {
-        StringBuilder workspace = new StringBuilder(this.wordName + " " + this.tagName);
+        StringBuilder workspace = new StringBuilder(
+                this.wordName +
+                ObjectUtilities.Tab +
+                this.goldTagName +
+                ObjectUtilities.Tab +
+                this.tagName +
+                ObjectUtilities.Tab +
+                this.probability);
 
         this
                 .nextSentenceWords
                 .keySet()
-                .forEach(key -> {
-                    workspace.append("\n" + this.nextSentenceWords.get(key).toString());
-                });
+                .forEach(key -> workspace.append(
+                        ObjectUtilities.NewLine + this.nextSentenceWords.get(key).toString()));
 
         return workspace.toString();
     }
 
-    public void printSelf() {
-        System.out.println(this.wordName + " " + this.tagName);
+    public void printSelfForSysFile() {
+        System.out.println(this.wordName +
+                ObjectUtilities.Tab +
+                this.goldTagName +
+                ObjectUtilities.Tab +
+                this.tagName +
+                ObjectUtilities.Tab +
+                this.probability);
 
         this.nextSentenceWords
                 .keySet()
-                .forEach(key -> this.nextSentenceWords.get(key).printSelf());
+                .forEach(key -> this.nextSentenceWords.get(key).printSelfForSysFile());
     }
 }

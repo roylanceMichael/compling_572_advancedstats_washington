@@ -1,7 +1,5 @@
 package edu.washington.ling.roylance.models;
 
-import com.google.common.base.Functions;
-import com.google.common.collect.Ordering;
 import edu.washington.ling.roylance.builders.FeatureFactory;
 import edu.washington.ling.roylance.enums.FeatureNames;
 import edu.washington.ling.roylance.models.feature.Feature;
@@ -92,12 +90,12 @@ public class Word {
         return this;
     }
 
-    public Set<String> getTopTags(int topN) {
+    public Set<TagResult> getTopTags(int topN) {
         return this
                 .potentialTags
                 .stream()
+                .sorted((a, b) -> b.getProbability().compareTo(a.getProbability()))
                 .limit(topN)
-                .map(item -> item.getTag())
                 .collect(Collectors.toCollection(HashSet::new));
     }
 

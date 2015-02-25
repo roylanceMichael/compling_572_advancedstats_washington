@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -14,6 +13,8 @@ public class ObjectUtilities {
     public static final String EmptyString = "";
 
     public static final String Tab = "\t";
+
+    public static final String NewLine = "\n";
 
     public static final String EqualsSign = "=";
 
