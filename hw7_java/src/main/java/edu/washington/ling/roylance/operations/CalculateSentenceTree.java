@@ -14,6 +14,10 @@ public class CalculateSentenceTree implements IBuilder<SentenceWord> {
 
     private final int topN;
 
+    private final int topK;
+
+    private final double beamSize;
+
     private final Sentence sentence;
 
     private final HashMap<String, Tag> allTags;
@@ -25,6 +29,8 @@ public class CalculateSentenceTree implements IBuilder<SentenceWord> {
             @NotNull Sentence sentence,
             @NotNull HashMap<String, Tag> allTags) {
         this.topN = topN;
+        this.topK = topK;
+        this.beamSize = beamSize;
         this.sentence = sentence;
         this.allTags = allTags;
     }
@@ -45,27 +51,27 @@ public class CalculateSentenceTree implements IBuilder<SentenceWord> {
                     List<SentenceWord> newLevel = new ArrayList<>();
 
                     currentLevel
-                            .forEach(nextWord -> {
+                            .forEach(previousWord ->
+                                    word
+                                    .calculatePotentialTags(
+                                            this.topK,
+                                            this.beamSize,
+                                            previousWord.getPreviousTwoTags(),
+                                            previousWord.getPreviousTag(),
+                                            this.allTags)
+                                    .getTopTags(this.topN)
+                                    .forEach(tag -> {
 
-                                word
-                                        .calculatePotentialTags(
-                                                nextWord.getPreviousTwoTags(),
-                                                nextWord.getPreviousTag(),
-                                                allTags)
-                                        .getTopTags(this.topN)
-                                        .forEach(tag -> {
+                                        SentenceWord newWord = new SentenceWord(
+                                                previousWord,
+                                                word.getInstanceName(),
+                                                tag.getTag(),
+                                                word.getGoldTag(),
+                                                tag.getProbability());
 
-                                            SentenceWord newWord = new SentenceWord(
-                                                    nextWord,
-                                                    word.getInstanceName(),
-                                                    tag.getTag(),
-                                                    word.getGoldTag(),
-                                                    tag.getProbability());
-
-                                            nextWord.addNextSentenceWord(tag.getTag(), newWord);
-                                            newLevel.add(newWord);
-                                        });
-                            });
+                                        previousWord.addNextSentenceWord(tag.getTag(), newWord);
+                                        newLevel.add(newWord);
+                                    }));
 
                     currentLevel.clear();
                     currentLevel.addAll(newLevel);

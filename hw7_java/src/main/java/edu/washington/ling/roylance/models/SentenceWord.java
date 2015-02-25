@@ -17,19 +17,20 @@ public class SentenceWord {
 
     private String tagName;
 
-    private double probability;
-
     private String goldTagName;
+
+    private double probability;
 
     private HashMap<String, SentenceWord> nextSentenceWords;
 
     public SentenceWord() {
         this.previousTwoWord = null;
         this.previousWord = null;
-        this.wordName = TagNames.BeginningOfSentence;
         this.tagName = TagNames.BeginningOfSentence;
+        this.wordName = TagNames.BeginningOfSentence;
+        this.goldTagName = TagNames.BeginningOfSentence;
+        this.probability = 1.0;
         this.nextSentenceWords = new HashMap<>();
-        this.probability = 0.0;
     }
 
     public SentenceWord(
@@ -38,11 +39,11 @@ public class SentenceWord {
             @NotNull String goldTagName,
             double probability) {
         this(new SentenceWord(),
-                new SentenceWord(),
-                wordName,
-                tagName,
-                goldTagName,
-                probability);
+            new SentenceWord(),
+            wordName,
+            tagName,
+            goldTagName,
+            probability);
     }
 
     public SentenceWord(
@@ -52,11 +53,11 @@ public class SentenceWord {
             @NotNull String goldTagName,
             double probability) {
         this(new SentenceWord(),
-                previousWord,
-                wordName,
-                tagName,
-                goldTagName,
-                probability);
+            previousWord,
+            wordName,
+            tagName,
+            goldTagName,
+            probability);
     }
 
     public SentenceWord(
@@ -76,11 +77,11 @@ public class SentenceWord {
     }
 
     public SentenceWord getPreviousTwoWord() {
-        return this.previousTwoWord;
+        return this.getPreviousWord();
     }
 
     public SentenceWord getPreviousWord() {
-        return this.previousWord;
+        return this;
     }
 
     public String getWordName() {
@@ -105,7 +106,7 @@ public class SentenceWord {
             previousTwoTags.setValue(TagNames.BeginningOfSentence);
         }
         else {
-            previousTwoTags.setValue(this.previousTwoWord.getTagName());
+            previousTwoTags.setValue(this.previousWord.getTagName());
         }
 
         return previousTwoTags;
@@ -113,13 +114,7 @@ public class SentenceWord {
 
     public PreviousTag getPreviousTag() {
         PreviousTag previousTag = new PreviousTag();
-        if (this.previousWord == null) {
-            previousTag.setValue(TagNames.BeginningOfSentence);
-        }
-        else {
-            previousTag.setValue(this.previousWord.getTagName());
-        }
-
+        previousTag.setValue(this.tagName);
         return previousTag;
     }
 

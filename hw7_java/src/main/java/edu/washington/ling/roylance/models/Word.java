@@ -100,6 +100,8 @@ public class Word {
     }
 
     public Word calculatePotentialTags(
+            int topK,
+            double beamSize,
             @NotNull PreviousTwoTags prevTwoTags,
             @NotNull PreviousTag prevTag,
             @NotNull HashMap<String, Tag> allTags){
@@ -121,16 +123,36 @@ public class Word {
 
         double denominator = new CalculateProbabilityDenominator(tagResults.values()).build();
 
+        List<TagResult> filteredTagResults = new ArrayList<>();
+
         tagResults
                 .entrySet()
                 .stream()
                 .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
                 .forEach(kvp ->
-                        this.potentialTags.add(
+                        filteredTagResults.add(
                                 new TagResult()
-                                .setTag(kvp.getKey())
-                                .setProbability(kvp.getValue() / denominator)
+                                        .setTag(kvp.getKey())
+                                        .setProbability(Math.log10(kvp.getValue() / denominator))
                         ));
+
+        // let maxProb be the highest prob among the nodes at position i
+        Optional<Double> maxProb = filteredTagResults
+                .stream()
+                .map(tagResult -> tagResult.getProbability())
+                .max(Double::compare);
+
+        if (maxProb.isPresent()) {
+            // for each node sij at position i
+            // let probIj be the probability stored at the node
+            filteredTagResults
+                    .stream()
+                    // keep top k
+                    .limit(topK)
+                    // log prob + beamSize > max log prob
+                    .filter(tagResult -> tagResult.getProbability() + beamSize >= maxProb.get())
+                    .forEach(tagResult -> this.potentialTags.add(tagResult));
+        }
 
         return this;
     }
