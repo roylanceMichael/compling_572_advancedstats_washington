@@ -34,7 +34,7 @@ public class CalculateProbabilityNumerator implements IBuilder<Double> {
                 this.word
                         .getInstanceFeatures()
                         .values()
-                        .stream()
+                        .parallelStream()
                         .map(feature -> {
                             if (this.tag.getFeatures().containsKey(feature.getRepresentation())) {
                                 return this.tag.getFeatures().get(feature.getRepresentation());

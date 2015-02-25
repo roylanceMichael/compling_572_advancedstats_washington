@@ -192,7 +192,7 @@ public class Word {
         }
         catch (Exception e) {
             // report the error to the console
-            System.out.println(e);
+            e.printStackTrace();
         }
 
         return returnList;

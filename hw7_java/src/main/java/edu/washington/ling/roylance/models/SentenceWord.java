@@ -6,7 +6,9 @@ import edu.washington.ling.roylance.models.feature.PreviousTwoTags;
 import edu.washington.ling.roylance.utilities.ObjectUtilities;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class SentenceWord {
     private SentenceWord previousTwoWord;
@@ -129,16 +131,39 @@ public class SentenceWord {
         return this;
     }
 
+    public double getAccuracy() {
+        List<Double> correctAmounts = new ArrayList<>();
+
+        correctAmounts.add(
+                this.tagName.equals(this.goldTagName) ? 1.0 : 0.0
+        );
+
+        this
+                .nextSentenceWords
+                .entrySet()
+                .forEach(kvp -> {
+                    correctAmounts.add(kvp.getValue().getAccuracy());
+                });
+
+        return correctAmounts.stream().reduce(0.0, (a, b) -> a + b) / (double)correctAmounts.size();
+    }
+
     @Override
     public String toString() {
-        StringBuilder workspace = new StringBuilder(
-                this.wordName +
-                ObjectUtilities.Tab +
-                this.goldTagName +
-                ObjectUtilities.Tab +
-                this.tagName +
-                ObjectUtilities.Tab +
-                this.probability);
+        StringBuilder workspace;
+        if (this.tagName == TagNames.BeginningOfSentence) {
+            workspace = new StringBuilder();
+        }
+        else {
+            workspace = new StringBuilder(
+                    this.wordName +
+                            ObjectUtilities.Tab +
+                            this.goldTagName +
+                            ObjectUtilities.Tab +
+                            this.tagName +
+                            ObjectUtilities.Tab +
+                            this.probability);
+        }
 
         this
                 .nextSentenceWords

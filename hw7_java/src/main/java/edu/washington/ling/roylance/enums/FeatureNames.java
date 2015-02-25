@@ -1,5 +1,6 @@
 package edu.washington.ling.roylance.enums;
 
+import edu.washington.ling.roylance.models.feature.Feature;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -31,7 +32,12 @@ public class FeatureNames {
 
     public static String getClassName(@NotNull String featureName) {
         populateFeatureNamesIfEmpty();
-        return FeatureNamesToClassNames.get(featureName);
+
+        if (FeatureNamesToClassNames.containsKey(featureName)) {
+            return FeatureNamesToClassNames.get(featureName);
+        }
+
+        return Feature.class.getName();
     }
 
     private static void populateFeatureNamesIfEmpty() {
