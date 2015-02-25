@@ -1,1 +1,8 @@
-overall accuracy: 0.9650466300281297
+[debug] execute contextualize
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.3.2:java (default-cli) on project hw7: An exception occured while executing the Java class. null: InvocationTargetException: NullPointerException -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
