@@ -5,20 +5,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Arrays;
 import java.util.HashMap;
 
-public class InstanceBuilder implements IBuilder<HashMap<Integer, HashMap<Integer, Double>>> {
+public class LabelBuilder implements IBuilder<HashMap<Integer, Integer>> {
     private final String fileName;
 
-    public InstanceBuilder(
+    public LabelBuilder(
             @NotNull String fileName) {
         this.fileName = fileName;
     }
 
     @Override
-    public HashMap<Integer, HashMap<Integer, Double>> build() {
-        final HashMap<Integer, HashMap<Integer, Double>> returnHashMap = new HashMap<>();
+    public HashMap<Integer, Integer> build() {
+        final HashMap<Integer,Integer> returnHashMap = new HashMap<>();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(this.fileName));
@@ -26,22 +25,12 @@ public class InstanceBuilder implements IBuilder<HashMap<Integer, HashMap<Intege
                 int id = 0;
                 String line;
                 while ((line = br.readLine()) != null) {
-                    HashMap<Integer, Double> featureHashMap = new HashMap<>();
                     String[] splitLine = ObjectUtilities.splitByWhiteSpace(line.trim());
 
-                    Arrays.stream(splitLine)
-                            .skip(1)
-                            .forEach(lineItem -> {
-                                String[] splitItems = lineItem.split(ObjectUtilities.Colon);
-
-                                if (splitItems.length == 2) {
-                                    featureHashMap
-                                            .put(Integer.parseInt(splitItems[0]), Double.parseDouble(splitItems[1]));
-                                }
-                            });
-
-                    returnHashMap.put(id, featureHashMap);
-                    id++;
+                    if (splitLine.length > 0) {
+                        returnHashMap.put(id, Integer.parseInt(splitLine[0]));
+                        id++;
+                    }
                 }
             }
             finally {

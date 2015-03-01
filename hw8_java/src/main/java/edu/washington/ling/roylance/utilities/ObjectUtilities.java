@@ -20,6 +20,8 @@ public class ObjectUtilities {
 
     public static final String PlusSign = "+";
 
+    public static final String Colon = ":";
+
     public static String[] splitByWhiteSpace(@NotNull String line) {
         return line.split("\\s+");
     }
