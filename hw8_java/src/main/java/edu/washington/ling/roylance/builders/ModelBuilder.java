@@ -7,14 +7,14 @@ import java.util.HashMap;
 
 public class ModelBuilder implements IBuilder<svm_model> {
 
-    private final HashMap<Integer, HashMap<Integer, Double>> trainingInstances;
+    private final HashMap<Integer, HashMap<Integer, Integer>> trainingInstances;
 
     private final HashMap<Integer, Integer> trainingLabels;
 
     private final svm_parameter parameter;
 
     public ModelBuilder(
-            @NotNull HashMap<Integer, HashMap<Integer, Double>> trainingInstances,
+            @NotNull HashMap<Integer, HashMap<Integer, Integer>> trainingInstances,
             @NotNull HashMap<Integer, Integer> trainingLabels,
             @NotNull svm_parameter parameter) {
         this.trainingInstances = trainingInstances;
@@ -36,7 +36,7 @@ public class ModelBuilder implements IBuilder<svm_model> {
             for (Integer id: this.trainingInstances.get(i).keySet()) {
                 svm_node node = new svm_node();
                 node.index = id;
-                node.value = this.trainingInstances.get(i).get(id);
+                node.value = 1;
                 problem.x[i][index] = node;
                 index++;
             }

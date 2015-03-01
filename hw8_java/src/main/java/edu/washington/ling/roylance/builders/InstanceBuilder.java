@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class InstanceBuilder implements IBuilder<HashMap<Integer, HashMap<Integer, Double>>> {
+public class InstanceBuilder implements IBuilder<HashMap<Integer, HashMap<Integer, Integer>>> {
     private final String fileName;
 
     public InstanceBuilder(
@@ -17,8 +17,8 @@ public class InstanceBuilder implements IBuilder<HashMap<Integer, HashMap<Intege
     }
 
     @Override
-    public HashMap<Integer, HashMap<Integer, Double>> build() {
-        final HashMap<Integer, HashMap<Integer, Double>> returnHashMap = new HashMap<>();
+    public HashMap<Integer, HashMap<Integer, Integer>> build() {
+        final HashMap<Integer, HashMap<Integer, Integer>> returnHashMap = new HashMap<>();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(this.fileName));
@@ -26,7 +26,7 @@ public class InstanceBuilder implements IBuilder<HashMap<Integer, HashMap<Intege
                 int id = 0;
                 String line;
                 while ((line = br.readLine()) != null) {
-                    HashMap<Integer, Double> featureHashMap = new HashMap<>();
+                    HashMap<Integer, Integer> featureHashMap = new HashMap<>();
                     String[] splitLine = ObjectUtilities.splitByWhiteSpace(line.trim());
 
                     Arrays.stream(splitLine)
@@ -36,7 +36,9 @@ public class InstanceBuilder implements IBuilder<HashMap<Integer, HashMap<Intege
 
                                 if (splitItems.length == 2) {
                                     featureHashMap
-                                            .put(Integer.parseInt(splitItems[0]), Double.parseDouble(splitItems[1]));
+                                            .put(
+                                                    Integer.parseInt(splitItems[0]),
+                                                    Integer.parseInt(splitItems[1]));
                                 }
                             });
 

@@ -7,22 +7,22 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
-public class PredictBuilder implements IBuilder<HashMap<Integer, Double>> {
+public class PredictBuilder implements IBuilder<HashMap<Integer, Integer>> {
 
-    private final HashMap<Integer, HashMap<Integer, Double>> testInstances;
+    private final HashMap<Integer, HashMap<Integer, Integer>> testInstances;
 
     private final svm_model trainingModel;
 
     public PredictBuilder(
-            @NotNull HashMap<Integer, HashMap<Integer, Double>> testInstances,
-            @NotNull svm_model trainingModel) {
-        this.testInstances = testInstances;
-        this.trainingModel = trainingModel;
+            @NotNull HashMap<Integer, HashMap<Integer, Integer>> instances,
+            @NotNull svm_model model) {
+        this.testInstances = instances;
+        this.trainingModel = model;
     }
 
     @Override
-    public HashMap<Integer, Double> build() {
-        HashMap<Integer, Double> returnMap = new HashMap<>();
+    public HashMap<Integer, Integer> build() {
+        HashMap<Integer, Integer> returnMap = new HashMap<>();
 
         this
                 .testInstances
@@ -31,15 +31,14 @@ public class PredictBuilder implements IBuilder<HashMap<Integer, Double>> {
                     svm_node[] x = new svm_node[testInstance.getValue().size()];
 
                     int featureIndex = 0;
-
                     for (Integer feature: testInstance.getValue().keySet()) {
                         x[featureIndex] = new svm_node();
                         x[featureIndex].index = feature;
-                        x[featureIndex].value = testInstance.getValue().get(feature);
+                        x[featureIndex].value = 1;
                         featureIndex++;
                     }
 
-                    returnMap.put(testInstance.getKey(), svm.svm_predict(this.trainingModel, x));
+                    returnMap.put(testInstance.getKey(), (int)svm.svm_predict(this.trainingModel, x));
                 });
 
         return returnMap;

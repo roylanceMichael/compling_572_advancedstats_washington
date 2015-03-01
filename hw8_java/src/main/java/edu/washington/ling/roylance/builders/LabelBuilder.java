@@ -28,7 +28,9 @@ public class LabelBuilder implements IBuilder<HashMap<Integer, Integer>> {
                     String[] splitLine = ObjectUtilities.splitByWhiteSpace(line.trim());
 
                     if (splitLine.length > 0) {
-                        returnHashMap.put(id, Integer.parseInt(splitLine[0]));
+                        int classLabel = Integer.parseInt(splitLine[0]);
+
+                        returnHashMap.put(id, classLabel == 0 ? -1 : 1);
                         id++;
                     }
                 }

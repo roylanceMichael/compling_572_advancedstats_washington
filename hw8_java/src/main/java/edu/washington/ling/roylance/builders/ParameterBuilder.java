@@ -1,57 +1,63 @@
 package edu.washington.ling.roylance.builders;
 
+import edu.washington.ling.roylance.enums.KernelTypes;
 import libsvm.svm_parameter;
 import org.jetbrains.annotations.NotNull;
 
-public class ParameterBuilder implements IBuilder<svm_parameter> {
+import java.util.DoubleSummaryStatistics;
 
-    private final String svmType;
+public class ParameterBuilder implements IBuilder<svm_parameter> {
 
     private final String kernelType;
 
     private final String gamma;
 
-    private final String nu;
+    private final String coef0;
 
-    private final String cacheSize;
-
-    private final String c;
-
-    private final String epsilon;
-
-    private final String p;
+    private final String degree;
 
     public ParameterBuilder(
-            @NotNull String svmType,
             @NotNull String kernelType,
-            @NotNull String gamma,
-            @NotNull String nu,
-            @NotNull String cacheSize,
-            @NotNull String c,
-            @NotNull String epsilon,
-            @NotNull String p) {
-        this.svmType = svmType;
+            String gamma,
+            String coef0,
+            String degree) {
         this.kernelType = kernelType;
         this.gamma = gamma;
-        this.nu = nu;
-        this.cacheSize = cacheSize;
-        this.c = c;
-        this.epsilon = epsilon;
-        this.p = p;
+        this.coef0 = coef0;
+        this.degree = degree;
     }
 
     @Override
     public svm_parameter build() {
         svm_parameter parameter = new svm_parameter();
+        parameter.svm_type = svm_parameter.ONE_CLASS;
 
-        parameter.svm_type = Integer.parseInt(this.svmType);
-        parameter.kernel_type = Integer.parseInt(this.kernelType);
-        parameter.gamma = Double.parseDouble(this.gamma);
-        parameter.nu = Double.parseDouble(this.nu);
-        parameter.cache_size = Double.parseDouble(this.cacheSize);
-        parameter.C = Double.parseDouble(this.c);
-        parameter.eps = Double.parseDouble(this.epsilon);
-        parameter.p = Double.parseDouble(this.p);
+        switch (this.kernelType.toLowerCase()) {
+            case KernelTypes.Linear:
+                parameter.kernel_type = svm_parameter.LINEAR;
+                break;
+            case KernelTypes.Polynomial:
+                parameter.kernel_type = svm_parameter.POLY;
+                break;
+            case KernelTypes.RBF:
+                parameter.kernel_type = svm_parameter.RBF;
+                break;
+            default:
+                parameter.kernel_type = svm_parameter.SIGMOID;
+                break;
+        }
+
+        if (this.gamma != null && this.gamma.length() > 0) {
+            parameter.gamma = Double.parseDouble(this.gamma);
+        }
+
+        if (this.coef0 != null && this.coef0.length() > 0) {
+            parameter.coef0 = Double.parseDouble(this.coef0);
+        }
+
+        if (this.degree != null && this.degree.length() > 0) {
+            parameter.degree = Integer.parseInt(this.degree);
+        }
 
         return parameter;
     }
