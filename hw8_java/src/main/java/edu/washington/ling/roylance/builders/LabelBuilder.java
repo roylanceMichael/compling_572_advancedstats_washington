@@ -6,8 +6,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
+import java.util.Map;
 
-public class LabelBuilder implements IBuilder<HashMap<Integer, Integer>> {
+public class LabelBuilder implements IBuilder<Map<Integer, Integer>> {
     private final String fileName;
 
     public LabelBuilder(
@@ -16,8 +17,8 @@ public class LabelBuilder implements IBuilder<HashMap<Integer, Integer>> {
     }
 
     @Override
-    public HashMap<Integer, Integer> build() {
-        final HashMap<Integer,Integer> returnHashMap = new HashMap<>();
+    public Map<Integer, Integer> build() {
+        final Map<Integer,Integer> returnHashMap = new HashMap<>();
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(this.fileName));
@@ -29,8 +30,7 @@ public class LabelBuilder implements IBuilder<HashMap<Integer, Integer>> {
 
                     if (splitLine.length > 0) {
                         int classLabel = Integer.parseInt(splitLine[0]);
-
-                        returnHashMap.put(id, classLabel == 0 ? -1 : 1);
+                        returnHashMap.put(id, classLabel);
                         id++;
                     }
                 }

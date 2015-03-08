@@ -1,5 +1,6 @@
 package edu.washington.ling.roylance.utilities;
 
+import libsvm.svm_node;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
@@ -32,6 +33,33 @@ public class ObjectUtilities {
 
     public static <T extends Comparable<T>> int descOrder(T first, T second) {
         return second.compareTo(first);
+    }
+
+    public static double calculateDotProduct(svm_node[] x, svm_node[] y) {
+        double total = 0.0;
+
+        int xLength = x.length;
+        int yLength = y.length;
+
+        int xIndex = 0;
+        int yIndex = 0;
+
+        while (xIndex < xLength &&
+                yIndex < yLength) {
+            if (x[xIndex].index == y[yIndex].index) {
+                total += x[xIndex].value * y[yIndex].value;
+                xIndex++;
+                yIndex++;
+            }
+            else if (x[xIndex].index > y[yIndex].index) {
+                yIndex++;
+            }
+            else {
+                xIndex++;
+            }
+        }
+
+        return total;
     }
 
     // http://stackoverflow.com/questions/5439529/determine-if-a-string-is-an-integer-in-java - thank you!

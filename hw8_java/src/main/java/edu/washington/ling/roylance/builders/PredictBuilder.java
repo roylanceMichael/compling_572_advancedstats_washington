@@ -6,40 +6,34 @@ import libsvm.svm_node;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Map;
 
-public class PredictBuilder implements IBuilder<HashMap<Integer, Integer>> {
+public class PredictBuilder implements IBuilder<Map<Integer, Integer>> {
 
-    private final HashMap<Integer, HashMap<Integer, Integer>> testInstances;
+    private final Map<Integer, svm_node[]> testInstances;
 
     private final svm_model trainingModel;
 
     public PredictBuilder(
-            @NotNull HashMap<Integer, HashMap<Integer, Integer>> instances,
+            @NotNull Map<Integer, svm_node[]> instances,
             @NotNull svm_model model) {
         this.testInstances = instances;
         this.trainingModel = model;
     }
 
     @Override
-    public HashMap<Integer, Integer> build() {
-        HashMap<Integer, Integer> returnMap = new HashMap<>();
+    public Map<Integer, Integer> build() {
+        Map<Integer, Integer> returnMap = new HashMap<>();
 
         this
                 .testInstances
                 .entrySet()
-                .forEach(testInstance -> {
-                    svm_node[] x = new svm_node[testInstance.getValue().size()];
-
-                    int featureIndex = 0;
-                    for (Integer feature: testInstance.getValue().keySet()) {
-                        x[featureIndex] = new svm_node();
-                        x[featureIndex].index = feature;
-                        x[featureIndex].value = 1;
-                        featureIndex++;
-                    }
-
-                    returnMap.put(testInstance.getKey(), (int)svm.svm_predict(this.trainingModel, x));
-                });
+                .forEach(instance ->
+                        returnMap.put(instance.getKey(),
+                                        (int) svm.svm_predict(
+                                                this.trainingModel,
+                                                instance.getValue()
+                )));
 
         return returnMap;
     }

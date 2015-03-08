@@ -3,19 +3,21 @@ package edu.washington.ling.roylance.builders;
 import libsvm.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ModelBuilder implements IBuilder<svm_model> {
 
-    private final HashMap<Integer, HashMap<Integer, Integer>> trainingInstances;
+    private final Map<Integer, svm_node[]> trainingInstances;
 
-    private final HashMap<Integer, Integer> trainingLabels;
+    private final Map<Integer, Integer> trainingLabels;
 
     private final svm_parameter parameter;
 
     public ModelBuilder(
-            @NotNull HashMap<Integer, HashMap<Integer, Integer>> trainingInstances,
-            @NotNull HashMap<Integer, Integer> trainingLabels,
+            @NotNull Map<Integer, svm_node[]> trainingInstances,
+            @NotNull Map<Integer, Integer> trainingLabels,
             @NotNull svm_parameter parameter) {
         this.trainingInstances = trainingInstances;
         this.trainingLabels = trainingLabels;
@@ -30,17 +32,7 @@ public class ModelBuilder implements IBuilder<svm_model> {
         problem.x = new svm_node[problem.l][];
 
         for (int i = 0; i < problem.l; i++) {
-            problem.x[i] = new svm_node[this.trainingInstances.get(i).size()];
-
-            int index = 0;
-            for (Integer id: this.trainingInstances.get(i).keySet()) {
-                svm_node node = new svm_node();
-                node.index = id;
-                node.value = 1;
-                problem.x[i][index] = node;
-                index++;
-            }
-
+            problem.x[i] = this.trainingInstances.get(i);
             problem.y[i] = this.trainingLabels.get(i);
         }
 

@@ -1,12 +1,14 @@
 package edu.washington.ling.roylance;
 
 import edu.washington.ling.roylance.builders.*;
-import edu.washington.ling.roylance.report.ReportQ1;
+import edu.washington.ling.roylance.report.ReportAccuracy;
+import edu.washington.ling.roylance.report.SaveModelFile;
 import edu.washington.ling.roylance.utilities.ObjectUtilities;
 import libsvm.svm_model;
+import libsvm.svm_node;
 import libsvm.svm_parameter;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class MainQ1 {
     public static void main(String[] args) {
@@ -35,22 +37,26 @@ public class MainQ1 {
         }
 
         // read in files
-        svm_parameter parameter = new ParameterBuilder(kernel, gamma, coef0, degree).build();
-        HashMap<Integer, Integer> trainingLabels = new LabelBuilder(trainFile).build();
-        HashMap<Integer, Integer> testLabels = new LabelBuilder(testFile).build();
+        Map<Integer, Integer> trainingLabels = new LabelBuilder(trainFile).build();
+        Map<Integer, Integer> testLabels = new LabelBuilder(testFile).build();
 
-        HashMap<Integer, HashMap<Integer, Integer>> trainingInstances = new InstanceBuilder(trainFile).build();
-        HashMap<Integer, HashMap<Integer, Integer>> testInstances = new InstanceBuilder(testFile).build();
+        Map<Integer, svm_node[]> trainingInstances = new InstanceBuilder(trainFile).build();
+        Map<Integer, svm_node[]> testInstances = new InstanceBuilder(testFile).build();
+
+        svm_parameter parameter = new ParameterBuilder(kernel, gamma, coef0, degree, trainingInstances).build();
+
         svm_model model = new ModelBuilder(trainingInstances, trainingLabels, parameter).build();
 
         // run classification
-        HashMap<Integer, Integer> trainResults = new PredictBuilder(trainingInstances, model).build();
-        double trainAccuracy = new ReportQ1(trainResults, trainingLabels).build();
+        Map<Integer, Integer> trainResults = new PredictBuilder(trainingInstances, model).build();
+        double trainAccuracy = new ReportAccuracy(trainResults, trainingLabels).build();
 
-        HashMap<Integer, Integer> testResults = new PredictBuilder(testInstances, model).build();
-        double testAccuracy = new ReportQ1(testResults, testLabels).build();
+        Map<Integer, Integer> testResults = new PredictBuilder(testInstances, model).build();
+        double testAccuracy = new ReportAccuracy(testResults, testLabels).build();
 
         // output
+        new SaveModelFile(parameter, model).build();
+
         StringBuilder resultOutput = new StringBuilder();
         resultOutput.append(trainingLabels.size() + ObjectUtilities.Tab);
         resultOutput.append(trainAccuracy + ObjectUtilities.Tab);
