@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+export JAVA_HOME=/opt/jdk8
+
 rm -rf q1
 mkdir q1
 
