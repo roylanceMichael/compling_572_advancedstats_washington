@@ -1,13 +1,16 @@
 package edu.washington.ling.roylance.builders;
 
-import edu.washington.ling.roylance.model.Transformation;
+import edu.washington.ling.roylance.models.Transformation;
+import edu.washington.ling.roylance.models.TransformationResult;
 import edu.washington.ling.roylance.services.Store;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class HistoryBuilder
-        implements IBuilder<HashMap<Transformation, Double>> {
+        implements IBuilder<List<TransformationResult>> {
 
     private final Store store;
 
@@ -25,26 +28,26 @@ public class HistoryBuilder
     }
 
     @Override
-    public HashMap<Transformation, Double> build() {
-        HashMap<Transformation, Double> history = new HashMap<>();
-        double lastProbability = this.initialProbability;
+    public List<TransformationResult> build() {
+        List<TransformationResult> history = new ArrayList<>();
+        double lastProbability;
         double currentProbability = this.initialProbability;
+
+        int stepNumber = 0;
 
         do {
             lastProbability = currentProbability;
 
             Transformation bestTransformation = new HighestTransformationBuilder(this.store).build();
             currentProbability = new ApplyHighestTransformationBuilder(this.store, bestTransformation).build();
-
-            System.out.println(
-                    "found best transformation " +
-                            bestTransformation.toString() +
-                            " = " +
-                            currentProbability);
-
-            history.put(bestTransformation, currentProbability);
-            System.out.println(currentProbability - lastProbability);
-            System.out.println(this.minimumGain);
+            double gain = currentProbability - lastProbability;
+            TransformationResult result = new TransformationResult(
+                    ++stepNumber,
+                    bestTransformation,
+                    gain,
+                    currentProbability
+            );
+            history.add(result);
         } while (currentProbability - lastProbability >= this.minimumGain);
 
         return history;

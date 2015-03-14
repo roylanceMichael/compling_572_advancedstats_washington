@@ -1,6 +1,6 @@
 package edu.washington.ling.roylance.builders;
 
-import edu.washington.ling.roylance.model.Transformation;
+import edu.washington.ling.roylance.models.Transformation;
 import edu.washington.ling.roylance.services.Store;
 import org.jetbrains.annotations.NotNull;
 

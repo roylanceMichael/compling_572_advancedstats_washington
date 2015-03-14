@@ -1,7 +1,7 @@
 package edu.washington.ling.roylance.services;
 
-import edu.washington.ling.roylance.model.Instance;
-import edu.washington.ling.roylance.model.Transformation;
+import edu.washington.ling.roylance.models.Instance;
+import edu.washington.ling.roylance.models.Transformation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;

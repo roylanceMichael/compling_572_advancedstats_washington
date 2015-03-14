@@ -1,4 +1,4 @@
-package edu.washington.ling.roylance.model;
+package edu.washington.ling.roylance.models;
 
 import edu.washington.ling.roylance.services.Store;
 import edu.washington.ling.roylance.utils.ObjectUtilities;
