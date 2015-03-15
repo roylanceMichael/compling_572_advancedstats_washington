@@ -4,7 +4,10 @@ import edu.washington.ling.roylance.models.Transformation;
 import edu.washington.ling.roylance.services.Store;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HighestTransformationBuilder
     implements IBuilder<Transformation> {
@@ -18,31 +21,34 @@ public class HighestTransformationBuilder
 
     @Override
     public Transformation build() {
-        HashMap<Transformation, Long> transformations = new HashMap<>();
+        Map<Transformation, Long> transformations = new ConcurrentHashMap<>();
 
         this.store
                 .getPossibleTransformations()
-                .stream()
+                .parallelStream()
                 .forEach(transformation -> {
-                    long correctTotal = this.store
+                    List<Boolean> results = new ArrayList<>();
+                    this.store
                             .getInstances()
-                            .parallelStream()
-                            .map(instance -> instance.getTestTransformation(transformation))
-                            .filter(result -> result)
-                            .count();
+                            .forEach(instance -> {
+                                if (instance.getTestTransformation(transformation)) {
+                                    results.add(true);
+                                }
+                            });
 
-                    transformations.put(transformation, correctTotal);
+                    transformations.put(transformation, (long)results.size());
                 });
 
-        Transformation highestTransformation = transformations
-                .entrySet()
-                .stream()
-                .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
-                .limit(1)
-                .findFirst()
-                .get()
-                .getKey();
+        Long largest = 0L;
+        Transformation largestTransformation = null;
 
-        return highestTransformation;
+        for(Transformation key : transformations.keySet()) {
+            if (transformations.get(key) > largest) {
+                largestTransformation = key;
+                largest = transformations.get(key);
+            }
+        }
+
+        return largestTransformation;
     }
 }
