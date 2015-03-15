@@ -1,6 +1,12 @@
 package edu.washington.ling.roylance.models;
 
+import edu.washington.ling.roylance.utils.ObjectUtilities;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Transformation {
     private static int IdSequence = 0;

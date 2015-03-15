@@ -6,8 +6,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 public class Instance {
     private static final String FeatureDelimiter = ":";
@@ -21,6 +23,8 @@ public class Instance {
     private String currentClassification;
 
     private final HashSet<String> features = new HashSet<>();
+
+    private final List<Transformation> transformations = new ArrayList<>();
 
     public int getId() {
         return this.id;
@@ -75,9 +79,34 @@ public class Instance {
     public boolean applyTransformation(@NotNull Transformation transformation) {
         if (this.features.contains(transformation.getFeature()) &&
                 this.currentClassification.equals(transformation.getFromClassification())) {
+            this.transformations.add(transformation);
             this.currentClassification = transformation.getToClassification();
         }
         return this.isCorrect();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder transformationString = new StringBuilder();
+
+        this
+                .transformations
+                .forEach(transformation -> {
+                    transformationString.append(
+                            transformation.getFeature() +
+                            ObjectUtilities.Tab +
+                            transformation.getToClassification() +
+                            ObjectUtilities.Tab +
+                            transformation.getFromClassification());
+                });
+
+        return this.id +
+                ObjectUtilities.Tab +
+                this.goldClassification +
+                ObjectUtilities.Tab +
+                this.currentClassification +
+                ObjectUtilities.Tab +
+                transformationString.toString();
     }
 
     public static Store factory(@NotNull String testFileName) {

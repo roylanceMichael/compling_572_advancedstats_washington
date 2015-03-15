@@ -19,7 +19,7 @@ public class HighestTransformationBuilder
     @Override
     public Transformation build() {
         HashMap<Transformation, Long> transformations = new HashMap<>();
-
+        
         this.store
                 .getPossibleTransformations()
                 .stream()
