@@ -6,7 +6,6 @@ import edu.washington.ling.roylance.services.Store;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class HistoryBuilder
@@ -18,37 +17,47 @@ public class HistoryBuilder
 
     private final double minimumGain;
 
+    private final boolean log;
+
     public HistoryBuilder(
             @NotNull Store store,
             double initialProbability,
-            double minimumGain) {
+            double minimumGain,
+            boolean log) {
         this.store = store;
         this.initialProbability = initialProbability;
         this.minimumGain = minimumGain;
+        this.log = log;
     }
 
     @Override
     public List<TransformationResult> build() {
         List<TransformationResult> history = new ArrayList<>();
-        double lastProbability;
-        double currentProbability = this.initialProbability;
+        double lastCorrectAmount;
+        double currentCorrectAmount = this.initialProbability;
 
         int stepNumber = 0;
 
         do {
-            lastProbability = currentProbability;
+            lastCorrectAmount = currentCorrectAmount;
 
             Transformation bestTransformation = new HighestTransformationBuilder(this.store).build();
-            currentProbability = new ApplyHighestTransformationBuilder(this.store, bestTransformation).build();
-            double gain = currentProbability - lastProbability;
+            currentCorrectAmount = new ApplyHighestTransformationBuilder(this.store, bestTransformation).build();
+
+            double gain = currentCorrectAmount - lastCorrectAmount;
+
             TransformationResult result = new TransformationResult(
                     ++stepNumber,
                     bestTransformation,
                     gain,
-                    currentProbability
-            );
+                    currentCorrectAmount / this.store.getInstanceSize());
+
+            if (this.log) {
+                System.out.println(result.toString());
+            }
+
             history.add(result);
-        } while (currentProbability - lastProbability >= this.minimumGain);
+        } while (currentCorrectAmount - lastCorrectAmount >= this.minimumGain);
 
         return history;
     }

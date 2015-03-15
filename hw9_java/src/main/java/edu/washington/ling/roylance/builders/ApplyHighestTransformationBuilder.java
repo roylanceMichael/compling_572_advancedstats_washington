@@ -31,6 +31,6 @@ public class ApplyHighestTransformationBuilder
                 .filter(result -> result)
                 .count();
 
-        return correct / store.getInstanceSize();
+        return correct;
     }
 }

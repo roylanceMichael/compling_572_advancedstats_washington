@@ -27,7 +27,8 @@ public class MainQ1 {
         List<TransformationResult> history = new HistoryBuilder(
                 store,
                 initialCorrectProbability,
-                minGain).build();
+                minGain,
+                true).build();
 
         new ReportModelFile(modelFile, store.getFirstClass(), history).build();
 

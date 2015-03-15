@@ -19,14 +19,14 @@ public class HighestTransformationBuilder
     @Override
     public Transformation build() {
         HashMap<Transformation, Long> transformations = new HashMap<>();
-        
+
         this.store
                 .getPossibleTransformations()
                 .stream()
                 .forEach(transformation -> {
                     long correctTotal = this.store
                             .getInstances()
-                            .stream()
+                            .parallelStream()
                             .map(instance -> instance.getTestTransformation(transformation))
                             .filter(result -> result)
                             .count();
@@ -34,7 +34,7 @@ public class HighestTransformationBuilder
                     transformations.put(transformation, correctTotal);
                 });
 
-        return transformations
+        Transformation highestTransformation = transformations
                 .entrySet()
                 .stream()
                 .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
@@ -42,5 +42,7 @@ public class HighestTransformationBuilder
                 .findFirst()
                 .get()
                 .getKey();
+
+        return highestTransformation;
     }
 }

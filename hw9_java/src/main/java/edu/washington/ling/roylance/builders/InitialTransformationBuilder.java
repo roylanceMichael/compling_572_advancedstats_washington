@@ -28,8 +28,6 @@ public class InitialTransformationBuilder
                 .filter(instance -> instance.isCorrect())
                 .count();
 
-        double total = this.store.getInstanceSize();
-
-        return correct / total;
+        return correct;
     }
 }
