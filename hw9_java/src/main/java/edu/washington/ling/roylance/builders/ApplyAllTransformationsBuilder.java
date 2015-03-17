@@ -13,15 +13,19 @@ public class ApplyAllTransformationsBuilder
 
     private final List<Transformation> transformations;
 
-    private String initialClass;
+    private final String initialClass;
+
+    private final int n;
 
     public ApplyAllTransformationsBuilder(
             @NotNull Store store,
             @NotNull List<Transformation> transformations,
-            @NotNull String initialClass) {
+            @NotNull String initialClass,
+            int n) {
         this.store = store;
         this.transformations = transformations;
         this.initialClass = initialClass;
+        this.n = n;
     }
 
     @Override
@@ -35,6 +39,8 @@ public class ApplyAllTransformationsBuilder
 
                     this
                             .transformations
+                            .stream()
+                            .limit(this.n)
                             .forEach(transformation -> instance.applyTransformation(transformation));
                 });
 

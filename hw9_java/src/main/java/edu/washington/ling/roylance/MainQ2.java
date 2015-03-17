@@ -24,7 +24,8 @@ public class MainQ2 {
         new ApplyAllTransformationsBuilder(
                 store,
                 convertedModelFile.getTransformations(),
-                convertedModelFile.getInitialClass()).build();
+                convertedModelFile.getInitialClass(),
+                Integer.parseInt(n)).build();
 
         new ReportSysFile(store.getInstances(), sysFile).build();
 
